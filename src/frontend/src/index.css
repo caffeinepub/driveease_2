@@ -1,0 +1,244 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.625rem;
+    --background: 0.145 0 0;
+    --foreground: 0.985 0 0;
+    --card: 0.18 0 0;
+    --card-foreground: 0.985 0 0;
+    --popover: 0.2 0 0;
+    --popover-foreground: 0.985 0 0;
+    --primary: 0.527 0.154 150.069;
+    --primary-foreground: 0.985 0 0;
+    --secondary: 0.25 0 0;
+    --secondary-foreground: 0.985 0 0;
+    --muted: 0.25 0 0;
+    --muted-foreground: 0.65 0 0;
+    --accent: 0.527 0.154 150.069;
+    --accent-foreground: 0.985 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 1 0 0 / 12%;
+    --input: 1 0 0 / 15%;
+    --ring: 0.527 0.154 150.069;
+    --chart-1: 0.527 0.154 150.069;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.18 0 0;
+    --sidebar-foreground: 0.985 0 0;
+    --sidebar-primary: 0.527 0.154 150.069;
+    --sidebar-primary-foreground: 0.985 0 0;
+    --sidebar-accent: 0.25 0 0;
+    --sidebar-accent-foreground: 0.985 0 0;
+    --sidebar-border: 1 0 0 / 12%;
+    --sidebar-ring: 0.527 0.154 150.069;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #121212;
+    color: #f8fafc;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* ─── Orbitron heading utility ──────────────────────────────── */
+.font-orbitron {
+  font-family: "Orbitron", monospace;
+}
+
+/* ─── Shared buttons ────────────────────────────────────────── */
+.green-btn {
+  background-color: #16a34a;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.green-btn:hover {
+  background-color: #15803d;
+}
+.card-dark {
+  background-color: #1e1e1e;
+  border: 1px solid #2d2d2d;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+.input-dark {
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  color: #f8fafc;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  width: 100%;
+  outline: none;
+  font-size: 0.95rem;
+}
+.input-dark:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+.badge-green {
+  background: rgba(22, 163, 74, 0.15);
+  color: #4ade80;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(22, 163, 74, 0.3);
+}
+badge-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+.section-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.section-sub {
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+}
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4ade80;
+  display: inline-block;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Driver map pulse ──────────────────────────────────────── */
+@keyframes driver-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+  }
+}
+
+.driver-dot-online {
+  animation: driver-pulse 2s infinite;
+}
+
+/* ─── Orb float ─────────────────────────────────────────────── */
+@keyframes orb-float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translateY(-30px) rotate(120deg) scale(1.05);
+  }
+  66% {
+    transform: translateY(15px) rotate(240deg) scale(0.97);
+  }
+}
+
+.orb-animate {
+  animation: orb-float 15s ease-in-out infinite;
+}
+
+.orb-animate-slow {
+  animation: orb-float 22s ease-in-out infinite reverse;
+}
+
+/* ─── Glow pulse ─────────────────────────────────────────────── */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+/* ─── Chatbot ring ───────────────────────────────────────────── */
+@keyframes chatbot-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5), 0 4px 20px
+      rgba(22, 163, 74, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(74, 222, 128, 0), 0 4px 20px
+      rgba(22, 163, 74, 0.5);
+  }
+}
+
+/* ─── Slide up for chatbot panel ─────────────────────────────── */
+@keyframes slideUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ─── Orbitron gradient text ─────────────────────────────────── */
+.orbitron-gradient {
+  font-family: "Orbitron", monospace;
+  background: linear-gradient(135deg, #4ade80 0%, #22d3ee 60%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 24px rgba(74, 222, 128, 0.4));
+}
+
+/* ─── Hero responsive grid ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
