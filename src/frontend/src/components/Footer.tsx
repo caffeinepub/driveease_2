@@ -2,11 +2,12 @@ interface FooterProps {
   navigate: (p: string) => void;
 }
 export default function Footer({ navigate }: FooterProps) {
+  const year = new Date().getFullYear();
   return (
     <footer
       style={{
-        background: "#0d0d0d",
-        borderTop: "1px solid #1e1e1e",
+        background: "#f0fdf4",
+        borderTop: "1px solid #bbf7d0",
         padding: "3rem 1.5rem 1.5rem",
         marginTop: "auto",
       }}
@@ -31,42 +32,41 @@ export default function Footer({ navigate }: FooterProps) {
             >
               <div
                 style={{
-                  background: "#16a34a",
+                  background: "linear-gradient(135deg,#16a34a,#22c55e)",
                   borderRadius: 8,
                   width: 32,
                   height: 32,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  boxShadow: "0 2px 8px rgba(22,163,74,0.25)",
                 }}
               >
-                <span
-                  style={{ color: "white", fontWeight: 900, fontSize: "1rem" }}
-                >
-                  D
-                </span>
+                <span style={{ fontSize: "1rem" }}>🚗</span>
               </div>
               <span
                 style={{
-                  color: "#f8fafc",
-                  fontWeight: 700,
+                  color: "#14532d",
+                  fontWeight: 800,
                   fontSize: "1.1rem",
+                  fontFamily: "'Orbitron', monospace",
                 }}
               >
                 DriveEase
               </span>
             </div>
             <p
-              style={{ color: "#6b7280", fontSize: "0.88rem", lineHeight: 1.6 }}
+              style={{ color: "#4b7e4b", fontSize: "0.88rem", lineHeight: 1.6 }}
             >
               India's First Personal Driver Network. Trusted by families across
               India.
             </p>
             <p
               style={{
-                color: "#4ade80",
+                color: "#16a34a",
                 marginTop: "0.75rem",
                 fontSize: "0.9rem",
+                fontWeight: 500,
               }}
             >
               "Not just a ride, a trusted driver."
@@ -75,9 +75,10 @@ export default function Footer({ navigate }: FooterProps) {
           <div>
             <h4
               style={{
-                color: "#f8fafc",
-                fontWeight: 600,
+                color: "#14532d",
+                fontWeight: 700,
                 marginBottom: "0.75rem",
+                fontSize: "0.95rem",
               }}
             >
               Quick Links
@@ -96,7 +97,7 @@ export default function Footer({ navigate }: FooterProps) {
                 onClick={() => navigate(p)}
                 style={{
                   display: "block",
-                  color: "#6b7280",
+                  color: "#4b7e4b",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -106,10 +107,10 @@ export default function Footer({ navigate }: FooterProps) {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#4ade80";
+                  e.currentTarget.style.color = "#16a34a";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#6b7280";
+                  e.currentTarget.style.color = "#4b7e4b";
                 }}
               >
                 {l}
@@ -119,16 +120,17 @@ export default function Footer({ navigate }: FooterProps) {
           <div>
             <h4
               style={{
-                color: "#f8fafc",
-                fontWeight: 600,
+                color: "#14532d",
+                fontWeight: 700,
                 marginBottom: "0.75rem",
+                fontSize: "0.95rem",
               }}
             >
               Contact & Support
             </h4>
             <p
               style={{
-                color: "#6b7280",
+                color: "#4b7e4b",
                 fontSize: "0.88rem",
                 marginBottom: "0.5rem",
               }}
@@ -138,11 +140,12 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="tel:+917836887228"
               style={{
-                color: "#4ade80",
+                color: "#16a34a",
                 fontSize: "0.9rem",
                 display: "block",
                 marginBottom: "0.5rem",
                 textDecoration: "none",
+                fontWeight: 600,
               }}
             >
               +91-7836887228
@@ -150,7 +153,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="mailto:support@driveease.in"
               style={{
-                color: "#6b7280",
+                color: "#4b7e4b",
                 fontSize: "0.88rem",
                 textDecoration: "none",
                 display: "block",
@@ -174,6 +177,7 @@ export default function Footer({ navigate }: FooterProps) {
                 fontSize: "0.85rem",
                 textDecoration: "none",
                 marginTop: "0.5rem",
+                fontWeight: 500,
               }}
             >
               💬 WhatsApp
@@ -182,9 +186,10 @@ export default function Footer({ navigate }: FooterProps) {
           <div>
             <h4
               style={{
-                color: "#f8fafc",
-                fontWeight: 600,
+                color: "#14532d",
+                fontWeight: 700,
                 marginBottom: "0.75rem",
+                fontSize: "0.95rem",
               }}
             >
               Emergency
@@ -195,12 +200,12 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                background: "rgba(239,68,68,0.1)",
-                border: "1px solid rgba(239,68,68,0.3)",
-                color: "#f87171",
+                background: "rgba(239,68,68,0.08)",
+                border: "1px solid rgba(239,68,68,0.25)",
+                color: "#dc2626",
                 padding: "0.5rem 0.75rem",
                 borderRadius: 8,
-                fontSize: "0.9rem",
+                fontSize: "0.88rem",
                 textDecoration: "none",
                 marginBottom: "0.75rem",
               }}
@@ -213,12 +218,12 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                background: "rgba(59,130,246,0.1)",
-                border: "1px solid rgba(59,130,246,0.3)",
-                color: "#60a5fa",
+                background: "rgba(59,130,246,0.08)",
+                border: "1px solid rgba(59,130,246,0.2)",
+                color: "#2563eb",
                 padding: "0.5rem 0.75rem",
                 borderRadius: 8,
-                fontSize: "0.9rem",
+                fontSize: "0.88rem",
                 textDecoration: "none",
               }}
             >
@@ -228,7 +233,7 @@ export default function Footer({ navigate }: FooterProps) {
         </div>
         <div
           style={{
-            borderTop: "1px solid #1e1e1e",
+            borderTop: "1px solid #dcfce7",
             paddingTop: "1.5rem",
             display: "flex",
             justifyContent: "space-between",
@@ -237,11 +242,23 @@ export default function Footer({ navigate }: FooterProps) {
             gap: "0.5rem",
           }}
         >
-          <p style={{ color: "#4b5563", fontSize: "0.82rem" }}>
-            © 2026 DriveEase. All rights reserved.
+          <p style={{ color: "#6b7280", fontSize: "0.82rem" }}>
+            © {year} DriveEase. All rights reserved.
           </p>
-          <p style={{ color: "#4b5563", fontSize: "0.82rem" }}>
-            Made with ❤️ for Indian Families
+          <p style={{ color: "#6b7280", fontSize: "0.82rem" }}>
+            © {year}. Built with ❤️ using{" "}
+            <a
+              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                color: "#16a34a",
+                textDecoration: "none",
+                fontWeight: 600,
+              }}
+            >
+              caffeine.ai
+            </a>
           </p>
         </div>
       </div>

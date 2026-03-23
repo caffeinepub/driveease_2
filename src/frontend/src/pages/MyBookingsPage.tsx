@@ -162,11 +162,11 @@ function FareBreakdown({ b }: { b: Booking }) {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: "0.2rem 0",
-                color: "#94a3b8",
+                color: "#4b7e4b",
               }}
             >
               <span>{l}</span>
-              <span style={{ color: "#f8fafc" }}>{v}</span>
+              <span style={{ color: "#14532d" }}>{v}</span>
             </div>
           ))}
           <hr style={{ borderColor: "#2a2a2a", margin: "0.4rem 0" }} />
@@ -241,7 +241,7 @@ export default function MyBookingsPage({ navigate }: Props) {
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "2rem 1.5rem" }}>
       <h1
         style={{
-          color: "#f8fafc",
+          color: "#14532d",
           fontWeight: 800,
           fontSize: "1.75rem",
           marginBottom: "0.25rem",
@@ -249,7 +249,7 @@ export default function MyBookingsPage({ navigate }: Props) {
       >
         My Bookings
       </h1>
-      <p style={{ color: "#94a3b8", marginBottom: "2rem", fontSize: "0.9rem" }}>
+      <p style={{ color: "#4b7e4b", marginBottom: "2rem", fontSize: "0.9rem" }}>
         Logged in as: {customer?.phone}
       </p>
 
@@ -334,7 +334,7 @@ export default function MyBookingsPage({ navigate }: Props) {
                     fontSize: "0.82rem",
                   }}
                 >
-                  <span style={{ color: "#94a3b8" }}>{tx.description}</span>
+                  <span style={{ color: "#4b7e4b" }}>{tx.description}</span>
                   <span
                     style={{
                       color: tx.type === "credit" ? "#4ade80" : "#f87171",
@@ -371,7 +371,7 @@ export default function MyBookingsPage({ navigate }: Props) {
           >
             <h3
               style={{
-                color: "#f8fafc",
+                color: "#14532d",
                 fontWeight: 700,
                 marginBottom: "1rem",
               }}
@@ -380,7 +380,7 @@ export default function MyBookingsPage({ navigate }: Props) {
             </h3>
             <p
               style={{
-                color: "#94a3b8",
+                color: "#4b7e4b",
                 fontSize: "0.85rem",
                 marginBottom: "1.25rem",
               }}
@@ -408,7 +408,7 @@ export default function MyBookingsPage({ navigate }: Props) {
                   flex: 1,
                   background: "none",
                   border: "1px solid #2a2a2a",
-                  color: "#94a3b8",
+                  color: "#4b7e4b",
                   borderRadius: 8,
                   padding: "0.65rem",
                   cursor: "pointer",
@@ -477,7 +477,7 @@ export default function MyBookingsPage({ navigate }: Props) {
                   </span>
                   <h3
                     style={{
-                      color: "#f8fafc",
+                      color: "#14532d",
                       fontWeight: 700,
                       fontSize: "1.05rem",
                     }}
@@ -539,7 +539,7 @@ export default function MyBookingsPage({ navigate }: Props) {
                   >
                     <p
                       style={{
-                        color: "#94a3b8",
+                        color: "#4b7e4b",
                         fontSize: "0.78rem",
                         marginBottom: "0.35rem",
                       }}
@@ -578,25 +578,25 @@ export default function MyBookingsPage({ navigate }: Props) {
                   marginBottom: "0.75rem",
                 }}
               >
-                <span style={{ color: "#94a3b8" }}>
-                  📍 From: <span style={{ color: "#f8fafc" }}>{b.pickup}</span>
+                <span style={{ color: "#4b7e4b" }}>
+                  📍 From: <span style={{ color: "#14532d" }}>{b.pickup}</span>
                 </span>
-                <span style={{ color: "#94a3b8" }}>
-                  To: <span style={{ color: "#f8fafc" }}>{b.drop}</span>
+                <span style={{ color: "#4b7e4b" }}>
+                  To: <span style={{ color: "#14532d" }}>{b.drop}</span>
                 </span>
                 {b.distanceKm && (
-                  <span style={{ color: "#94a3b8" }}>
+                  <span style={{ color: "#4b7e4b" }}>
                     Distance:{" "}
-                    <span style={{ color: "#f8fafc" }}>{b.distanceKm} km</span>
+                    <span style={{ color: "#14532d" }}>{b.distanceKm} km</span>
                   </span>
                 )}
                 {b.paymentMethod && (
-                  <span style={{ color: "#94a3b8" }}>
+                  <span style={{ color: "#4b7e4b" }}>
                     Payment:{" "}
-                    <span style={{ color: "#f8fafc" }}>{b.paymentMethod}</span>
+                    <span style={{ color: "#14532d" }}>{b.paymentMethod}</span>
                   </span>
                 )}
-                <span style={{ color: "#94a3b8" }}>
+                <span style={{ color: "#4b7e4b" }}>
                   Amount:{" "}
                   <span style={{ color: "#4ade80", fontWeight: 700 }}>
                     ₹{b.amount}

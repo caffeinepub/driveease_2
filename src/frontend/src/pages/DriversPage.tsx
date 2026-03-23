@@ -151,11 +151,19 @@ export default function DriversPage({ navigate }: DriversPageProps) {
   );
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "2rem 1.5rem" }}>
+    <div
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        padding: "2rem 1.5rem",
+        background: "#f8fff8",
+        minHeight: "100vh",
+      }}
+    >
       <div style={{ marginBottom: "2rem" }}>
         <h1
           style={{
-            color: "#f8fafc",
+            color: "#14532d",
             fontWeight: 800,
             fontSize: "2rem",
             marginBottom: "0.5rem",
@@ -163,7 +171,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
         >
           Find Your Driver
         </h1>
-        <p style={{ color: "#94a3b8" }}>Browse verified drivers across India</p>
+        <p style={{ color: "#4b7e4b" }}>Browse verified drivers across India</p>
       </div>
 
       {/* Filters */}
@@ -273,7 +281,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
               alignItems: "center",
               gap: "0.5rem",
               cursor: "pointer",
-              color: "#d1d5db",
+              color: "#374151",
               fontSize: "0.9rem",
             }}
           >
@@ -331,7 +339,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
         )}
       </div>
 
-      <p style={{ color: "#94a3b8", fontSize: "0.9rem", marginBottom: "1rem" }}>
+      <p style={{ color: "#4b7e4b", fontSize: "0.9rem", marginBottom: "1rem" }}>
         {filtered.length} drivers found
       </p>
 
@@ -406,7 +414,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                   >
                     <h3
                       style={{
-                        color: "#f8fafc",
+                        color: "#14532d",
                         fontWeight: 700,
                         fontSize: "1rem",
                       }}
@@ -427,7 +435,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                       {statusLabel}
                     </span>
                   </div>
-                  <p style={{ color: "#94a3b8", fontSize: "0.83rem" }}>
+                  <p style={{ color: "#4b7e4b", fontSize: "0.83rem" }}>
                     {d.city}, {d.state}
                   </p>
                   <div
@@ -443,7 +451,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                     </span>
                     <span
                       style={{
-                        color: "#f8fafc",
+                        color: "#14532d",
                         fontSize: "0.85rem",
                         fontWeight: 600,
                       }}
@@ -496,11 +504,11 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                   marginBottom: "0.75rem",
                 }}
               >
-                <span style={{ color: "#94a3b8" }}>
+                <span style={{ color: "#4b7e4b" }}>
                   ⏱ {d.experience} yrs exp
                 </span>
-                <span style={{ color: "#94a3b8" }}>🚗 {d.vehicleTypes[0]}</span>
-                <span style={{ color: "#94a3b8" }}>
+                <span style={{ color: "#4b7e4b" }}>🚗 {d.vehicleTypes[0]}</span>
+                <span style={{ color: "#4b7e4b" }}>
                   🗣 {d.languages.slice(0, 2).join(", ")}
                 </span>
                 <span style={{ color: "#4ade80", fontWeight: 700 }}>

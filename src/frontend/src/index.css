@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,38 +7,38 @@
 @layer base {
   :root {
     --radius: 0.625rem;
-    --background: 0.145 0 0;
-    --foreground: 0.985 0 0;
-    --card: 0.18 0 0;
-    --card-foreground: 0.985 0 0;
-    --popover: 0.2 0 0;
-    --popover-foreground: 0.985 0 0;
-    --primary: 0.527 0.154 150.069;
-    --primary-foreground: 0.985 0 0;
-    --secondary: 0.25 0 0;
-    --secondary-foreground: 0.985 0 0;
-    --muted: 0.25 0 0;
-    --muted-foreground: 0.65 0 0;
-    --accent: 0.527 0.154 150.069;
-    --accent-foreground: 0.985 0 0;
+    --background: 0.98 0.01 145;
+    --foreground: 0.18 0.05 145;
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.05 145;
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.05 145;
+    --primary: 0.55 0.15 145;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.96 0.03 145;
+    --secondary-foreground: 0.22 0.08 145;
+    --muted: 0.96 0.02 145;
+    --muted-foreground: 0.45 0.08 145;
+    --accent: 0.55 0.15 145;
+    --accent-foreground: 1 0 0;
     --destructive: 0.577 0.245 27.325;
-    --destructive-foreground: 0.985 0 0;
-    --border: 1 0 0 / 12%;
-    --input: 1 0 0 / 15%;
-    --ring: 0.527 0.154 150.069;
-    --chart-1: 0.527 0.154 150.069;
+    --destructive-foreground: 1 0 0;
+    --border: 0.85 0.06 145;
+    --input: 0.9 0.04 145;
+    --ring: 0.55 0.15 145;
+    --chart-1: 0.55 0.15 145;
     --chart-2: 0.6 0.118 184.704;
     --chart-3: 0.398 0.07 227.392;
     --chart-4: 0.828 0.189 84.429;
     --chart-5: 0.769 0.188 70.08;
-    --sidebar: 0.18 0 0;
-    --sidebar-foreground: 0.985 0 0;
-    --sidebar-primary: 0.527 0.154 150.069;
-    --sidebar-primary-foreground: 0.985 0 0;
-    --sidebar-accent: 0.25 0 0;
-    --sidebar-accent-foreground: 0.985 0 0;
-    --sidebar-border: 1 0 0 / 12%;
-    --sidebar-ring: 0.527 0.154 150.069;
+    --sidebar: 0.98 0.01 145;
+    --sidebar-foreground: 0.18 0.05 145;
+    --sidebar-primary: 0.55 0.15 145;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.94 0.04 145;
+    --sidebar-accent-foreground: 0.22 0.08 145;
+    --sidebar-border: 0.88 0.05 145;
+    --sidebar-ring: 0.55 0.15 145;
   }
 
   * {
@@ -46,13 +46,13 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #121212;
-    color: #f8fafc;
-    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background-color: #f8fff8;
+    color: #1a2e1a;
+    font-family: "Poppins", system-ui, -apple-system, sans-serif;
   }
 }
 
-/* ─── Orbitron heading utility ──────────────────────────────── */
+/* ─── Font utilities ──────────────────────────────────────── */
 .font-orbitron {
   font-family: "Orbitron", monospace;
 }
@@ -70,61 +70,67 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  font-family: "Poppins", sans-serif;
 }
 .green-btn:hover {
   background-color: #15803d;
 }
+
+/* Light theme card */
 .card-dark {
-  background-color: #1e1e1e;
-  border: 1px solid #2d2d2d;
+  background-color: #ffffff;
+  border: 1px solid #bbf7d0;
   border-radius: 0.75rem;
   padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.06);
 }
+
+/* Light theme input */
 .input-dark {
-  background-color: #2a2a2a;
-  border: 1px solid #3a3a3a;
-  color: #f8fafc;
+  background-color: #ffffff;
+  border: 1px solid #bbf7d0;
+  color: #1a2e1a;
   border-radius: 0.5rem;
   padding: 0.6rem 0.9rem;
   width: 100%;
   outline: none;
   font-size: 0.95rem;
+  font-family: "Poppins", sans-serif;
 }
 .input-dark:focus {
   border-color: #16a34a;
-  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.15);
 }
+
 .badge-green {
-  background: rgba(22, 163, 74, 0.15);
-  color: #4ade80;
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(22, 163, 74, 0.3);
+  border: 1px solid rgba(22, 163, 74, 0.25);
 }
-badge-red {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-}
+
 .section-heading {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #166534;
   text-align: center;
   margin-bottom: 0.5rem;
+  font-family: "Poppins", sans-serif;
 }
 .section-sub {
-  color: #94a3b8;
+  color: #4b7e4b;
   text-align: center;
   margin-bottom: 2.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 .live-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #4ade80;
+  background-color: #16a34a;
   display: inline-block;
   animation: pulse 1.5s infinite;
 }
@@ -155,62 +161,46 @@ badge-red {
 @keyframes driver-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+    box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
   }
 }
-
 .driver-dot-online {
   animation: driver-pulse 2s infinite;
 }
 
-/* ─── Orb float ─────────────────────────────────────────────── */
+/* ─── Soft orb float ─────────────────────────────────────────── */
 @keyframes orb-float {
   0%,
   100% {
     transform: translateY(0px) rotate(0deg) scale(1);
   }
   33% {
-    transform: translateY(-30px) rotate(120deg) scale(1.05);
+    transform: translateY(-20px) rotate(120deg) scale(1.04);
   }
   66% {
-    transform: translateY(15px) rotate(240deg) scale(0.97);
+    transform: translateY(10px) rotate(240deg) scale(0.97);
   }
 }
-
 .orb-animate {
   animation: orb-float 15s ease-in-out infinite;
 }
-
 .orb-animate-slow {
   animation: orb-float 22s ease-in-out infinite reverse;
-}
-
-/* ─── Glow pulse ─────────────────────────────────────────────── */
-@keyframes glow-pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    filter: blur(0px);
-  }
-  50% {
-    opacity: 1;
-    filter: blur(1px);
-  }
 }
 
 /* ─── Chatbot ring ───────────────────────────────────────────── */
 @keyframes chatbot-ring {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5), 0 4px 20px
-      rgba(22, 163, 74, 0.5);
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4), 0 4px 20px
+      rgba(22, 163, 74, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(74, 222, 128, 0), 0 4px 20px
-      rgba(22, 163, 74, 0.5);
+    box-shadow: 0 0 0 10px rgba(22, 163, 74, 0), 0 4px 20px
+      rgba(22, 163, 74, 0.3);
   }
 }
 
@@ -226,14 +216,13 @@ badge-red {
   }
 }
 
-/* ─── Orbitron gradient text ─────────────────────────────────── */
+/* ─── Brand gradient text ───────────────────────────────────── */
 .orbitron-gradient {
   font-family: "Orbitron", monospace;
-  background: linear-gradient(135deg, #4ade80 0%, #22d3ee 60%, #818cf8 100%);
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 60%, #22c55e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 24px rgba(74, 222, 128, 0.4));
 }
 
 /* ─── Hero responsive grid ───────────────────────────────────── */
@@ -241,4 +230,286 @@ badge-red {
   .hero-grid {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CAR & DRIVER ANIMATIONS
+══════════════════════════════════════════════════════════════ */
+
+/* Car driving across screen */
+@keyframes car-drive {
+  0% {
+    transform: translateX(-120px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 120px));
+    opacity: 0;
+  }
+}
+.car-drive {
+  animation: car-drive 8s linear infinite;
+}
+.car-drive-slow {
+  animation: car-drive 14s linear infinite;
+  animation-delay: 4s;
+}
+.car-drive-med {
+  animation: car-drive 11s linear infinite;
+  animation-delay: 2s;
+}
+
+/* Steering wheel gentle rocking */
+@keyframes steer-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.steer-spin {
+  animation: steer-spin 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Driver waving hand */
+@keyframes wave-hand {
+  0%,
+  100% {
+    transform: rotate(0deg);
+    transform-origin: bottom center;
+  }
+  25% {
+    transform: rotate(20deg);
+    transform-origin: bottom center;
+  }
+  75% {
+    transform: rotate(-10deg);
+    transform-origin: bottom center;
+  }
+}
+.wave-hand {
+  animation: wave-hand 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Road dashes moving */
+@keyframes road-dash {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.road-dash {
+  animation: road-dash 2s linear infinite;
+}
+
+/* Parked car gentle bob */
+@keyframes car-bob {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+.car-bob {
+  animation: car-bob 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Map pin bounce */
+@keyframes pin-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.pin-bounce {
+  animation: pin-bounce 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SPARKLE + BUBBLE BUTTONS
+══════════════════════════════════════════════════════════════ */
+
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(180deg);
+  }
+}
+
+@keyframes spark-a {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4) translateY(0px);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-3px);
+  }
+}
+@keyframes spark-b {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(45deg);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1) rotate(225deg);
+  }
+}
+@keyframes spark-c {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translateX(0px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1) translateX(2px);
+  }
+}
+
+@keyframes btn-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.btn-float {
+  animation: btn-float 3s ease-in-out infinite;
+}
+
+.sparkle-btn {
+  position: relative;
+  border-radius: 9999px;
+  overflow: visible;
+  padding: 0.75rem 1.8rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.02em;
+  font-family: "Poppins", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.sparkle-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(
+    ellipse at 30% 30%,
+    rgba(255, 255, 255, 0.35) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sparkle-btn::after {
+  content: "✦";
+  position: absolute;
+  top: -9px;
+  right: 10px;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.85);
+  animation: sparkle-twinkle 1.8s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sparkle-btn .spark {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.55rem;
+  pointer-events: none;
+  z-index: 2;
+  line-height: 1;
+}
+.sparkle-btn .spark:nth-child(1) {
+  top: 4px;
+  left: 14px;
+  animation: spark-a 2s ease-in-out infinite;
+  animation-delay: 0s;
+}
+.sparkle-btn .spark:nth-child(2) {
+  bottom: 5px;
+  right: 22px;
+  animation: spark-b 2s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+.sparkle-btn .spark:nth-child(3) {
+  top: 50%;
+  left: 30%;
+  transform: translateY(-50%);
+  animation: spark-c 2s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+.sparkle-btn:active {
+  transform: translateY(2px) scale(0.98) !important;
+}
+
+/* ── Green variant ── */
+.sparkle-btn-green {
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 60%, #4ade80 100%);
+  color: #fff;
+  box-shadow: 0 6px 28px rgba(22, 163, 74, 0.45), 0 3px 0 #0d5c28, inset 0 1px 0
+    rgba(255, 255, 255, 0.25);
+}
+.sparkle-btn-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(22, 163, 74, 0.55), 0 5px 0 #0d5c28, inset 0 1px
+    0 rgba(255, 255, 255, 0.3);
+}
+
+/* ── Teal/secondary variant (Driver Login) ── */
+.sparkle-btn-indigo {
+  background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 60%, #67e8f9 100%);
+  color: #fff;
+  box-shadow: 0 6px 28px rgba(14, 165, 233, 0.4), 0 3px 0 #075985, inset 0 1px 0
+    rgba(255, 255, 255, 0.25);
+  border: none;
+}
+.sparkle-btn-indigo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(14, 165, 233, 0.55), 0 5px 0 #075985, inset 0 1px
+    0 rgba(255, 255, 255, 0.3);
 }

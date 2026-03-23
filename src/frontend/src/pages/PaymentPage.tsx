@@ -4,7 +4,7 @@ export default function PaymentPage() {
       <div style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1
           style={{
-            color: "#f8fafc",
+            color: "#14532d",
             fontWeight: 800,
             fontSize: "2.25rem",
             marginBottom: "0.5rem",
@@ -12,7 +12,7 @@ export default function PaymentPage() {
         >
           💳 Payment Details
         </h1>
-        <p style={{ color: "#94a3b8" }}>
+        <p style={{ color: "#4b7e4b" }}>
           Pay securely via bank transfer or UPI
         </p>
       </div>
@@ -49,13 +49,13 @@ export default function PaymentPage() {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: "0.6rem 0",
-                borderBottom: "1px solid #2a2a2a",
+                borderBottom: "1px solid #dcfce7",
               }}
             >
               <span style={{ color: "#6b7280", fontSize: "0.9rem" }}>{k}</span>
               <span
                 style={{
-                  color: "#f8fafc",
+                  color: "#14532d",
                   fontWeight: 700,
                   fontSize: "0.9rem",
                   userSelect: "all",
@@ -170,7 +170,7 @@ export default function PaymentPage() {
           </div>
           <p
             style={{
-              color: "#94a3b8",
+              color: "#4b7e4b",
               fontSize: "0.88rem",
               textAlign: "center",
             }}
@@ -203,7 +203,7 @@ export default function PaymentPage() {
         </h4>
         <ul
           style={{
-            color: "#94a3b8",
+            color: "#4b7e4b",
             fontSize: "0.9rem",
             lineHeight: 1.9,
             paddingLeft: "1.25rem",
@@ -211,7 +211,7 @@ export default function PaymentPage() {
         >
           <li>
             For Driver Registration: Pay{" "}
-            <strong style={{ color: "#f8fafc" }}>₹150</strong> as registration
+            <strong style={{ color: "#14532d" }}>₹150</strong> as registration
             fee
           </li>
           <li>For Ride Booking: Pay as per price shown in your booking</li>

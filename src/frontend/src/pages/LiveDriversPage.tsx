@@ -135,7 +135,15 @@ export default function LiveDriversPage({ navigate }: Props) {
   };
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "2rem 1.5rem" }}>
+    <div
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        padding: "2rem 1.5rem",
+        background: "#f8fff8",
+        minHeight: "100vh",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -149,7 +157,7 @@ export default function LiveDriversPage({ navigate }: Props) {
         <div>
           <h1
             style={{
-              color: "#f8fafc",
+              color: "#14532d",
               fontWeight: 800,
               fontSize: "2rem",
               marginBottom: "0.25rem",
@@ -279,7 +287,7 @@ export default function LiveDriversPage({ navigate }: Props) {
               display: "flex",
               alignItems: "center",
               gap: "0.4rem",
-              color: "#94a3b8",
+              color: "#4b7e4b",
               fontSize: "0.85rem",
               cursor: "pointer",
             }}
@@ -309,8 +317,8 @@ export default function LiveDriversPage({ navigate }: Props) {
       {/* India Map Visualization */}
       <div
         style={{
-          background: "#1a1a1a",
-          border: "1px solid #2d2d2d",
+          background: "#ffffff",
+          border: "1px solid #bbf7d0",
           borderRadius: 16,
           padding: "1.5rem",
           marginBottom: "2rem",
@@ -319,7 +327,7 @@ export default function LiveDriversPage({ navigate }: Props) {
       >
         <h3
           style={{
-            color: "#94a3b8",
+            color: "#4b7e4b",
             fontSize: "0.85rem",
             marginBottom: "1rem",
           }}
@@ -423,7 +431,7 @@ export default function LiveDriversPage({ navigate }: Props) {
                 style={{ width: 44, height: 44, borderRadius: "50%" }}
               />
               <div>
-                <p style={{ color: "#f8fafc", fontWeight: 700 }}>
+                <p style={{ color: "#14532d", fontWeight: 700 }}>
                   {selected.name}
                 </p>
                 <p style={{ color: "#4ade80", fontSize: "0.85rem" }}>
@@ -464,7 +472,7 @@ export default function LiveDriversPage({ navigate }: Props) {
           style={{
             textAlign: "center",
             padding: "3rem",
-            background: "#1e1e1e",
+            background: "#ffffff",
             borderRadius: 16,
           }}
         >
@@ -526,21 +534,21 @@ export default function LiveDriversPage({ navigate }: Props) {
                 <div>
                   <p
                     style={{
-                      color: "#f8fafc",
+                      color: "#14532d",
                       fontWeight: 700,
                       fontSize: "0.95rem",
                     }}
                   >
                     {d.name}
                   </p>
-                  <p style={{ color: "#94a3b8", fontSize: "0.8rem" }}>
+                  <p style={{ color: "#4b7e4b", fontSize: "0.8rem" }}>
                     {d.city} • ⭐ {d.rating}
                   </p>
                 </div>
               </div>
               <p
                 style={{
-                  color: "#94a3b8",
+                  color: "#4b7e4b",
                   fontSize: "0.82rem",
                   marginBottom: "0.75rem",
                 }}

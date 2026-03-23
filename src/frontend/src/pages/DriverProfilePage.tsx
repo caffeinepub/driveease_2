@@ -36,7 +36,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         type="button"
         onClick={() => navigate("drivers")}
         style={{
-          color: "#94a3b8",
+          color: "#4b7e4b",
           background: "none",
           border: "none",
           cursor: "pointer",
@@ -82,7 +82,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
               <div>
                 <h1
                   style={{
-                    color: "#f8fafc",
+                    color: "#14532d",
                     fontWeight: 800,
                     fontSize: "1.5rem",
                     marginBottom: "0.25rem",
@@ -90,7 +90,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
                 >
                   {driver.name}
                 </h1>
-                <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
                   {driver.city}, {driver.state} • {driver.experience} years
                   experience
                 </p>
@@ -146,7 +146,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
               <span style={{ color: "#fbbf24", fontSize: "1.1rem" }}>★</span>
               <span
                 style={{
-                  color: "#f8fafc",
+                  color: "#14532d",
                   fontWeight: 700,
                   fontSize: "1.1rem",
                 }}
@@ -201,7 +201,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
             </div>
             <p
               style={{
-                color: "#94a3b8",
+                color: "#4b7e4b",
                 fontSize: "0.82rem",
                 marginBottom: "0.25rem",
               }}
@@ -226,7 +226,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         <div className="card-dark">
           <h4
             style={{
-              color: "#f8fafc",
+              color: "#14532d",
               fontWeight: 600,
               marginBottom: "0.75rem",
             }}
@@ -246,7 +246,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         <div className="card-dark">
           <h4
             style={{
-              color: "#f8fafc",
+              color: "#14532d",
               fontWeight: 600,
               marginBottom: "0.75rem",
             }}
@@ -262,7 +262,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
                 border: "1px solid #3a3a3a",
                 borderRadius: 6,
                 padding: "0.2rem 0.6rem",
-                color: "#d1d5db",
+                color: "#374151",
                 fontSize: "0.85rem",
                 margin: "0.2rem",
               }}
@@ -274,7 +274,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         <div className="card-dark">
           <h4
             style={{
-              color: "#f8fafc",
+              color: "#14532d",
               fontWeight: 600,
               marginBottom: "0.75rem",
             }}
@@ -304,7 +304,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         <div className="card-dark">
           <h4
             style={{
-              color: "#f8fafc",
+              color: "#14532d",
               fontWeight: 600,
               marginBottom: "0.75rem",
             }}
@@ -313,19 +313,19 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
           </h4>
           <p
             style={{
-              color: "#94a3b8",
+              color: "#4b7e4b",
               fontSize: "0.88rem",
               marginBottom: "0.35rem",
             }}
           >
             Total Trips:{" "}
-            <span style={{ color: "#f8fafc", fontWeight: 700 }}>
+            <span style={{ color: "#14532d", fontWeight: 700 }}>
               {driver.totalTrips}
             </span>
           </p>
           <p
             style={{
-              color: "#94a3b8",
+              color: "#4b7e4b",
               fontSize: "0.88rem",
               marginBottom: "0.35rem",
             }}
@@ -335,9 +335,9 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
               ₹{driver.totalEarnings.toLocaleString("en-IN")}
             </span>
           </p>
-          <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>
+          <p style={{ color: "#4b7e4b", fontSize: "0.88rem" }}>
             Pincode:{" "}
-            <span style={{ color: "#f8fafc", fontWeight: 700 }}>
+            <span style={{ color: "#14532d", fontWeight: 700 }}>
               {driver.pincode}
             </span>
           </p>
@@ -353,7 +353,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
       >
         <p
           style={{
-            color: "#d1d5db",
+            color: "#374151",
             fontStyle: "italic",
             marginBottom: "1rem",
           }}

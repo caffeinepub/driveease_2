@@ -218,7 +218,7 @@ export default function DriverLoginPage() {
           <div>
             <h1
               style={{
-                color: "#f8fafc",
+                color: "#14532d",
                 fontWeight: 800,
                 fontSize: "1.75rem",
                 marginBottom: "0.25rem",
@@ -226,7 +226,7 @@ export default function DriverLoginPage() {
             >
               Driver Portal
             </h1>
-            <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+            <p style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
               {driver?.name || session.phone} • {driver?.city}
             </p>
           </div>
@@ -348,7 +348,7 @@ export default function DriverLoginPage() {
             { l: "Rating", v: `⭐ ${driver?.rating || "--"}`, c: "#f8fafc" },
           ].map(({ l, v, c }) => (
             <div key={l} className="card-dark">
-              <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>{l}</p>
+              <p style={{ color: "#4b7e4b", fontSize: "0.82rem" }}>{l}</p>
               <p
                 style={{
                   color: c,
@@ -392,10 +392,10 @@ export default function DriverLoginPage() {
                   }}
                 >
                   <div>
-                    <p style={{ color: "#f8fafc", fontWeight: 700 }}>
+                    <p style={{ color: "#14532d", fontWeight: 700 }}>
                       {b.customerName}
                     </p>
-                    <p style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+                    <p style={{ color: "#4b7e4b", fontSize: "0.85rem" }}>
                       {b.pickup} → {b.drop}
                     </p>
                     <p style={{ color: "#4ade80", fontWeight: 700 }}>
@@ -469,7 +469,7 @@ export default function DriverLoginPage() {
                     >
                       <p
                         style={{
-                          color: "#94a3b8",
+                          color: "#4b7e4b",
                           fontSize: "0.8rem",
                           marginBottom: "0.5rem",
                         }}
@@ -485,7 +485,7 @@ export default function DriverLoginPage() {
                             border: "1px solid #3a3a3a",
                             borderRadius: 8,
                             padding: "0.5rem",
-                            color: "#f8fafc",
+                            color: "#14532d",
                             fontSize: "1.1rem",
                             letterSpacing: "0.3em",
                             textAlign: "center",
@@ -577,7 +577,7 @@ export default function DriverLoginPage() {
                     <div
                       style={{
                         marginBottom: "0.75rem",
-                        color: "#94a3b8",
+                        color: "#4b7e4b",
                         fontSize: "0.85rem",
                       }}
                     >
@@ -639,7 +639,7 @@ export default function DriverLoginPage() {
             {session.isOnline && (
               <p
                 style={{
-                  color: "#94a3b8",
+                  color: "#4b7e4b",
                   fontSize: "0.78rem",
                   marginTop: "0.4rem",
                 }}
@@ -675,17 +675,17 @@ export default function DriverLoginPage() {
               >
                 <p
                   style={{
-                    color: "#f8fafc",
+                    color: "#14532d",
                     fontWeight: 600,
                     marginBottom: "0.25rem",
                   }}
                 >
                   {b.customerName} • {b.customerPhone}
                 </p>
-                <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.88rem" }}>
                   {b.pickup} → {b.drop}
                 </p>
-                <p style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.85rem" }}>
                   {b.startDate} to {b.endDate} ({b.days} days) • ₹{b.amount}
                 </p>
                 <p
@@ -746,7 +746,7 @@ export default function DriverLoginPage() {
           <div className="card-dark" style={{ marginBottom: "1.5rem" }}>
             <h3
               style={{
-                color: "#f8fafc",
+                color: "#14532d",
                 fontWeight: 700,
                 marginBottom: "1rem",
               }}
@@ -766,14 +766,14 @@ export default function DriverLoginPage() {
               >
                 <p
                   style={{
-                    color: "#f8fafc",
+                    color: "#14532d",
                     fontWeight: 600,
                     fontSize: "0.9rem",
                   }}
                 >
                   {b.pickup} → {b.drop}
                 </p>
-                <p style={{ color: "#94a3b8", fontSize: "0.83rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.83rem" }}>
                   {b.customerName} • {b.startDate}
                 </p>
                 <p style={{ color: "#4b5563", fontSize: "0.78rem" }}>
@@ -790,7 +790,7 @@ export default function DriverLoginPage() {
                 >
                   <p
                     style={{
-                      color: "#94a3b8",
+                      color: "#4b7e4b",
                       fontSize: "0.8rem",
                       marginBottom: "0.5rem",
                     }}
@@ -805,7 +805,7 @@ export default function DriverLoginPage() {
                         border: "1px solid #3a3a3a",
                         borderRadius: 8,
                         padding: "0.5rem",
-                        color: "#f8fafc",
+                        color: "#14532d",
                         fontSize: "1.1rem",
                         letterSpacing: "0.3em",
                         textAlign: "center",
@@ -878,10 +878,10 @@ export default function DriverLoginPage() {
                   border: "1px solid rgba(167,139,250,0.2)",
                 }}
               >
-                <p style={{ color: "#f8fafc", fontWeight: 600 }}>
+                <p style={{ color: "#14532d", fontWeight: 600 }}>
                   {b.pickup} → {b.drop}
                 </p>
-                <p style={{ color: "#94a3b8", fontSize: "0.83rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.83rem" }}>
                   {b.customerName} • ₹{b.amount}
                 </p>
                 <p
@@ -893,7 +893,7 @@ export default function DriverLoginPage() {
                 >
                   ✅ Ride started - OTP verified
                 </p>
-                <p style={{ color: "#94a3b8", fontSize: "0.78rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.78rem" }}>
                   Your Earnings: ₹
                   {b.driverEarnings || Math.floor(b.amount * 0.85)} (after 15%
                   commission)
@@ -927,13 +927,13 @@ export default function DriverLoginPage() {
 
         <div className="card-dark">
           <h3
-            style={{ color: "#f8fafc", fontWeight: 700, marginBottom: "1rem" }}
+            style={{ color: "#14532d", fontWeight: 700, marginBottom: "1rem" }}
           >
             Withdrawal Request
           </h3>
           <p
             style={{
-              color: "#94a3b8",
+              color: "#4b7e4b",
               fontSize: "0.88rem",
               marginBottom: "1rem",
             }}
@@ -996,7 +996,7 @@ export default function DriverLoginPage() {
           </div>
           <h1
             style={{
-              color: "#f8fafc",
+              color: "#14532d",
               fontWeight: 800,
               fontSize: "1.5rem",
               marginBottom: "0.25rem",
@@ -1004,7 +1004,7 @@ export default function DriverLoginPage() {
           >
             Driver Portal
           </h1>
-          <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+          <p style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
             Login to access your dashboard
           </p>
         </div>
@@ -1013,7 +1013,7 @@ export default function DriverLoginPage() {
           <div className="card-dark">
             <p
               style={{
-                color: "#d1d5db",
+                color: "#374151",
                 fontSize: "0.85rem",
                 display: "block",
                 marginBottom: "0.4rem",
@@ -1048,7 +1048,7 @@ export default function DriverLoginPage() {
           <div className="card-dark">
             <p
               style={{
-                color: "#94a3b8",
+                color: "#4b7e4b",
                 fontSize: "0.85rem",
                 marginBottom: "1rem",
               }}

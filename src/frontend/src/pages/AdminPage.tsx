@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import LiveBadge from "../components/LiveBadge";
+import { MessagesTab } from "../components/MessagesTab";
 import type { Driver } from "../data/drivers";
 import { toIST } from "../utils/dateUtils";
 import {
@@ -269,6 +270,7 @@ export default function AdminPage() {
     ["live", "📍 Live GPS"],
     ["finance", "💰 Finance"],
     ["pricing", "⚙️ Pricing"],
+    ["messages", "✉️ Messages"],
   ];
 
   const stats = [
@@ -1831,6 +1833,7 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+      {tab === "messages" && <MessagesTab />}
     </div>
   );
 }

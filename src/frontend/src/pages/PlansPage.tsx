@@ -106,7 +106,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       <div style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1
           style={{
-            color: "#f8fafc",
+            color: "#14532d",
             fontWeight: 800,
             fontSize: "2.25rem",
             marginBottom: "0.5rem",
@@ -114,7 +114,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
         >
           Subscription Plans
         </h1>
-        <p style={{ color: "#94a3b8", fontSize: "1rem" }}>
+        <p style={{ color: "#4b7e4b", fontSize: "1rem" }}>
           What you see is what you pay. No surprise charges, ever.
         </p>
       </div>
@@ -167,7 +167,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
             >
               <h3
                 style={{
-                  color: "#f8fafc",
+                  color: "#14532d",
                   fontWeight: 800,
                   fontSize: "1.15rem",
                   marginBottom: "0.25rem",
@@ -205,7 +205,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
             </div>
             <p
               style={{
-                color: "#94a3b8",
+                color: "#4b7e4b",
                 fontSize: "0.88rem",
                 marginBottom: "1rem",
                 lineHeight: 1.6,
@@ -225,7 +225,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 <li
                   key={f}
                   style={{
-                    color: "#d1d5db",
+                    color: "#374151",
                     fontSize: "0.87rem",
                     padding: "0.2rem 0",
                     display: "flex",
@@ -290,8 +290,8 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
         >
           <div
             style={{
-              background: "#1a1a1a",
-              border: "1px solid #2d2d2d",
+              background: "#ffffff",
+              border: "1px solid #bbf7d0",
               borderRadius: 20,
               padding: "2rem",
               maxWidth: 420,
@@ -308,14 +308,14 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
               <div>
                 <h3
                   style={{
-                    color: "#f8fafc",
+                    color: "#14532d",
                     fontWeight: 800,
                     fontSize: "1.2rem",
                   }}
                 >
                   {activePlan?.name}
                 </h3>
-                <p style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.85rem" }}>
                   Submit enquiry to get started
                 </p>
               </div>
@@ -348,7 +348,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 >
                   Enquiry Submitted!
                 </h3>
-                <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>
+                <p style={{ color: "#4b7e4b", fontSize: "0.88rem" }}>
                   Plan enquiry submitted! We'll contact you within 24 hours.
                 </p>
                 <button
@@ -382,7 +382,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 <div>
                   <p
                     style={{
-                      color: "#d1d5db",
+                      color: "#374151",
                       fontSize: "0.85rem",
                       display: "block",
                       marginBottom: "0.35rem",
@@ -402,7 +402,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 <div>
                   <p
                     style={{
-                      color: "#d1d5db",
+                      color: "#374151",
                       fontSize: "0.85rem",
                       display: "block",
                       marginBottom: "0.35rem",
@@ -439,7 +439,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                   >
                     Selected Plan: {activePlan?.name}
                   </p>
-                  <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
+                  <p style={{ color: "#4b7e4b", fontSize: "0.82rem" }}>
                     {activePlan?.price}
                     {activePlan?.period ? `/${activePlan.period}` : ""}
                   </p>
@@ -475,7 +475,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       <div className="card-dark" style={{ maxWidth: 560, margin: "0 auto" }}>
         <h2
           style={{
-            color: "#f8fafc",
+            color: "#14532d",
             fontWeight: 700,
             fontSize: "1.2rem",
             marginBottom: "0.5rem",
@@ -485,7 +485,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
         </h2>
         <p
           style={{
-            color: "#94a3b8",
+            color: "#4b7e4b",
             fontSize: "0.88rem",
             marginBottom: "1rem",
           }}
