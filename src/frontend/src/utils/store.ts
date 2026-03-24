@@ -12,6 +12,8 @@ const KEYS = {
   currentDriver: "de_current_driver",
   savedAddresses: "de_saved_addresses",
   pricingConfig: "de_pricing_config",
+  callRecordings: "de_call_recordings",
+  callbackRequests: "de_callback_requests",
 };
 
 function get<T>(key: string, fallback: T): T {
@@ -368,6 +370,117 @@ export function addWalletTransaction(
   set(`de_wallet_${phone}`, w);
 }
 
+// ---- Comments ----
+export function getComment(recordId: string): string {
+  return localStorage.getItem(`de_comment_${recordId}`) || "";
+}
+export function saveComment(recordId: string, comment: string): void {
+  localStorage.setItem(`de_comment_${recordId}`, comment);
+}
+
+// ---- Call Recordings ----
+export interface CallRecording {
+  id: string;
+  staffName: string;
+  customerName: string;
+  customerPhone: string;
+  recordedAt: string;
+  durationSecs: number;
+  notes: string;
+}
+export function getCallRecordings(): CallRecording[] {
+  return get<CallRecording[]>(KEYS.callRecordings, []);
+}
+export function saveCallRecording(r: CallRecording): void {
+  const arr = getCallRecordings();
+  arr.unshift(r);
+  set(KEYS.callRecordings, arr);
+}
+export function clearCallRecordings(): void {
+  set(KEYS.callRecordings, []);
+}
+
+// ---- Callback Requests ----
+export interface CallbackRequest {
+  id: string;
+  customerName: string;
+  customerPhone: string;
+  requestedAt: string;
+  status: "pending" | "done";
+  note: string;
+}
+export function getCallbackRequests(): CallbackRequest[] {
+  return get<CallbackRequest[]>(KEYS.callbackRequests, []);
+}
+export function saveCallbackRequest(r: CallbackRequest): void {
+  const arr = getCallbackRequests();
+  arr.unshift(r);
+  set(KEYS.callbackRequests, arr);
+}
+export function updateCallbackRequest(
+  id: string,
+  patch: Partial<CallbackRequest>,
+): void {
+  set(
+    KEYS.callbackRequests,
+    getCallbackRequests().map((r) => (r.id === id ? { ...r, ...patch } : r)),
+  );
+}
+
 export function uid(): string {
   return Math.random().toString(36).slice(2, 10).toUpperCase();
+}
+
+// ---- Comment History (timestamped) ----
+export interface CommentEntry {
+  id: string;
+  recordId: string;
+  staffName: string;
+  text: string;
+  createdAt: string;
+}
+export function getCommentHistory(recordId: string): CommentEntry[] {
+  try {
+    return JSON.parse(
+      localStorage.getItem(`de_comment_hist_${recordId}`) || "[]",
+    );
+  } catch {
+    return [];
+  }
+}
+export function addCommentEntry(
+  recordId: string,
+  staffName: string,
+  text: string,
+): void {
+  const arr = getCommentHistory(recordId);
+  arr.unshift({
+    id: uid(),
+    recordId,
+    staffName,
+    text,
+    createdAt: new Date().toISOString(),
+  });
+  localStorage.setItem(`de_comment_hist_${recordId}`, JSON.stringify(arr));
+}
+
+// ---- Customer Notes ----
+export interface CustomerNote {
+  id: string;
+  phone: string;
+  staffName: string;
+  tag: string;
+  notes: string;
+  updatedAt: string;
+}
+export function getCustomerNote(phone: string): CustomerNote | null {
+  try {
+    const v = localStorage.getItem(`de_cust_note_${phone}`);
+    return v ? JSON.parse(v) : null;
+  } catch {
+    return null;
+  }
+}
+export function saveCustomerNote(n: CustomerNote): void {
+  localStorage.setItem(`de_cust_note_${n.phone}`, JSON.stringify(n));
 }

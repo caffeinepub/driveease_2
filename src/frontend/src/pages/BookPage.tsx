@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import "leaflet/dist/leaflet.css";
+import * as L from "leaflet";
+import { useEffect, useRef, useState } from "react";
 import MapCanvas from "../components/MapCanvas";
 import OTPModal from "../components/OTPModal";
 import type { Driver } from "../data/drivers";
@@ -45,6 +47,74 @@ export default function BookPage({ navigate, driverId }: Props) {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [error, setError] = useState("");
   const [searching, setSearching] = useState(false);
+
+  const [mapModal, setMapModal] = useState<"pickup" | "drop" | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
+  const markerRef = useRef<L.Marker | null>(null);
+  const [pendingCoords, setPendingCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+
+  useEffect(() => {
+    // Fix leaflet default icon
+    (L.Icon.Default.prototype as any)._getIconUrl = undefined;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+      iconUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+      shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!mapModal || !mapContainerRef.current) return;
+    // Small delay to ensure modal is rendered
+    const timer = setTimeout(() => {
+      if (!mapContainerRef.current) return;
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+      const map = L.map(mapContainerRef.current).setView([20.5937, 78.9629], 5);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+      mapInstanceRef.current = map;
+      map.on("click", (e: L.LeafletMouseEvent) => {
+        const { lat, lng } = e.latlng;
+        setPendingCoords({ lat, lng });
+        if (markerRef.current) markerRef.current.remove();
+        markerRef.current = L.marker([lat, lng], { draggable: true }).addTo(
+          map,
+        );
+        markerRef.current.on("dragend", (de: L.LeafletEvent) => {
+          const pos = (de.target as L.Marker).getLatLng();
+          setPendingCoords({ lat: pos.lat, lng: pos.lng });
+        });
+      });
+    }, 100);
+    return () => {
+      clearTimeout(timer);
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+      markerRef.current = null;
+    };
+  }, [mapModal]);
+
+  const confirmLocation = () => {
+    if (!pendingCoords) return;
+    const label = `Lat: ${pendingCoords.lat.toFixed(4)}, Lng: ${pendingCoords.lng.toFixed(4)}`;
+    if (mapModal === "pickup") setPickup(label);
+    else if (mapModal === "drop") setDrop(label);
+    setMapModal(null);
+    setPendingCoords(null);
+  };
 
   useEffect(() => {
     if (driverId) {
@@ -551,6 +621,29 @@ export default function BookPage({ navigate, driverId }: Props) {
                   value={pickup}
                   onChange={(e) => setPickup(e.target.value)}
                 />
+                <button
+                  data-ocid="book.primary_button"
+                  type="button"
+                  onClick={() => {
+                    setMapModal("pickup");
+                    setPendingCoords(null);
+                  }}
+                  style={{
+                    marginTop: "0.4rem",
+                    background: "rgba(59,130,246,0.1)",
+                    border: "1px solid rgba(59,130,246,0.3)",
+                    color: "#60a5fa",
+                    borderRadius: 7,
+                    padding: "0.35rem 0.75rem",
+                    cursor: "pointer",
+                    fontSize: "0.8rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.35rem",
+                  }}
+                >
+                  📍 Select on Map
+                </button>
                 <label
                   style={{
                     display: "flex",
@@ -603,6 +696,29 @@ export default function BookPage({ navigate, driverId }: Props) {
                   value={drop}
                   onChange={(e) => setDrop(e.target.value)}
                 />
+                <button
+                  data-ocid="book.primary_button"
+                  type="button"
+                  onClick={() => {
+                    setMapModal("drop");
+                    setPendingCoords(null);
+                  }}
+                  style={{
+                    marginTop: "0.4rem",
+                    background: "rgba(59,130,246,0.1)",
+                    border: "1px solid rgba(59,130,246,0.3)",
+                    color: "#60a5fa",
+                    borderRadius: 7,
+                    padding: "0.35rem 0.75rem",
+                    cursor: "pointer",
+                    fontSize: "0.8rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.35rem",
+                  }}
+                >
+                  📍 Select on Map
+                </button>
                 <label
                   style={{
                     display: "flex",
@@ -1093,6 +1209,109 @@ export default function BookPage({ navigate, driverId }: Props) {
             </button>
           </div>
         </>
+      )}
+      {/* Map Modal */}
+      {mapModal && (
+        <div
+          data-ocid="book.modal"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.85)",
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              background: "#1e293b",
+              padding: "1rem 1.5rem",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid #334155",
+            }}
+          >
+            <h3 style={{ color: "#e2e8f0", fontWeight: 700, margin: 0 }}>
+              📍{" "}
+              {mapModal === "pickup"
+                ? "Select Pickup Location"
+                : "Select Drop Location"}
+            </h3>
+            <div style={{ display: "flex", gap: "0.6rem" }}>
+              {pendingCoords && (
+                <button
+                  data-ocid="book.confirm_button"
+                  type="button"
+                  onClick={confirmLocation}
+                  style={{
+                    background: "#16a34a",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "0.5rem 1.1rem",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    fontSize: "0.88rem",
+                  }}
+                >
+                  ✓ Confirm Location
+                </button>
+              )}
+              <button
+                data-ocid="book.cancel_button"
+                type="button"
+                onClick={() => {
+                  setMapModal(null);
+                  setPendingCoords(null);
+                }}
+                style={{
+                  background: "transparent",
+                  color: "#94a3b8",
+                  border: "1px solid #334155",
+                  borderRadius: 8,
+                  padding: "0.5rem 1rem",
+                  cursor: "pointer",
+                  fontSize: "0.88rem",
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+          {pendingCoords && (
+            <div
+              style={{
+                background: "#0f172a",
+                padding: "0.5rem 1.5rem",
+                borderBottom: "1px solid #1e293b",
+              }}
+            >
+              <span style={{ color: "#22c55e", fontSize: "0.85rem" }}>
+                📌 Selected: Lat {pendingCoords.lat.toFixed(4)}, Lng{" "}
+                {pendingCoords.lng.toFixed(4)}
+              </span>
+            </div>
+          )}
+          <div style={{ flex: 1, position: "relative" }}>
+            <div
+              ref={mapContainerRef}
+              style={{ width: "100%", height: "100%", minHeight: 400 }}
+            />
+          </div>
+          <div
+            style={{
+              background: "#0f172a",
+              padding: "0.5rem 1.5rem",
+              textAlign: "center",
+            }}
+          >
+            <span style={{ color: "#64748b", fontSize: "0.8rem" }}>
+              Click anywhere on the map to drop a pin
+            </span>
+          </div>
+        </div>
       )}
     </div>
   );

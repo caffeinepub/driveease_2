@@ -163,14 +163,12 @@ export default function Footer({ navigate }: FooterProps) {
               support@driveease.in
             </a>
             <a
-              href="https://wa.me/917836887228"
-              target="_blank"
-              rel="noreferrer"
+              href="tel:+917836887228"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                background: "#25d366",
+                background: "#2563eb",
                 color: "white",
                 padding: "0.4rem 0.8rem",
                 borderRadius: 6,
@@ -180,7 +178,7 @@ export default function Footer({ navigate }: FooterProps) {
                 fontWeight: 500,
               }}
             >
-              💬 WhatsApp
+              🎧 Live Support
             </a>
           </div>
           <div>
@@ -264,14 +262,12 @@ export default function Footer({ navigate }: FooterProps) {
       </div>
       {/* WhatsApp float */}
       <a
-        href="https://wa.me/917836887228"
-        target="_blank"
-        rel="noreferrer"
+        href="tel:+917836887228"
         style={{
           position: "fixed",
           bottom: "1.5rem",
           right: "1.5rem",
-          background: "#25d366",
+          background: "#2563eb",
           color: "white",
           width: 52,
           height: 52,
@@ -280,7 +276,7 @@ export default function Footer({ navigate }: FooterProps) {
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.6rem",
-          boxShadow: "0 4px 20px rgba(37,211,102,0.4)",
+          boxShadow: "0 4px 20px rgba(37,99,235,0.4)",
           zIndex: 999,
           textDecoration: "none",
           transition: "transform 0.2s",
@@ -292,7 +288,7 @@ export default function Footer({ navigate }: FooterProps) {
           e.currentTarget.style.transform = "scale(1)";
         }}
       >
-        💬
+        🎧
       </a>
     </footer>
   );

@@ -3,11 +3,14 @@ import OTPModal from "../components/OTPModal";
 import { toIST } from "../utils/dateUtils";
 import {
   type Booking,
+  type CallbackRequest,
   type WalletTransaction,
   addWalletTransaction,
   getBookings,
   getCurrentCustomer,
   getWallet,
+  saveCallbackRequest,
+  uid,
   updateBooking,
 } from "../utils/store";
 
@@ -198,6 +201,9 @@ export default function MyBookingsPage({ navigate }: Props) {
   );
   const [showAddMoney, setShowAddMoney] = useState(false);
   const [addAmount, setAddAmount] = useState("500");
+  const [callbackModal, setCallbackModal] = useState<string | null>(null); // bookingId
+  const [callbackNote, setCallbackNote] = useState("");
+  const [callbackSuccess, setCallbackSuccess] = useState<string | null>(null);
 
   const load = useCallback(() => {
     const c = getCurrentCustomer();
@@ -646,8 +652,131 @@ export default function MyBookingsPage({ navigate }: Props) {
                   ✅ Complete & Pay
                 </button>
               )}
+              {/* Callback request */}
+              <button
+                type="button"
+                data-ocid="booking.secondary_button"
+                onClick={() => {
+                  setCallbackModal(b.id);
+                  setCallbackNote("");
+                  setCallbackSuccess(null);
+                }}
+                style={{
+                  background: "rgba(251,191,36,0.12)",
+                  border: "1px solid rgba(251,191,36,0.35)",
+                  color: "#fbbf24",
+                  borderRadius: 8,
+                  padding: "0.45rem 1rem",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  fontSize: "0.82rem",
+                  marginTop: "0.4rem",
+                  marginLeft: "0.4rem",
+                }}
+              >
+                📞 Request Callback
+              </button>
+              {callbackSuccess === b.id && (
+                <p
+                  data-ocid="booking.success_state"
+                  style={{
+                    color: "#4ade80",
+                    fontSize: "0.82rem",
+                    marginTop: "0.4rem",
+                  }}
+                >
+                  ✅ We'll call you back soon!
+                </p>
+              )}
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Callback Modal */}
+      {callbackModal && (
+        <div
+          data-ocid="callback.modal"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 50,
+            padding: "1rem",
+          }}
+        >
+          <div className="card-dark" style={{ width: "100%", maxWidth: 420 }}>
+            <h3
+              style={{
+                color: "#14532d",
+                fontWeight: 700,
+                marginBottom: "1rem",
+              }}
+            >
+              📞 Request Callback
+            </h3>
+            <p
+              style={{
+                color: "#4b7e4b",
+                fontSize: "0.88rem",
+                marginBottom: "1rem",
+              }}
+            >
+              Tell us your preferred time or any note for the call:
+            </p>
+            <textarea
+              className="input-dark"
+              rows={3}
+              placeholder="e.g. Please call after 5 PM, I have a question about my booking..."
+              value={callbackNote}
+              onChange={(e) => setCallbackNote(e.target.value)}
+              style={{ marginBottom: "1rem", resize: "vertical" }}
+            />
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <button
+                type="button"
+                data-ocid="callback.cancel_button"
+                onClick={() => setCallbackModal(null)}
+                style={{
+                  flex: 1,
+                  background: "none",
+                  border: "1px solid #2a2a2a",
+                  color: "#4b7e4b",
+                  borderRadius: 8,
+                  padding: "0.65rem",
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                data-ocid="callback.confirm_button"
+                onClick={() => {
+                  if (!customer) return;
+                  const req: CallbackRequest = {
+                    id: uid(),
+                    customerName: customer.name,
+                    customerPhone: customer.phone,
+                    requestedAt: new Date().toISOString(),
+                    status: "pending",
+                    note: callbackNote,
+                  };
+                  saveCallbackRequest(req);
+                  setCallbackSuccess(callbackModal);
+                  setCallbackModal(null);
+                }}
+                className="green-btn"
+                style={{ flex: 2, justifyContent: "center" }}
+              >
+                Request Callback
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

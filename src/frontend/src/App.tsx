@@ -16,6 +16,7 @@ import LiveDriversPage from "./pages/LiveDriversPage";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import PaymentPage from "./pages/PaymentPage";
 import PlansPage from "./pages/PlansPage";
+import StaffCRMPage from "./pages/StaffCRMPage";
 import { initStore } from "./utils/store";
 
 initStore();
@@ -46,7 +47,7 @@ export default function App() {
     window.scrollTo(0, 0);
   };
 
-  const noShellPages = ["admin", "driver-login"];
+  const noShellPages = ["admin", "driver-login", "staff-crm"];
   const showShell = !noShellPages.includes(path);
 
   const params = new URLSearchParams(search);
@@ -78,6 +79,8 @@ export default function App() {
     content = <PaymentPage />;
   } else if (cleanPath === "live") {
     content = <LiveDriversPage navigate={navigate} />;
+  } else if (cleanPath === "staff-crm") {
+    content = <StaffCRMPage />;
   } else if (cleanPath === "admin") {
     content = <AdminPage />;
   } else if (cleanPath === "login") {
@@ -156,22 +159,30 @@ export default function App() {
               zIndex: 998,
             }}
           >
-            <button
-              type="button"
-              onClick={() => navigate("driver-login")}
+            <div
               style={{
-                background: "rgba(22,163,74,0.08)",
-                border: "1px solid rgba(22,163,74,0.2)",
-                color: "#4ade80",
-                borderRadius: 8,
-                padding: "0.35rem 0.75rem",
-                cursor: "pointer",
-                fontSize: "0.78rem",
-                opacity: 0.7,
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.4rem",
               }}
             >
-              Driver Portal
-            </button>
+              <button
+                type="button"
+                onClick={() => navigate("driver-login")}
+                style={{
+                  background: "rgba(22,163,74,0.08)",
+                  border: "1px solid rgba(22,163,74,0.2)",
+                  color: "#4ade80",
+                  borderRadius: 8,
+                  padding: "0.35rem 0.75rem",
+                  cursor: "pointer",
+                  fontSize: "0.78rem",
+                  opacity: 0.7,
+                }}
+              >
+                Driver Portal
+              </button>
+            </div>
           </div>
           {/* AI ChatBot */}
           <ChatBot />
