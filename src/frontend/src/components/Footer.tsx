@@ -56,7 +56,7 @@ export default function Footer({ navigate }: FooterProps) {
               </span>
             </div>
             <p
-              style={{ color: "#64748b", fontSize: "0.88rem", lineHeight: 1.6 }}
+              style={{ color: "#94a3b8", fontSize: "0.88rem", lineHeight: 1.6 }}
             >
               India's First Personal Driver Network. Trusted by families across
               India.
@@ -242,10 +242,10 @@ export default function Footer({ navigate }: FooterProps) {
             gap: "0.5rem",
           }}
         >
-          <p style={{ color: "#64748b", fontSize: "0.82rem" }}>
+          <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
             © {year} DriveEase. All rights reserved.
           </p>
-          <p style={{ color: "#64748b", fontSize: "0.82rem" }}>
+          <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
             © {year}. Built with ❤️ using{" "}
             <a
               href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}

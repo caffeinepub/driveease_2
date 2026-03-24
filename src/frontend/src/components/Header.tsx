@@ -332,7 +332,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   window.location.reload();
                 }}
                 style={{
-                  color: "#64748b",
+                  color: "#94a3b8",
                   background: "none",
                   border: "1px solid #d1d5db",
                   borderRadius: 6,

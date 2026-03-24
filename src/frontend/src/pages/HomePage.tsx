@@ -248,56 +248,66 @@ export default function HomePage({ navigate }: HomePageProps) {
       <section
         className="relative overflow-hidden"
         style={{
-          minHeight: "92vh",
-          background: "linear-gradient(160deg,#0f1a2e 0%,#e0f2fe 100%)",
+          minHeight: "100vh",
+          backgroundImage: `url('/assets/uploads/blackened_avenger_cruiser_at_dusk-019d1e2b-918f-7687-a427-1756df992065-1.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
+        {/* Dark overlay */}
         <div
-          className="float-blob absolute rounded-full pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            width: 480,
-            height: 480,
-            background: "radial-gradient(circle,#86efac,#6ee7b7)",
-            opacity: 0.18,
-            top: -120,
-            right: -120,
+            background: "rgba(0,0,0,0.58)",
+            zIndex: 1,
           }}
         />
+        {/* Subtle gradient overlay for better text readability at bottom */}
         <div
-          className="float-blob absolute rounded-full pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            width: 300,
-            height: 300,
-            background: "radial-gradient(circle,#bfdbfe,#93c5fd)",
-            opacity: 0.15,
-            bottom: 30,
-            left: -80,
-            animationDelay: "3s",
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,10,5,0.65) 100%)",
+            zIndex: 2,
           }}
         />
+
         <div
-          className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-16 flex flex-col lg:flex-row items-center gap-10"
-          style={{ minHeight: "92vh" }}
+          className="relative flex flex-col lg:flex-row items-center gap-10 max-w-7xl mx-auto px-4 pt-10 pb-16"
+          style={{ minHeight: "100vh", zIndex: 3 }}
         >
           <div className="flex-1 flex flex-col items-start gap-5">
             <div
               data-ocid="hero.live_badge"
-              className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-green-200 rounded-full px-4 py-2 shadow-sm"
+              className="flex items-center gap-2 backdrop-blur-sm border border-green-400/40 rounded-full px-4 py-2"
+              style={{ background: "rgba(0,0,0,0.45)" }}
             >
-              <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-green-500" />
-              <span className="text-green-700 font-semibold text-sm">
+              <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-green-400" />
+              <span className="text-green-300 font-semibold text-sm">
                 {driverCount} drivers nearby right now
               </span>
             </div>
             <h1
-              className="font-bold text-gray-900"
-              style={{ fontSize: "clamp(1.8rem,5vw,3rem)", lineHeight: 1.18 }}
+              className="font-bold text-white"
+              style={{
+                fontSize: "clamp(2rem,5.5vw,3.4rem)",
+                lineHeight: 1.15,
+                textShadow: "0 2px 24px rgba(0,0,0,0.7)",
+              }}
             >
               Book Verified Drivers
               <br />
-              <span style={{ color: "#00e676" }}>Near You</span>
+              <span
+                style={{ color: "#00e676", textShadow: "0 0 32px #00e67688" }}
+              >
+                Near You
+              </span>
             </h1>
-            <p className="text-gray-600 text-base max-w-md">
+            <p
+              className="text-gray-200 text-base max-w-md"
+              style={{ textShadow: "0 1px 8px rgba(0,0,0,0.7)" }}
+            >
               Safe, reliable rides with OTP verification and real drivers.
               Trusted by 1000+ families across India.
             </p>
@@ -309,7 +319,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 className="flex items-center gap-2 font-semibold px-7 py-3.5 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
                 style={{
                   background: "linear-gradient(135deg,#16a34a,#15803d)",
-                  boxShadow: "0 4px 24px #16a34a55",
+                  boxShadow: "0 4px 24px #16a34a77",
                 }}
               >
                 <MapPin size={18} /> Find Drivers
@@ -319,21 +329,25 @@ export default function HomePage({ navigate }: HomePageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-ocid="hero.whatsapp_button"
-                className="flex items-center gap-2 font-semibold px-7 py-3.5 rounded-full bg-white border-2 border-green-500 text-green-700 shadow transition-all hover:bg-green-50 hover:scale-105 active:scale-95"
+                className="flex items-center gap-2 font-semibold px-7 py-3.5 rounded-full border-2 border-green-400 text-green-300 backdrop-blur-sm shadow transition-all hover:bg-green-900/30 hover:scale-105 active:scale-95"
+                style={{ background: "rgba(0,0,0,0.35)" }}
               >
                 <svg
                   aria-label="WhatsApp"
                   role="img"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="w-5 h-5 text-green-600"
+                  className="w-5 h-5 text-green-400"
                 >
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
                 Book via WhatsApp
               </a>
             </div>
-            <p className="text-gray-400 text-xs">
+            <p
+              className="text-gray-300 text-xs"
+              style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}
+            >
               Takes less than 30 seconds · No hidden charges
             </p>
             <div className="flex flex-wrap gap-2">
@@ -344,7 +358,8 @@ export default function HomePage({ navigate }: HomePageProps) {
               ].map((b) => (
                 <span
                   key={b}
-                  className="bg-white border border-green-200 text-green-800 text-xs font-medium px-3 py-1.5 rounded-full shadow-sm"
+                  className="backdrop-blur-sm border border-green-400/30 text-green-200 text-xs font-medium px-3 py-1.5 rounded-full"
+                  style={{ background: "rgba(0,0,0,0.4)" }}
                 >
                   {b}
                 </span>
@@ -386,14 +401,14 @@ export default function HomePage({ navigate }: HomePageProps) {
                 key={b.label}
                 className="flex items-center gap-4 bg-white rounded-2xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-shadow"
               >
-                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-gray-50">
+                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-slate-800">
                   {b.icon}
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">
                     {b.label}
                   </div>
-                  <div className="text-gray-500 text-xs mt-0.5">{b.sub}</div>
+                  <div className="text-slate-400 text-xs mt-0.5">{b.sub}</div>
                 </div>
               </div>
             ))}
@@ -411,7 +426,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <h2 className="text-2xl font-bold text-gray-900 mb-1">
             How It Works
           </h2>
-          <p className="text-gray-500 text-sm mb-10">
+          <p className="text-slate-400 text-sm mb-10">
             Get a verified driver in 3 simple steps
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -446,7 +461,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 <h3 className="font-semibold text-gray-900 mb-1.5">
                   {s.title}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
+                <p className="text-slate-400 text-sm leading-relaxed">
                   {s.desc}
                 </p>
               </div>
@@ -467,7 +482,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             <h2 className="text-2xl font-bold text-gray-900 mb-1">
               Verified Drivers Near You
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-slate-400 text-sm">
               All drivers are police-verified and rated by real customers
             </p>
           </div>
@@ -498,7 +513,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             <h2 className="text-2xl font-bold text-gray-900 mb-1">
               What Families Say
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-slate-400 text-sm">
               Real stories from real customers across India
             </p>
           </div>
@@ -515,7 +530,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                   <Star size={14} fill="#f59e0b" color="#f59e0b" />
                   <Star size={14} fill="#f59e0b" color="#f59e0b" />
                 </div>
-                <p className="text-gray-700 text-sm leading-relaxed mb-4 italic">
+                <p className="text-slate-200 text-sm leading-relaxed mb-4 italic">
                   &ldquo;{r.quote}&rdquo;
                 </p>
                 <div className="flex items-center gap-3">
@@ -526,7 +541,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                       .join("")}
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-800 text-sm">
+                    <div className="font-semibold text-slate-100 text-sm">
                       {r.name}
                     </div>
                     <div className="text-gray-400 text-xs">{r.city}</div>
@@ -549,7 +564,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             <h2 className="text-2xl font-bold text-gray-900 mb-1">
               Why DriveEase is Different
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-slate-400 text-sm">
               Built around trust, not just transactions
             </p>
           </div>
@@ -557,7 +572,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-6 border border-red-100 hover:shadow-lg hover:-translate-y-1 transition-all">
               <Heart size={32} className="text-red-500 mb-3" fill="#ef4444" />
               <h3 className="font-bold text-gray-900 mb-2">Favourite Driver</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 Save and rebook the same trusted driver every time. Build a
                 long-term relationship.
               </p>
@@ -567,7 +582,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               <h3 className="font-bold text-gray-900 mb-2">
                 Driver for Parents
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 Safe rides for your loved ones. We vet every driver personally.
                 Your family deserves the best.
               </p>
@@ -577,7 +592,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               <h3 className="font-bold text-gray-900 mb-2">
                 Subscription Plans
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed mb-3">
+              <p className="text-slate-300 text-sm leading-relaxed mb-3">
                 Monthly driver from ₹8,000/mo. Fixed driver, no daily hassle.
                 Best value for daily commuters.
               </p>
@@ -624,7 +639,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Ready to Book Your First Ride?
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-slate-300 mb-6">
             Join thousands of families who trust DriveEase for safe, verified
             rides.
           </p>
@@ -656,7 +671,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <h2 className="text-xl font-bold text-gray-900 mb-1">
             Available In Your City
           </h2>
-          <p className="text-gray-500 text-sm mb-6">
+          <p className="text-slate-400 text-sm mb-6">
             Expanding across India, one city at a time
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -694,7 +709,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             <h2 className="text-xl font-bold text-gray-900 mb-1">
               Meet Our Drivers
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-slate-400 text-sm">
               Verified professionals ready to serve you
             </p>
           </div>
@@ -739,7 +754,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                   />
                 </div>
                 <div className="text-center">
-                  <div className="font-semibold text-gray-800 text-xs">
+                  <div className="font-semibold text-slate-100 text-xs">
                     {d.name}
                   </div>
                   <div className="text-gray-400 text-xs">{d.city}</div>
@@ -765,7 +780,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Our Investors &amp; Partners
           </h2>
-          <p className="text-gray-500 text-sm mb-10 max-w-md mx-auto">
+          <p className="text-slate-400 text-sm mb-10 max-w-md mx-auto">
             Leading companies and visionary investors who believe in making
             India's roads safer, one family at a time.
           </p>
@@ -875,7 +890,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           textAlign: "center",
         }}
       >
-        <p className="text-gray-500 text-xs">
+        <p className="text-slate-400 text-xs">
           © {new Date().getFullYear()} DriveEase. Built with ❤️ using{" "}
           <a
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
@@ -918,10 +933,11 @@ export default function HomePage({ navigate }: HomePageProps) {
 function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
   return (
     <div
-      className="relative rounded-3xl overflow-hidden shadow-2xl border border-green-100"
+      className="relative rounded-3xl overflow-hidden shadow-2xl"
       style={{
-        background:
-          "linear-gradient(135deg,#0f1a2e 0%,#1a2e1a20 60%,#d1fae5 100%)",
+        background: "rgba(13,20,32,0.75)",
+        backdropFilter: "blur(16px)",
+        border: "1px solid rgba(0,230,118,0.2)",
         minHeight: 400,
         display: "flex",
         flexDirection: "column",
@@ -929,34 +945,9 @@ function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
         justifyContent: "center",
         padding: "2.5rem 2rem",
         gap: "1.5rem",
+        boxShadow: "0 8px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,230,118,0.1)",
       }}
     >
-      {/* Decorative blobs */}
-      <div
-        className="absolute"
-        style={{
-          width: 200,
-          height: 200,
-          borderRadius: "50%",
-          background: "radial-gradient(circle,#bbf7d0,#86efac)",
-          opacity: 0.25,
-          top: -60,
-          right: -60,
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          width: 140,
-          height: 140,
-          borderRadius: "50%",
-          background: "radial-gradient(circle,#bfdbfe,#93c5fd)",
-          opacity: 0.2,
-          bottom: -40,
-          left: -40,
-        }}
-      />
-
       {/* Logo mark */}
       <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
         <div
@@ -975,7 +966,7 @@ function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 8px 36px rgba(0,230,118,0.4)",
+              boxShadow: "0 8px 36px rgba(0,230,118,0.5)",
             }}
           >
             <svg
@@ -1038,7 +1029,7 @@ function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
             fontWeight: 900,
             fontSize: "2.6rem",
             letterSpacing: "0.04em",
-            background: "linear-gradient(135deg,#15803d,#0d9488)",
+            background: "linear-gradient(135deg,#4ade80,#34d399)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             lineHeight: 1.1,
@@ -1082,22 +1073,21 @@ function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
           {
             value: "1,000+",
             label: "Happy Families",
-            color: "#0284c7",
+            color: "#60a5fa",
             dot: false,
           },
-          { value: "4.9 ★", label: "Avg Rating", color: "#7c3aed", dot: false },
+          { value: "4.9 ★", label: "Avg Rating", color: "#a78bfa", dot: false },
         ].map((s) => (
           <div
             key={s.label}
             style={{
-              background: "rgba(255,255,255,0.85)",
+              background: "rgba(255,255,255,0.08)",
               backdropFilter: "blur(8px)",
               borderRadius: 16,
               padding: "0.75rem 1.2rem",
               textAlign: "center",
               minWidth: 90,
-              boxShadow: "0 2px 12px rgba(0,230,118,0.1)",
-              border: "1px solid rgba(255,255,255,0.7)",
+              border: "1px solid rgba(255,255,255,0.12)",
             }}
           >
             <div
@@ -1126,7 +1116,7 @@ function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
                 {s.value}
               </span>
             </div>
-            <div style={{ fontSize: "0.7rem", color: "#64748b", marginTop: 2 }}>
+            <div style={{ fontSize: "0.7rem", color: "#94a3b8", marginTop: 2 }}>
               {s.label}
             </div>
           </div>
@@ -1155,11 +1145,10 @@ function DriveEaseBrandHero({ driverCount }: { driverCount: number }) {
               display: "flex",
               alignItems: "center",
               gap: "0.6rem",
-              background: "rgba(255,255,255,0.75)",
+              background: "rgba(255,255,255,0.07)",
               borderRadius: 12,
               padding: "0.5rem 0.85rem",
               border: "1px solid rgba(0,230,118,0.15)",
-              backdropFilter: "blur(4px)",
             }}
           >
             <span style={{ fontSize: "1rem" }}>{b.icon}</span>
@@ -1211,8 +1200,8 @@ function DriverCard({
     offline: {
       dot: "bg-gray-400",
       label: "Offline",
-      text: "text-gray-600",
-      bg: "bg-gray-50 border-gray-200",
+      text: "text-slate-300",
+      bg: "bg-slate-800 border-slate-700",
       blink: false,
     },
   };
@@ -1258,12 +1247,12 @@ function DriverCard({
         <div className="text-gray-400 text-xs">{driver.city}</div>
       </div>
       <div className="grid grid-cols-2 gap-1.5 text-xs">
-        <div className="bg-gray-50 rounded-lg p-2">
-          <div className="font-semibold text-gray-800">{driver.rides}</div>
+        <div className="bg-slate-800 rounded-lg p-2">
+          <div className="font-semibold text-slate-100">{driver.rides}</div>
           <div className="text-gray-400">rides</div>
         </div>
         <div className="bg-yellow-50 rounded-lg p-2">
-          <div className="flex items-center gap-0.5 font-semibold text-gray-800">
+          <div className="flex items-center gap-0.5 font-semibold text-slate-100">
             <Star size={10} fill="#f59e0b" color="#f59e0b" />
             {driver.rating}
           </div>
@@ -1280,7 +1269,7 @@ function DriverCard({
           onClick={() => navigate("book")}
           className="flex-1 text-xs font-semibold py-2 rounded-lg text-white transition-all hover:opacity-90"
           style={{
-            background: driver.status === "offline" ? "#64748b" : "#16a34a",
+            background: driver.status === "offline" ? "#94a3b8" : "#16a34a",
           }}
           disabled={driver.status === "offline"}
         >
