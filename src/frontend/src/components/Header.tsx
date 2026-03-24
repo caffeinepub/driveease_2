@@ -43,7 +43,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
         }}
         style={{
           background: isActive ? "#16a34a" : "transparent",
-          color: isActive ? "#ffffff" : "#166534",
+          color: isActive ? "#0d1420" : "#e2e8f0",
           border: "none",
           cursor: "pointer",
           fontWeight: isActive ? 600 : 500,
@@ -55,14 +55,14 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
         }}
         onMouseEnter={(e) => {
           if (!isActive) {
-            e.currentTarget.style.background = "#f0fdf4";
-            e.currentTarget.style.color = "#15803d";
+            e.currentTarget.style.background = "#0f1a2e";
+            e.currentTarget.style.color = "#00e676";
           }
         }}
         onMouseLeave={(e) => {
           if (!isActive) {
             e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#166534";
+            e.currentTarget.style.color = "#94a3b8";
           }
         }}
       >
@@ -74,9 +74,9 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
   return (
     <header
       style={{
-        background: "#ffffff",
-        borderBottom: "1px solid #bbf7d0",
-        boxShadow: "0 2px 12px rgba(22,163,74,0.08)",
+        background: "#0d1420",
+        borderBottom: "1px solid rgba(0,230,118,0.2)",
+        boxShadow: "0 2px 12px rgba(0,230,118,0.08)",
         position: "sticky",
         top: 0,
         zIndex: 100,
@@ -110,21 +110,21 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
         >
           <div
             style={{
-              background: "linear-gradient(135deg,#16a34a,#22c55e)",
+              background: "linear-gradient(135deg,#00e676,#22c55e)",
               borderRadius: 10,
               width: 36,
               height: 36,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 3px 10px rgba(22,163,74,0.3)",
+              boxShadow: "0 3px 10px rgba(0,230,118,0.3)",
             }}
           >
             <span style={{ fontSize: "1.2rem" }}>🚗</span>
           </div>
           <span
             style={{
-              color: "#14532d",
+              color: "#00e676",
               fontWeight: 800,
               fontSize: "1.25rem",
               fontFamily: "'Orbitron', monospace",
@@ -135,13 +135,13 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
           </span>
           <span
             style={{
-              color: "#16a34a",
+              color: "#00e676",
               fontSize: "0.6rem",
               fontWeight: 700,
-              background: "#dcfce7",
+              background: "#1a2e1a20",
               padding: "2px 6px",
               borderRadius: 4,
-              border: "1px solid #bbf7d0",
+              border: "1px solid rgba(0,230,118,0.2)",
               letterSpacing: "0.05em",
             }}
           >
@@ -155,10 +155,10 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             display: "flex",
             alignItems: "center",
             gap: "0.15rem",
-            background: "#f0fdf4",
+            background: "#0f1a2e",
             borderRadius: 9999,
             padding: "0.3rem 0.4rem",
-            border: "1px solid #bbf7d0",
+            border: "1px solid rgba(0,230,118,0.2)",
           }}
           className="hidden md:flex"
         >
@@ -174,7 +174,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             style={{
               background:
                 currentPage === "driver-login" ? "#0ea5e9" : "transparent",
-              color: currentPage === "driver-login" ? "#ffffff" : "#0369a1",
+              color: currentPage === "driver-login" ? "#0d1420" : "#0369a1",
               border: "none",
               borderRadius: 9999,
               padding: "0.3rem 0.9rem",
@@ -197,7 +197,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               }
             }}
           >
-            🧑‍🚗 Driver Login
+            🧑‍✈️ Captain Login
           </button>
           <div style={{ position: "relative" }}>
             <button
@@ -207,7 +207,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               aria-expanded={servicesOpen}
               style={{
                 background: "transparent",
-                color: "#166534",
+                color: "#e2e8f0",
                 border: "none",
                 cursor: "pointer",
                 padding: "0.3rem 0.9rem",
@@ -221,7 +221,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 transition: "all 0.18s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#f0fdf4";
+                e.currentTarget.style.background = "#0f1a2e";
               }}
               onMouseLeave={(e) => {
                 if (!servicesOpen)
@@ -236,13 +236,13 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   position: "absolute",
                   top: "calc(100% + 8px)",
                   left: 0,
-                  background: "#ffffff",
-                  border: "1px solid #bbf7d0",
+                  background: "#0d1420",
+                  border: "1px solid rgba(0,230,118,0.25)",
                   borderRadius: 12,
                   minWidth: 160,
                   zIndex: 200,
                   overflow: "hidden",
-                  boxShadow: "0 8px 24px rgba(22,163,74,0.12)",
+                  boxShadow: "0 8px 24px rgba(0,230,118,0.12)",
                 }}
                 onMouseLeave={() => setServicesOpen(false)}
               >
@@ -265,19 +265,19 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                       padding: "0.65rem 1rem",
                       background: "none",
                       border: "none",
-                      color: "#166534",
+                      color: "#e2e8f0",
                       cursor: "pointer",
                       fontSize: "0.88rem",
                       fontFamily: "'Poppins', sans-serif",
                       transition: "all 0.15s",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#f0fdf4";
-                      e.currentTarget.style.color = "#16a34a";
+                      e.currentTarget.style.background = "#0f1a2e";
+                      e.currentTarget.style.color = "#00e676";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = "none";
-                      e.currentTarget.style.color = "#166534";
+                      e.currentTarget.style.color = "#94a3b8";
                     }}
                   >
                     {l}
@@ -296,9 +296,9 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={installApp}
               data-ocid="header.install_button"
               style={{
-                background: "#dcfce7",
-                border: "1px solid #bbf7d0",
-                color: "#15803d",
+                background: "#1a2e1a20",
+                border: "1px solid rgba(0,230,118,0.2)",
+                color: "#00e676",
                 borderRadius: 8,
                 padding: "0.35rem 0.75rem",
                 cursor: "pointer",
@@ -318,7 +318,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             >
               <span
                 style={{
-                  color: "#15803d",
+                  color: "#00e676",
                   fontSize: "0.85rem",
                   fontWeight: 500,
                 }}
@@ -332,7 +332,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   window.location.reload();
                 }}
                 style={{
-                  color: "#6b7280",
+                  color: "#64748b",
                   background: "none",
                   border: "1px solid #d1d5db",
                   borderRadius: 6,
@@ -349,9 +349,9 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               type="button"
               onClick={() => navigate("login")}
               style={{
-                color: "#166534",
-                background: "#f0fdf4",
-                border: "1px solid #bbf7d0",
+                color: "#94a3b8",
+                background: "#111827",
+                border: "1px solid rgba(0,230,118,0.2)",
                 borderRadius: 8,
                 padding: "0.4rem 0.9rem",
                 cursor: "pointer",
@@ -361,11 +361,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 transition: "all 0.2s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#dcfce7";
-                e.currentTarget.style.borderColor = "#86efac";
+                e.currentTarget.style.background = "#1a2e1a20";
+                e.currentTarget.style.borderColor = "rgba(0,230,118,0.5)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#f0fdf4";
+                e.currentTarget.style.background = "#0f1a2e";
                 e.currentTarget.style.borderColor = "#bbf7d0";
               }}
             >
@@ -377,7 +377,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             onClick={() => navigate("book")}
             data-ocid="header.book_driver_button"
             style={{
-              background: "linear-gradient(135deg,#16a34a,#22c55e)",
+              background: "linear-gradient(135deg,#00e676,#22c55e)",
               color: "white",
               border: "none",
               borderRadius: 9999,
@@ -386,18 +386,18 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               fontWeight: 700,
               fontSize: "0.875rem",
               fontFamily: "'Poppins', sans-serif",
-              boxShadow: "0 3px 12px rgba(22,163,74,0.35)",
+              boxShadow: "0 3px 12px rgba(0,230,118,0.35)",
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-1px)";
               e.currentTarget.style.boxShadow =
-                "0 6px 20px rgba(22,163,74,0.45)";
+                "0 6px 20px rgba(0,230,118,0.45)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.boxShadow =
-                "0 3px 12px rgba(22,163,74,0.35)";
+                "0 3px 12px rgba(0,230,118,0.35)";
             }}
           >
             🚗 Book Now
@@ -408,8 +408,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             onClick={() => setMobileOpen(!mobileOpen)}
             style={{
               background: "none",
-              border: "1px solid #bbf7d0",
-              color: "#166534",
+              border: "1px solid rgba(0,230,118,0.2)",
+              color: "#e2e8f0",
               cursor: "pointer",
               fontSize: "1.2rem",
               borderRadius: 8,
@@ -427,8 +427,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
       {mobileOpen && (
         <div
           style={{
-            background: "#ffffff",
-            borderTop: "1px solid #dcfce7",
+            background: "#0d1420",
+            borderTop: "1px solid #1a2e1a20",
             padding: "1rem 1.5rem",
             display: "flex",
             flexDirection: "column",
@@ -444,7 +444,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             ["💳 Payment", "payment"],
             ["📅 My Bookings", "my-bookings"],
             ["✍️ Register Driver", "register-driver"],
-            ["🔐 Driver Login", "driver-login"],
+            ["🔐 Captain Login", "driver-login"],
           ].map(([l, p]) => (
             <button
               type="button"
@@ -454,8 +454,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 setMobileOpen(false);
               }}
               style={{
-                color: currentPage === p ? "#16a34a" : "#166534",
-                background: currentPage === p ? "#f0fdf4" : "none",
+                color: currentPage === p ? "#16a34a" : "#e2e8f0",
+                background: currentPage === p ? "#0f1a2e" : "none",
                 border: "none",
                 cursor: "pointer",
                 textAlign: "left",

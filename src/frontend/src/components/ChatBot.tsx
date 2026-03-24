@@ -101,14 +101,14 @@ export default function ChatBot() {
           width: 56,
           height: 56,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #16a34a, #0d9488)",
+          background: "linear-gradient(135deg, #00e676, #0d9488)",
           border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.5rem",
-          boxShadow: "0 4px 20px rgba(22,163,74,0.5)",
+          boxShadow: "0 4px 20px rgba(0,230,118,0.5)",
           animation: "chatbot-ring 2s ease-in-out infinite",
         }}
       >
@@ -146,7 +146,7 @@ export default function ChatBot() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              background: "rgba(22,163,74,0.08)",
+              background: "rgba(0,230,118,0.08)",
             }}
           >
             <div
@@ -225,7 +225,7 @@ export default function ChatBot() {
                         : "16px 16px 16px 4px",
                     background:
                       msg.role === "user"
-                        ? "linear-gradient(135deg, #16a34a, #15803d)"
+                        ? "linear-gradient(135deg, #00e676, #15803d)"
                         : "rgba(40,40,40,0.9)",
                     border:
                       msg.role === "user"
@@ -241,7 +241,7 @@ export default function ChatBot() {
                 </div>
                 <span
                   style={{
-                    color: "#4b5563",
+                    color: "#94a3b8",
                     fontSize: "0.7rem",
                     marginTop: "0.2rem",
                   }}
@@ -285,7 +285,7 @@ export default function ChatBot() {
               data-ocid="chatbot.submit_button"
               onClick={send}
               style={{
-                background: "#16a34a",
+                background: "#00e676",
                 border: "none",
                 borderRadius: 10,
                 color: "white",

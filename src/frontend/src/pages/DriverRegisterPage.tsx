@@ -224,8 +224,8 @@ export default function DriverRegisterPage() {
       >
         <div
           style={{
-            background: "rgba(22,163,74,0.08)",
-            border: "2px solid rgba(22,163,74,0.4)",
+            background: "rgba(0,230,118,0.08)",
+            border: "2px solid rgba(0,230,118,0.4)",
             borderRadius: 20,
             padding: "3rem 2rem",
           }}
@@ -242,7 +242,7 @@ export default function DriverRegisterPage() {
             Registration Submitted!
           </h2>
           <p
-            style={{ color: "#4b7e4b", marginBottom: "2rem", lineHeight: 1.7 }}
+            style={{ color: "#94a3b8", marginBottom: "2rem", lineHeight: 1.7 }}
           >
             Verification in Progress. Our team is reviewing your documents and
             payment.
@@ -258,7 +258,7 @@ export default function DriverRegisterPage() {
           >
             <p
               style={{
-                color: "#6b7280",
+                color: "#64748b",
                 fontSize: "0.8rem",
                 marginBottom: "0.5rem",
               }}
@@ -278,7 +278,7 @@ export default function DriverRegisterPage() {
             </div>
             <p
               style={{
-                color: "#6b7280",
+                color: "#64748b",
                 fontSize: "0.82rem",
                 marginTop: "0.5rem",
               }}
@@ -288,7 +288,7 @@ export default function DriverRegisterPage() {
           </div>
           <p
             style={{
-              color: "#4b7e4b",
+              color: "#94a3b8",
               fontSize: "0.88rem",
               marginBottom: "1.5rem",
               lineHeight: 1.6,
@@ -324,13 +324,13 @@ export default function DriverRegisterPage() {
     border: "1px solid #2d2d2d",
     borderRadius: 8,
     padding: "0.65rem 0.9rem",
-    color: "#14532d",
+    color: "#e2e8f0",
     fontSize: "0.95rem",
     outline: "none",
     boxSizing: "border-box",
   };
   const labelStyle: React.CSSProperties = {
-    color: "#374151",
+    color: "#94a3b8",
     fontSize: "0.85rem",
     display: "block",
     marginBottom: "0.35rem",
@@ -342,7 +342,7 @@ export default function DriverRegisterPage() {
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <h1
           style={{
-            color: "#14532d",
+            color: "#e2e8f0",
             fontWeight: 800,
             fontSize: "1.75rem",
             marginBottom: "0.25rem",
@@ -350,7 +350,7 @@ export default function DriverRegisterPage() {
         >
           Register as Driver
         </h1>
-        <p style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
+        <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
           Complete verification to start earning with DriveEase
         </p>
       </div>
@@ -372,7 +372,7 @@ export default function DriverRegisterPage() {
       </div>
       <p
         style={{
-          color: "#6b7280",
+          color: "#64748b",
           fontSize: "0.82rem",
           marginBottom: "1.5rem",
         }}
@@ -425,7 +425,7 @@ export default function DriverRegisterPage() {
                   onClick={sendOtp}
                   disabled={otpVerified}
                   style={{
-                    background: otpVerified ? "#14532d" : "#16a34a",
+                    background: otpVerified ? "#e2e8f0" : "#16a34a",
                     color: "white",
                     border: "none",
                     borderRadius: 8,
@@ -443,8 +443,8 @@ export default function DriverRegisterPage() {
                 <div
                   style={{
                     marginTop: "0.75rem",
-                    background: "rgba(22,163,74,0.08)",
-                    border: "1px solid rgba(22,163,74,0.2)",
+                    background: "rgba(0,230,118,0.08)",
+                    border: "1px solid rgba(0,230,118,0.2)",
                     borderRadius: 8,
                     padding: "0.75rem",
                   }}
@@ -482,7 +482,7 @@ export default function DriverRegisterPage() {
                       type="button"
                       onClick={verifyOtp}
                       style={{
-                        background: "#16a34a",
+                        background: "#00e676",
                         color: "white",
                         border: "none",
                         borderRadius: 8,
@@ -591,10 +591,10 @@ export default function DriverRegisterPage() {
           >
             <p
               style={{
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 fontSize: "0.88rem",
-                background: "rgba(22,163,74,0.08)",
-                border: "1px solid rgba(22,163,74,0.2)",
+                background: "rgba(0,230,118,0.08)",
+                border: "1px solid rgba(0,230,118,0.2)",
                 borderRadius: 8,
                 padding: "0.75rem",
               }}
@@ -648,7 +648,7 @@ export default function DriverRegisterPage() {
                       <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
                         📁
                       </div>
-                      <p style={{ color: "#6b7280", fontSize: "0.85rem" }}>
+                      <p style={{ color: "#64748b", fontSize: "0.85rem" }}>
                         Click to upload or drag & drop
                       </p>
                     </>
@@ -677,8 +677,8 @@ export default function DriverRegisterPage() {
           >
             <div
               style={{
-                background: "rgba(22,163,74,0.08)",
-                border: "1px solid rgba(22,163,74,0.3)",
+                background: "rgba(0,230,118,0.08)",
+                border: "1px solid rgba(0,230,118,0.3)",
                 borderRadius: 12,
                 padding: "1.25rem",
               }}
@@ -716,12 +716,12 @@ export default function DriverRegisterPage() {
                       borderBottom: "1px solid #2a2a2a",
                     }}
                   >
-                    <span style={{ color: "#6b7280", fontSize: "0.85rem" }}>
+                    <span style={{ color: "#64748b", fontSize: "0.85rem" }}>
                       {k}
                     </span>
                     <span
                       style={{
-                        color: "#14532d",
+                        color: "#e2e8f0",
                         fontSize: "0.85rem",
                         fontWeight: 600,
                       }}
@@ -771,7 +771,7 @@ export default function DriverRegisterPage() {
                     <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
                       📷
                     </div>
-                    <p style={{ color: "#6b7280", fontSize: "0.85rem" }}>
+                    <p style={{ color: "#64748b", fontSize: "0.85rem" }}>
                       Upload screenshot of payment confirmation
                     </p>
                   </>
@@ -844,7 +844,7 @@ export default function DriverRegisterPage() {
                 flex: 1,
                 background: "none",
                 border: "1px solid #3a3a3a",
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 borderRadius: 8,
                 padding: "0.75rem",
                 cursor: "pointer",
@@ -860,7 +860,7 @@ export default function DriverRegisterPage() {
               onClick={nextStep}
               style={{
                 flex: 2,
-                background: "#16a34a",
+                background: "#00e676",
                 color: "white",
                 border: "none",
                 borderRadius: 8,
@@ -878,7 +878,7 @@ export default function DriverRegisterPage() {
               onClick={submit}
               style={{
                 flex: 2,
-                background: "#16a34a",
+                background: "#00e676",
                 color: "white",
                 border: "none",
                 borderRadius: 8,

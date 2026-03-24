@@ -6,8 +6,8 @@ export default function Footer({ navigate }: FooterProps) {
   return (
     <footer
       style={{
-        background: "#f0fdf4",
-        borderTop: "1px solid #bbf7d0",
+        background: "#060d16",
+        borderTop: "1px solid rgba(0,230,118,0.2)",
         padding: "3rem 1.5rem 1.5rem",
         marginTop: "auto",
       }}
@@ -32,21 +32,21 @@ export default function Footer({ navigate }: FooterProps) {
             >
               <div
                 style={{
-                  background: "linear-gradient(135deg,#16a34a,#22c55e)",
+                  background: "linear-gradient(135deg,#00e676,#22c55e)",
                   borderRadius: 8,
                   width: 32,
                   height: 32,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 2px 8px rgba(22,163,74,0.25)",
+                  boxShadow: "0 2px 8px rgba(0,230,118,0.25)",
                 }}
               >
                 <span style={{ fontSize: "1rem" }}>🚗</span>
               </div>
               <span
                 style={{
-                  color: "#14532d",
+                  color: "#e2e8f0",
                   fontWeight: 800,
                   fontSize: "1.1rem",
                   fontFamily: "'Orbitron', monospace",
@@ -56,14 +56,14 @@ export default function Footer({ navigate }: FooterProps) {
               </span>
             </div>
             <p
-              style={{ color: "#4b7e4b", fontSize: "0.88rem", lineHeight: 1.6 }}
+              style={{ color: "#64748b", fontSize: "0.88rem", lineHeight: 1.6 }}
             >
               India's First Personal Driver Network. Trusted by families across
               India.
             </p>
             <p
               style={{
-                color: "#16a34a",
+                color: "#00e676",
                 marginTop: "0.75rem",
                 fontSize: "0.9rem",
                 fontWeight: 500,
@@ -75,7 +75,7 @@ export default function Footer({ navigate }: FooterProps) {
           <div>
             <h4
               style={{
-                color: "#14532d",
+                color: "#e2e8f0",
                 fontWeight: 700,
                 marginBottom: "0.75rem",
                 fontSize: "0.95rem",
@@ -97,7 +97,7 @@ export default function Footer({ navigate }: FooterProps) {
                 onClick={() => navigate(p)}
                 style={{
                   display: "block",
-                  color: "#4b7e4b",
+                  color: "#94a3b8",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -107,10 +107,10 @@ export default function Footer({ navigate }: FooterProps) {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#16a34a";
+                  e.currentTarget.style.color = "#00e676";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#4b7e4b";
+                  e.currentTarget.style.color = "#94a3b8";
                 }}
               >
                 {l}
@@ -120,7 +120,7 @@ export default function Footer({ navigate }: FooterProps) {
           <div>
             <h4
               style={{
-                color: "#14532d",
+                color: "#e2e8f0",
                 fontWeight: 700,
                 marginBottom: "0.75rem",
                 fontSize: "0.95rem",
@@ -130,7 +130,7 @@ export default function Footer({ navigate }: FooterProps) {
             </h4>
             <p
               style={{
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 fontSize: "0.88rem",
                 marginBottom: "0.5rem",
               }}
@@ -140,7 +140,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="tel:+917836887228"
               style={{
-                color: "#16a34a",
+                color: "#00e676",
                 fontSize: "0.9rem",
                 display: "block",
                 marginBottom: "0.5rem",
@@ -153,7 +153,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="mailto:support@driveease.in"
               style={{
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 fontSize: "0.88rem",
                 textDecoration: "none",
                 display: "block",
@@ -186,7 +186,7 @@ export default function Footer({ navigate }: FooterProps) {
           <div>
             <h4
               style={{
-                color: "#14532d",
+                color: "#e2e8f0",
                 fontWeight: 700,
                 marginBottom: "0.75rem",
                 fontSize: "0.95rem",
@@ -233,7 +233,7 @@ export default function Footer({ navigate }: FooterProps) {
         </div>
         <div
           style={{
-            borderTop: "1px solid #dcfce7",
+            borderTop: "1px solid #1a2e1a20",
             paddingTop: "1.5rem",
             display: "flex",
             justifyContent: "space-between",
@@ -242,17 +242,17 @@ export default function Footer({ navigate }: FooterProps) {
             gap: "0.5rem",
           }}
         >
-          <p style={{ color: "#6b7280", fontSize: "0.82rem" }}>
+          <p style={{ color: "#64748b", fontSize: "0.82rem" }}>
             © {year} DriveEase. All rights reserved.
           </p>
-          <p style={{ color: "#6b7280", fontSize: "0.82rem" }}>
+          <p style={{ color: "#64748b", fontSize: "0.82rem" }}>
             © {year}. Built with ❤️ using{" "}
             <a
               href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
               target="_blank"
               rel="noreferrer"
               style={{
-                color: "#16a34a",
+                color: "#00e676",
                 textDecoration: "none",
                 fontWeight: 600,
               }}

@@ -4,7 +4,7 @@ export default function PaymentPage() {
       <div style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1
           style={{
-            color: "#14532d",
+            color: "#e2e8f0",
             fontWeight: 800,
             fontSize: "2.25rem",
             marginBottom: "0.5rem",
@@ -12,7 +12,7 @@ export default function PaymentPage() {
         >
           💳 Payment Details
         </h1>
-        <p style={{ color: "#4b7e4b" }}>
+        <p style={{ color: "#94a3b8" }}>
           Pay securely via bank transfer or UPI
         </p>
       </div>
@@ -49,13 +49,13 @@ export default function PaymentPage() {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: "0.6rem 0",
-                borderBottom: "1px solid #dcfce7",
+                borderBottom: "1px solid #1a2e1a20",
               }}
             >
-              <span style={{ color: "#6b7280", fontSize: "0.9rem" }}>{k}</span>
+              <span style={{ color: "#64748b", fontSize: "0.9rem" }}>{k}</span>
               <span
                 style={{
-                  color: "#14532d",
+                  color: "#e2e8f0",
                   fontWeight: 700,
                   fontSize: "0.9rem",
                   userSelect: "all",
@@ -159,7 +159,7 @@ export default function PaymentPage() {
               <div
                 style={{
                   fontSize: "0.65rem",
-                  color: "#16a34a",
+                  color: "#00e676",
                   fontWeight: 800,
                   marginTop: "0.5rem",
                 }}
@@ -170,7 +170,7 @@ export default function PaymentPage() {
           </div>
           <p
             style={{
-              color: "#4b7e4b",
+              color: "#94a3b8",
               fontSize: "0.88rem",
               textAlign: "center",
             }}
@@ -179,7 +179,7 @@ export default function PaymentPage() {
           </p>
           <p
             style={{
-              color: "#6b7280",
+              color: "#64748b",
               fontSize: "0.8rem",
               textAlign: "center",
             }}
@@ -203,7 +203,7 @@ export default function PaymentPage() {
         </h4>
         <ul
           style={{
-            color: "#4b7e4b",
+            color: "#94a3b8",
             fontSize: "0.9rem",
             lineHeight: 1.9,
             paddingLeft: "1.25rem",
@@ -211,7 +211,7 @@ export default function PaymentPage() {
         >
           <li>
             For Driver Registration: Pay{" "}
-            <strong style={{ color: "#14532d" }}>₹150</strong> as registration
+            <strong style={{ color: "#e2e8f0" }}>₹150</strong> as registration
             fee
           </li>
           <li>For Ride Booking: Pay as per price shown in your booking</li>

@@ -140,7 +140,7 @@ export default function LiveDriversPage({ navigate }: Props) {
         maxWidth: 1200,
         margin: "0 auto",
         padding: "2rem 1.5rem",
-        background: "#f8fff8",
+        background: "#0a0f1a",
         minHeight: "100vh",
       }}
     >
@@ -157,7 +157,7 @@ export default function LiveDriversPage({ navigate }: Props) {
         <div>
           <h1
             style={{
-              color: "#14532d",
+              color: "#e2e8f0",
               fontWeight: 800,
               fontSize: "2rem",
               marginBottom: "0.25rem",
@@ -170,9 +170,9 @@ export default function LiveDriversPage({ navigate }: Props) {
           >
             <LiveBadge status={liveStatus} />
             <span style={{ color: "#4ade80", fontSize: "0.9rem" }}>
-              {onlineCount} drivers online now
+              {onlineCount} captains online now
             </span>
-            <span style={{ color: "#4b5563", fontSize: "0.82rem" }}>
+            <span style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
               · {lastRefresh.toLocaleTimeString("en-IN")}
             </span>
           </div>
@@ -206,8 +206,8 @@ export default function LiveDriversPage({ navigate }: Props) {
             type="button"
             onClick={reload}
             style={{
-              background: "rgba(22,163,74,0.15)",
-              border: "1px solid rgba(22,163,74,0.3)",
+              background: "rgba(0,230,118,0.15)",
+              border: "1px solid rgba(0,230,118,0.3)",
               color: "#4ade80",
               borderRadius: 8,
               padding: "0.5rem 1rem",
@@ -287,7 +287,7 @@ export default function LiveDriversPage({ navigate }: Props) {
               display: "flex",
               alignItems: "center",
               gap: "0.4rem",
-              color: "#4b7e4b",
+              color: "#94a3b8",
               fontSize: "0.85rem",
               cursor: "pointer",
             }}
@@ -317,8 +317,8 @@ export default function LiveDriversPage({ navigate }: Props) {
       {/* India Map Visualization */}
       <div
         style={{
-          background: "#ffffff",
-          border: "1px solid #bbf7d0",
+          background: "#0d1420",
+          border: "1px solid rgba(0,230,118,0.2)",
           borderRadius: 16,
           padding: "1.5rem",
           marginBottom: "2rem",
@@ -327,7 +327,7 @@ export default function LiveDriversPage({ navigate }: Props) {
       >
         <h3
           style={{
-            color: "#4b7e4b",
+            color: "#94a3b8",
             fontSize: "0.85rem",
             marginBottom: "1rem",
           }}
@@ -355,8 +355,8 @@ export default function LiveDriversPage({ navigate }: Props) {
             <title>India Driver Map</title>
             <path
               d="M120,40 L160,30 L200,25 L240,35 L270,50 L290,80 L300,110 L295,140 L310,160 L320,190 L300,220 L280,250 L260,290 L240,330 L220,360 L200,380 L185,355 L170,320 L150,290 L130,250 L110,210 L95,170 L85,140 L80,110 L90,80 L105,60 Z"
-              fill="rgba(22,163,74,0.06)"
-              stroke="rgba(22,163,74,0.3)"
+              fill="rgba(0,230,118,0.06)"
+              stroke="rgba(0,230,118,0.3)"
               strokeWidth="1.5"
             />
             {displayed.map((d) => {
@@ -371,7 +371,7 @@ export default function LiveDriversPage({ navigate }: Props) {
                   onKeyDown={() => setSelected(d)}
                   style={{ cursor: "pointer" }}
                 >
-                  <circle cx={x} cy={y} r="10" fill="rgba(22,163,74,0.2)">
+                  <circle cx={x} cy={y} r="10" fill="rgba(0,230,118,0.2)">
                     <animate
                       attributeName="r"
                       values="6;14"
@@ -411,8 +411,8 @@ export default function LiveDriversPage({ navigate }: Props) {
           <div
             style={{
               marginTop: "1rem",
-              background: "rgba(22,163,74,0.1)",
-              border: "1px solid rgba(22,163,74,0.3)",
+              background: "#0f1a2e",
+              border: "1px solid rgba(0,230,118,0.35)",
               borderRadius: 10,
               padding: "1rem",
               display: "flex",
@@ -431,7 +431,13 @@ export default function LiveDriversPage({ navigate }: Props) {
                 style={{ width: 44, height: 44, borderRadius: "50%" }}
               />
               <div>
-                <p style={{ color: "#14532d", fontWeight: 700 }}>
+                <p
+                  style={{
+                    color: "#e2e8f0",
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                  }}
+                >
                   {selected.name}
                 </p>
                 <p style={{ color: "#4ade80", fontSize: "0.85rem" }}>
@@ -471,15 +477,55 @@ export default function LiveDriversPage({ navigate }: Props) {
           data-ocid="livedrivers.empty_state"
           style={{
             textAlign: "center",
-            padding: "3rem",
-            background: "#ffffff",
+            padding: "3rem 2rem",
+            background: "#0d1420",
             borderRadius: 16,
+            border: "1px solid rgba(0,230,118,0.2)",
           }}
         >
-          <p style={{ color: "#6b7280" }}>
-            No {showAll ? "approved" : "online"} drivers
-            {selectedCity ? ` in ${selectedCity}` : ""}.
+          <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🚗</div>
+          <h3
+            style={{
+              color: "#e2e8f0",
+              fontWeight: 700,
+              fontSize: "1.1rem",
+              marginBottom: "0.5rem",
+            }}
+          >
+            No {showAll ? "approved" : "online"} captains
+            {selectedCity ? ` in ${selectedCity}` : ""} right now
+          </h3>
+          <p
+            style={{
+              color: "#64748b",
+              fontSize: "0.9rem",
+              maxWidth: 320,
+              margin: "0 auto 1rem",
+            }}
+          >
+            Captains go online when they receive a booking. Try showing all
+            approved captains or book in advance.
           </p>
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: "#00e676",
+              fontWeight: 600,
+              fontSize: "0.9rem",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={showAll}
+              onChange={(e) => setShowAll(e.target.checked)}
+              style={{ accentColor: "#16a34a" }}
+            />
+            Show all approved captains
+          </label>
         </div>
       ) : (
         <div
@@ -534,21 +580,21 @@ export default function LiveDriversPage({ navigate }: Props) {
                 <div>
                   <p
                     style={{
-                      color: "#14532d",
+                      color: "#e2e8f0",
                       fontWeight: 700,
                       fontSize: "0.95rem",
                     }}
                   >
                     {d.name}
                   </p>
-                  <p style={{ color: "#4b7e4b", fontSize: "0.8rem" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.8rem" }}>
                     {d.city} • ⭐ {d.rating}
                   </p>
                 </div>
               </div>
               <p
                 style={{
-                  color: "#4b7e4b",
+                  color: "#94a3b8",
                   fontSize: "0.82rem",
                   marginBottom: "0.75rem",
                 }}
@@ -568,7 +614,7 @@ export default function LiveDriversPage({ navigate }: Props) {
                     background: d.isOnline
                       ? "rgba(74,222,128,0.15)"
                       : "rgba(107,114,128,0.15)",
-                    color: d.isOnline ? "#4ade80" : "#9ca3af",
+                    color: d.isOnline ? "#4ade80" : "#64748b",
                     borderRadius: 9999,
                     padding: "2px 8px",
                     fontSize: "0.75rem",

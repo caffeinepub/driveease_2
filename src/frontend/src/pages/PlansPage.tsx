@@ -9,7 +9,7 @@ const PLANS = [
     period: "day",
     monthly: "₹24,000/month",
     badge: "Most Popular",
-    color: "#16a34a",
+    color: "#00e676",
     desc: "8 hours/day flexible scheduling between 7 AM – 9 PM. Same verified driver every day.",
     features: [
       "8 hrs/day coverage",
@@ -106,7 +106,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       <div style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1
           style={{
-            color: "#14532d",
+            color: "#e2e8f0",
             fontWeight: 800,
             fontSize: "2.25rem",
             marginBottom: "0.5rem",
@@ -114,7 +114,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
         >
           Subscription Plans
         </h1>
-        <p style={{ color: "#4b7e4b", fontSize: "1rem" }}>
+        <p style={{ color: "#94a3b8", fontSize: "1rem" }}>
           What you see is what you pay. No surprise charges, ever.
         </p>
       </div>
@@ -167,7 +167,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
             >
               <h3
                 style={{
-                  color: "#14532d",
+                  color: "#e2e8f0",
                   fontWeight: 800,
                   fontSize: "1.15rem",
                   marginBottom: "0.25rem",
@@ -182,7 +182,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 {p.period && (
                   <span
                     style={{
-                      color: "#6b7280",
+                      color: "#64748b",
                       fontSize: "0.9rem",
                       fontWeight: 400,
                     }}
@@ -194,7 +194,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
               {p.monthly && (
                 <div
                   style={{
-                    color: "#6b7280",
+                    color: "#64748b",
                     fontSize: "0.78rem",
                     marginTop: "0.25rem",
                   }}
@@ -205,7 +205,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
             </div>
             <p
               style={{
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 fontSize: "0.88rem",
                 marginBottom: "1rem",
                 lineHeight: 1.6,
@@ -225,7 +225,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 <li
                   key={f}
                   style={{
-                    color: "#374151",
+                    color: "#94a3b8",
                     fontSize: "0.87rem",
                     padding: "0.2rem 0",
                     display: "flex",
@@ -290,8 +290,8 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
         >
           <div
             style={{
-              background: "#ffffff",
-              border: "1px solid #bbf7d0",
+              background: "#0d1420",
+              border: "1px solid rgba(0,230,118,0.2)",
               borderRadius: 20,
               padding: "2rem",
               maxWidth: 420,
@@ -308,14 +308,14 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
               <div>
                 <h3
                   style={{
-                    color: "#14532d",
+                    color: "#e2e8f0",
                     fontWeight: 800,
                     fontSize: "1.2rem",
                   }}
                 >
                   {activePlan?.name}
                 </h3>
-                <p style={{ color: "#4b7e4b", fontSize: "0.85rem" }}>
+                <p style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
                   Submit enquiry to get started
                 </p>
               </div>
@@ -326,7 +326,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                   setSubmitted(false);
                 }}
                 style={{
-                  color: "#6b7280",
+                  color: "#64748b",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -348,7 +348,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 >
                   Enquiry Submitted!
                 </h3>
-                <p style={{ color: "#4b7e4b", fontSize: "0.88rem" }}>
+                <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>
                   Plan enquiry submitted! We'll contact you within 24 hours.
                 </p>
                 <button
@@ -359,7 +359,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                   }}
                   style={{
                     marginTop: "1.5rem",
-                    background: "#16a34a",
+                    background: "#00e676",
                     color: "white",
                     border: "none",
                     borderRadius: 8,
@@ -382,7 +382,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 <div>
                   <p
                     style={{
-                      color: "#374151",
+                      color: "#94a3b8",
                       fontSize: "0.85rem",
                       display: "block",
                       marginBottom: "0.35rem",
@@ -402,7 +402,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 <div>
                   <p
                     style={{
-                      color: "#374151",
+                      color: "#94a3b8",
                       fontSize: "0.85rem",
                       display: "block",
                       marginBottom: "0.35rem",
@@ -424,8 +424,8 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 </div>
                 <div
                   style={{
-                    background: "rgba(22,163,74,0.08)",
-                    border: "1px solid rgba(22,163,74,0.2)",
+                    background: "rgba(0,230,118,0.08)",
+                    border: "1px solid rgba(0,230,118,0.2)",
                     borderRadius: 8,
                     padding: "0.75rem",
                   }}
@@ -439,7 +439,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                   >
                     Selected Plan: {activePlan?.name}
                   </p>
-                  <p style={{ color: "#4b7e4b", fontSize: "0.82rem" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
                     {activePlan?.price}
                     {activePlan?.period ? `/${activePlan.period}` : ""}
                   </p>
@@ -451,7 +451,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                   style={{
                     background:
                       !form.name || !form.phone
-                        ? "#374151"
+                        ? "#94a3b8"
                         : activePlan?.color || "#16a34a",
                     color: "white",
                     border: "none",
@@ -475,7 +475,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       <div className="card-dark" style={{ maxWidth: 560, margin: "0 auto" }}>
         <h2
           style={{
-            color: "#14532d",
+            color: "#e2e8f0",
             fontWeight: 700,
             fontSize: "1.2rem",
             marginBottom: "0.5rem",
@@ -485,7 +485,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
         </h2>
         <p
           style={{
-            color: "#4b7e4b",
+            color: "#94a3b8",
             fontSize: "0.88rem",
             marginBottom: "1rem",
           }}

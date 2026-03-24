@@ -1,8 +1,9 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 import ChatBot from "./components/ChatBot";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import OTPModal from "./components/OTPModal";
+import SplashScreen from "./components/SplashScreen";
 import AdminPage from "./pages/AdminPage";
 import BookPage from "./pages/BookPage";
 import DriverLoginPage from "./pages/DriverLoginPage";
@@ -28,6 +29,9 @@ function getPage() {
 export default function App() {
   const [{ path, search }, setRoute] = useState(getPage);
   const [showLogin, setShowLogin] = useState(false);
+  const [splashDone, setSplashDone] = useState(false);
+
+  const handleSplashDone = useCallback(() => setSplashDone(true), []);
 
   useEffect(() => {
     const handler = () => setRoute(getPage());
@@ -117,57 +121,71 @@ export default function App() {
     );
   }
 
-  if (!showShell) return content;
-
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        background: "#121212",
-      }}
-    >
-      <Header currentPage={cleanPath || "home"} navigate={navigate} />
-      <main style={{ flex: 1 }}>{content}</main>
-      <Footer navigate={navigate} />
-      {showLogin && (
-        <OTPModal
-          onClose={() => setShowLogin(false)}
-          onSuccess={() => {
-            setShowLogin(false);
-            window.location.reload();
-          }}
-        />
-      )}
-      {/* Driver Portal button */}
-      <div
-        style={{
-          position: "fixed",
-          bottom: "1.5rem",
-          left: "1.5rem",
-          zIndex: 998,
-        }}
-      >
-        <button
-          type="button"
-          onClick={() => navigate("driver-login")}
+    <>
+      {!splashDone && <SplashScreen onDone={handleSplashDone} />}
+      {showShell ? (
+        <div
           style={{
-            background: "rgba(22,163,74,0.08)",
-            border: "1px solid rgba(22,163,74,0.2)",
-            color: "#4ade80",
-            borderRadius: 8,
-            padding: "0.35rem 0.75rem",
-            cursor: "pointer",
-            fontSize: "0.78rem",
-            opacity: 0.7,
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            background: "#121212",
+            opacity: splashDone ? 1 : 0,
+            transition: "opacity 0.5s ease",
           }}
         >
-          Driver Portal
-        </button>
-      </div>
-      {/* AI ChatBot */}
-      <ChatBot />
-    </div>
+          <Header currentPage={cleanPath || "home"} navigate={navigate} />
+          <main style={{ flex: 1 }}>{content}</main>
+          <Footer navigate={navigate} />
+          {showLogin && (
+            <OTPModal
+              onClose={() => setShowLogin(false)}
+              onSuccess={() => {
+                setShowLogin(false);
+                window.location.reload();
+              }}
+            />
+          )}
+          {/* Driver Portal button */}
+          <div
+            style={{
+              position: "fixed",
+              bottom: "1.5rem",
+              left: "1.5rem",
+              zIndex: 998,
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => navigate("driver-login")}
+              style={{
+                background: "rgba(22,163,74,0.08)",
+                border: "1px solid rgba(22,163,74,0.2)",
+                color: "#4ade80",
+                borderRadius: 8,
+                padding: "0.35rem 0.75rem",
+                cursor: "pointer",
+                fontSize: "0.78rem",
+                opacity: 0.7,
+              }}
+            >
+              Driver Portal
+            </button>
+          </div>
+          {/* AI ChatBot */}
+          <ChatBot />
+        </div>
+      ) : (
+        <div
+          style={{
+            opacity: splashDone ? 1 : 0,
+            transition: "opacity 0.5s ease",
+          }}
+        >
+          {content}
+        </div>
+      )}
+    </>
   );
 }

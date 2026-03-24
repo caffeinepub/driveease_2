@@ -156,14 +156,14 @@ export default function DriversPage({ navigate }: DriversPageProps) {
         maxWidth: 1200,
         margin: "0 auto",
         padding: "2rem 1.5rem",
-        background: "#f8fff8",
+        background: "#0a0f1a",
         minHeight: "100vh",
       }}
     >
       <div style={{ marginBottom: "2rem" }}>
         <h1
           style={{
-            color: "#14532d",
+            color: "#e2e8f0",
             fontWeight: 800,
             fontSize: "2rem",
             marginBottom: "0.5rem",
@@ -171,7 +171,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
         >
           Find Your Driver
         </h1>
-        <p style={{ color: "#4b7e4b" }}>Browse verified drivers across India</p>
+        <p style={{ color: "#94a3b8" }}>Browse verified drivers across India</p>
       </div>
 
       {/* Filters */}
@@ -281,7 +281,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
               alignItems: "center",
               gap: "0.5rem",
               cursor: "pointer",
-              color: "#374151",
+              color: "#94a3b8",
               fontSize: "0.9rem",
             }}
           >
@@ -339,7 +339,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
         )}
       </div>
 
-      <p style={{ color: "#4b7e4b", fontSize: "0.9rem", marginBottom: "1rem" }}>
+      <p style={{ color: "#94a3b8", fontSize: "0.9rem", marginBottom: "1rem" }}>
         {filtered.length} drivers found
       </p>
 
@@ -414,7 +414,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                   >
                     <h3
                       style={{
-                        color: "#14532d",
+                        color: "#e2e8f0",
                         fontWeight: 700,
                         fontSize: "1rem",
                       }}
@@ -435,7 +435,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                       {statusLabel}
                     </span>
                   </div>
-                  <p style={{ color: "#4b7e4b", fontSize: "0.83rem" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.83rem" }}>
                     {d.city}, {d.state}
                   </p>
                   <div
@@ -451,14 +451,14 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                     </span>
                     <span
                       style={{
-                        color: "#14532d",
+                        color: "#e2e8f0",
                         fontSize: "0.85rem",
                         fontWeight: 600,
                       }}
                     >
                       {d.rating}
                     </span>
-                    <span style={{ color: "#6b7280", fontSize: "0.78rem" }}>
+                    <span style={{ color: "#64748b", fontSize: "0.78rem" }}>
                       ({d.totalTrips} trips)
                     </span>
                   </div>
@@ -504,11 +504,11 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                   marginBottom: "0.75rem",
                 }}
               >
-                <span style={{ color: "#4b7e4b" }}>
+                <span style={{ color: "#94a3b8" }}>
                   ⏱ {d.experience} yrs exp
                 </span>
-                <span style={{ color: "#4b7e4b" }}>🚗 {d.vehicleTypes[0]}</span>
-                <span style={{ color: "#4b7e4b" }}>
+                <span style={{ color: "#94a3b8" }}>🚗 {d.vehicleTypes[0]}</span>
+                <span style={{ color: "#94a3b8" }}>
                   🗣 {d.languages.slice(0, 2).join(", ")}
                 </span>
                 <span style={{ color: "#4ade80", fontWeight: 700 }}>
@@ -556,7 +556,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
       {filtered.length === 0 && (
         <div
           data-ocid="drivers.empty_state"
-          style={{ textAlign: "center", padding: "4rem", color: "#6b7280" }}
+          style={{ textAlign: "center", padding: "4rem", color: "#64748b" }}
         >
           <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔍</div>
           <p>No drivers found. Try adjusting your filters.</p>

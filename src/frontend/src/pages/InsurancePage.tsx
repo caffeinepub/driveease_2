@@ -4,7 +4,7 @@ interface Props {
 export default function InsurancePage({ navigate }: Props) {
   return (
     <div
-      style={{ background: "#f8fff8", minHeight: "100vh", padding: "2rem 0" }}
+      style={{ background: "#0a0f1a", minHeight: "100vh", padding: "2rem 0" }}
     >
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 1.5rem" }}>
         {/* Header with driver wave animation */}
@@ -14,7 +14,7 @@ export default function InsurancePage({ navigate }: Props) {
           </div>
           <h1
             style={{
-              color: "#14532d",
+              color: "#e2e8f0",
               fontWeight: 800,
               fontSize: "2rem",
               marginBottom: "0.5rem",
@@ -22,7 +22,7 @@ export default function InsurancePage({ navigate }: Props) {
           >
             🛡️ Ride Insurance & Helpline
           </h1>
-          <p style={{ color: "#4b7e4b", fontSize: "1rem" }}>
+          <p style={{ color: "#94a3b8", fontSize: "1rem" }}>
             Your safety is our top priority. Every ride can be insured.
           </p>
         </div>
@@ -64,12 +64,12 @@ export default function InsurancePage({ navigate }: Props) {
             <div
               key={title}
               style={{
-                background: "#ffffff",
-                border: "1px solid #bbf7d0",
+                background: "#0d1420",
+                border: "1px solid rgba(0,230,118,0.2)",
                 borderRadius: 14,
                 padding: "1.5rem",
                 textAlign: "center",
-                boxShadow: "0 2px 8px rgba(22,163,74,0.07)",
+                boxShadow: "0 2px 8px rgba(0,230,118,0.07)",
               }}
             >
               <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>
@@ -77,7 +77,7 @@ export default function InsurancePage({ navigate }: Props) {
               </div>
               <h3
                 style={{
-                  color: "#14532d",
+                  color: "#e2e8f0",
                   fontWeight: 700,
                   marginBottom: "0.5rem",
                   fontSize: "0.95rem",
@@ -87,7 +87,7 @@ export default function InsurancePage({ navigate }: Props) {
               </h3>
               <p
                 style={{
-                  color: "#4b7e4b",
+                  color: "#94a3b8",
                   fontSize: "0.88rem",
                   marginBottom: "1rem",
                   lineHeight: 1.6,
@@ -118,12 +118,12 @@ export default function InsurancePage({ navigate }: Props) {
 
         <div
           style={{
-            background: "#ffffff",
-            border: "1px solid #bbf7d0",
+            background: "#0d1420",
+            border: "1px solid rgba(0,230,118,0.2)",
             borderRadius: 14,
             padding: "1.5rem",
             marginBottom: "1.5rem",
-            boxShadow: "0 2px 8px rgba(22,163,74,0.07)",
+            boxShadow: "0 2px 8px rgba(0,230,118,0.07)",
           }}
         >
           <div
@@ -139,7 +139,7 @@ export default function InsurancePage({ navigate }: Props) {
             <div>
               <h2
                 style={{
-                  color: "#14532d",
+                  color: "#e2e8f0",
                   fontWeight: 800,
                   fontSize: "1.4rem",
                   marginBottom: "0.25rem",
@@ -147,14 +147,14 @@ export default function InsurancePage({ navigate }: Props) {
               >
                 Per-Ride Insurance Plan
               </h2>
-              <p style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
+              <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
                 Pay per ride. Insurance expires automatically when the ride
                 completes.
               </p>
             </div>
             <div
               style={{
-                background: "#dcfce7",
+                background: "#1a2e1a20",
                 border: "2px solid #86efac",
                 borderRadius: 12,
                 padding: "1rem 1.5rem",
@@ -162,11 +162,11 @@ export default function InsurancePage({ navigate }: Props) {
               }}
             >
               <div
-                style={{ color: "#16a34a", fontWeight: 900, fontSize: "2rem" }}
+                style={{ color: "#00e676", fontWeight: 900, fontSize: "2rem" }}
               >
                 ₹49
               </div>
-              <div style={{ color: "#4b7e4b", fontSize: "0.82rem" }}>
+              <div style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
                 per ride
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function InsurancePage({ navigate }: Props) {
               <div
                 key={f}
                 style={{
-                  color: "#166534",
+                  color: "#e2e8f0",
                   fontSize: "0.88rem",
                   padding: "0.4rem 0",
                 }}
@@ -202,15 +202,15 @@ export default function InsurancePage({ navigate }: Props) {
 
         <div
           style={{
-            background: "#ffffff",
-            border: "1px solid #bbf7d0",
+            background: "#0d1420",
+            border: "1px solid rgba(0,230,118,0.2)",
             borderRadius: 14,
             padding: "1.5rem",
-            boxShadow: "0 2px 8px rgba(22,163,74,0.07)",
+            boxShadow: "0 2px 8px rgba(0,230,118,0.07)",
           }}
         >
           <h3
-            style={{ color: "#14532d", fontWeight: 700, marginBottom: "1rem" }}
+            style={{ color: "#e2e8f0", fontWeight: 700, marginBottom: "1rem" }}
           >
             How to Claim Insurance
           </h3>
@@ -245,12 +245,12 @@ export default function InsurancePage({ navigate }: Props) {
                   width: 36,
                   height: 36,
                   borderRadius: "50%",
-                  background: "#dcfce7",
+                  background: "#1a2e1a20",
                   border: "2px solid #86efac",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#16a34a",
+                  color: "#00e676",
                   fontWeight: 700,
                   flexShrink: 0,
                   fontSize: "0.9rem",
@@ -261,7 +261,7 @@ export default function InsurancePage({ navigate }: Props) {
               <div>
                 <p
                   style={{
-                    color: "#14532d",
+                    color: "#e2e8f0",
                     fontWeight: 600,
                     marginBottom: "0.2rem",
                     fontSize: "0.93rem",
@@ -269,7 +269,7 @@ export default function InsurancePage({ navigate }: Props) {
                 >
                   {t}
                 </p>
-                <p style={{ color: "#4b7e4b", fontSize: "0.88rem" }}>{d}</p>
+                <p style={{ color: "#94a3b8", fontSize: "0.88rem" }}>{d}</p>
               </div>
             </div>
           ))}

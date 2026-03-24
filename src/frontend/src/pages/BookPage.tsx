@@ -192,7 +192,7 @@ export default function BookPage({ navigate, driverId }: Props) {
         </h2>
         <p
           style={{
-            color: "#4b7e4b",
+            color: "#94a3b8",
             marginBottom: "1.5rem",
             fontSize: "0.9rem",
           }}
@@ -203,8 +203,8 @@ export default function BookPage({ navigate, driverId }: Props) {
         {/* OTP */}
         <div
           style={{
-            background: "rgba(22,163,74,0.1)",
-            border: "2px solid rgba(22,163,74,0.4)",
+            background: "rgba(0,230,118,0.1)",
+            border: "2px solid rgba(0,230,118,0.4)",
             borderRadius: 16,
             padding: "1.5rem",
             marginBottom: "1.5rem",
@@ -212,7 +212,7 @@ export default function BookPage({ navigate, driverId }: Props) {
         >
           <p
             style={{
-              color: "#4b7e4b",
+              color: "#94a3b8",
               fontSize: "0.8rem",
               marginBottom: "0.5rem",
               letterSpacing: "0.1em",
@@ -232,7 +232,7 @@ export default function BookPage({ navigate, driverId }: Props) {
           >
             {booking.rideOtp}
           </div>
-          <p style={{ color: "#6b7280", fontSize: "0.78rem" }}>
+          <p style={{ color: "#64748b", fontSize: "0.78rem" }}>
             Share only with your driver to start the ride
           </p>
         </div>
@@ -278,15 +278,15 @@ export default function BookPage({ navigate, driverId }: Props) {
               fontSize: "0.88rem",
             }}
           >
-            <span style={{ color: "#4b7e4b" }}>📍 Pickup</span>
-            <span style={{ color: "#14532d" }}>{booking.pickup}</span>
-            <span style={{ color: "#4b7e4b" }}>🎯 Drop</span>
-            <span style={{ color: "#14532d" }}>{booking.drop}</span>
-            <span style={{ color: "#4b7e4b" }}>🚗 Driver</span>
-            <span style={{ color: "#14532d" }}>{booking.driverName}</span>
-            <span style={{ color: "#4b7e4b" }}>💳 Payment</span>
-            <span style={{ color: "#14532d" }}>{booking.paymentMethod}</span>
-            <span style={{ color: "#4b7e4b" }}>💰 Amount</span>
+            <span style={{ color: "#94a3b8" }}>📍 Pickup</span>
+            <span style={{ color: "#e2e8f0" }}>{booking.pickup}</span>
+            <span style={{ color: "#94a3b8" }}>🎯 Drop</span>
+            <span style={{ color: "#e2e8f0" }}>{booking.drop}</span>
+            <span style={{ color: "#94a3b8" }}>🚗 Driver</span>
+            <span style={{ color: "#e2e8f0" }}>{booking.driverName}</span>
+            <span style={{ color: "#94a3b8" }}>💳 Payment</span>
+            <span style={{ color: "#e2e8f0" }}>{booking.paymentMethod}</span>
+            <span style={{ color: "#94a3b8" }}>💰 Amount</span>
             <span style={{ color: "#4ade80", fontWeight: 700 }}>
               ₹{booking.amount}
             </span>
@@ -312,7 +312,7 @@ export default function BookPage({ navigate, driverId }: Props) {
             width: "100%",
             background: "none",
             border: "1px solid #2a2a2a",
-            color: "#4b7e4b",
+            color: "#94a3b8",
             borderRadius: 8,
             padding: "0.65rem",
             cursor: "pointer",
@@ -344,11 +344,11 @@ export default function BookPage({ navigate, driverId }: Props) {
           🔍
         </div>
         <h2
-          style={{ color: "#14532d", fontWeight: 700, marginBottom: "0.5rem" }}
+          style={{ color: "#e2e8f0", fontWeight: 700, marginBottom: "0.5rem" }}
         >
           Finding your driver...
         </h2>
-        <p style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
+        <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
           Matching with nearest available driver
         </p>
         <style>
@@ -365,13 +365,13 @@ export default function BookPage({ navigate, driverId }: Props) {
         maxWidth: 640,
         margin: "0 auto",
         padding: "2rem 1.5rem",
-        background: "#f8fff8",
+        background: "#0a0f1a",
         minHeight: "100vh",
       }}
     >
       <h1
         style={{
-          color: "#14532d",
+          color: "#e2e8f0",
           fontWeight: 800,
           fontSize: "1.75rem",
           marginBottom: "0.25rem",
@@ -438,7 +438,7 @@ export default function BookPage({ navigate, driverId }: Props) {
       {!driver && (
         <p
           style={{
-            color: "#4b7e4b",
+            color: "#94a3b8",
             fontSize: "0.9rem",
             marginBottom: "1.5rem",
           }}
@@ -510,7 +510,7 @@ export default function BookPage({ navigate, driverId }: Props) {
           <div className="card-dark" style={{ marginBottom: "1rem" }}>
             <h3
               style={{
-                color: "#14532d",
+                color: "#e2e8f0",
                 fontWeight: 700,
                 marginBottom: "1rem",
               }}
@@ -521,7 +521,7 @@ export default function BookPage({ navigate, driverId }: Props) {
               <div>
                 <p
                   style={{
-                    color: "#374151",
+                    color: "#94a3b8",
                     fontSize: "0.85rem",
                     marginBottom: "0.4rem",
                   }}
@@ -558,7 +558,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                     gap: "0.4rem",
                     marginTop: "0.4rem",
                     cursor: "pointer",
-                    color: "#4b7e4b",
+                    color: "#94a3b8",
                     fontSize: "0.82rem",
                   }}
                 >
@@ -574,7 +574,7 @@ export default function BookPage({ navigate, driverId }: Props) {
               <div>
                 <p
                   style={{
-                    color: "#374151",
+                    color: "#94a3b8",
                     fontSize: "0.85rem",
                     marginBottom: "0.4rem",
                   }}
@@ -610,7 +610,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                     gap: "0.4rem",
                     marginTop: "0.4rem",
                     cursor: "pointer",
-                    color: "#4b7e4b",
+                    color: "#94a3b8",
                     fontSize: "0.82rem",
                   }}
                 >
@@ -635,7 +635,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                   <label
                     htmlFor="distance-km"
                     style={{
-                      color: "#374151",
+                      color: "#94a3b8",
                       fontSize: "0.85rem",
                       display: "block",
                       marginBottom: "0.4rem",
@@ -656,7 +656,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                 <div>
                   <p
                     style={{
-                      color: "#374151",
+                      color: "#94a3b8",
                       fontSize: "0.85rem",
                       marginBottom: "0.4rem",
                     }}
@@ -677,7 +677,7 @@ export default function BookPage({ navigate, driverId }: Props) {
               <div>
                 <p
                   style={{
-                    color: "#374151",
+                    color: "#94a3b8",
                     fontSize: "0.85rem",
                     marginBottom: "0.4rem",
                   }}
@@ -696,7 +696,7 @@ export default function BookPage({ navigate, driverId }: Props) {
               <div>
                 <p
                   style={{
-                    color: "#374151",
+                    color: "#94a3b8",
                     fontSize: "0.85rem",
                     marginBottom: "0.75rem",
                   }}
@@ -717,7 +717,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                       style={{
                         background:
                           paymentMethod === m
-                            ? "rgba(22,163,74,0.2)"
+                            ? "rgba(0,230,118,0.2)"
                             : "#1e1e1e",
                         border: `1px solid ${paymentMethod === m ? "#16a34a" : "#2a2a2a"}`,
                         color: paymentMethod === m ? "#4ade80" : "#94a3b8",
@@ -757,14 +757,14 @@ export default function BookPage({ navigate, driverId }: Props) {
                 <div>
                   <p
                     style={{
-                      color: "#14532d",
+                      color: "#e2e8f0",
                       fontWeight: 600,
                       fontSize: "0.95rem",
                     }}
                   >
                     🛡️ Add Ride Insurance (+₹49)
                   </p>
-                  <p style={{ color: "#4b7e4b", fontSize: "0.82rem" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
                     Coverage for accidents • Emergency helpline
                   </p>
                 </div>
@@ -811,14 +811,14 @@ export default function BookPage({ navigate, driverId }: Props) {
           <div
             className="card-dark"
             style={{
-              background: "rgba(22,163,74,0.05)",
-              borderColor: "rgba(22,163,74,0.25)",
+              background: "rgba(0,230,118,0.05)",
+              borderColor: "rgba(0,230,118,0.25)",
               marginBottom: "1rem",
             }}
           >
             <h3
               style={{
-                color: "#14532d",
+                color: "#e2e8f0",
                 fontWeight: 700,
                 marginBottom: "1rem",
               }}
@@ -865,10 +865,10 @@ export default function BookPage({ navigate, driverId }: Props) {
                     padding: "0.35rem 0",
                   }}
                 >
-                  <span style={{ color: "#4b7e4b", fontSize: "0.9rem" }}>
+                  <span style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
                     {l}
                     {m && (
-                      <span style={{ color: "#6b7280", fontSize: "0.78rem" }}>
+                      <span style={{ color: "#64748b", fontSize: "0.78rem" }}>
                         {" "}
                         ({m})
                       </span>
@@ -905,7 +905,7 @@ export default function BookPage({ navigate, driverId }: Props) {
 
           <p
             style={{
-              color: "#6b7280",
+              color: "#64748b",
               fontSize: "0.78rem",
               marginBottom: "1rem",
               textAlign: "center",
@@ -919,7 +919,7 @@ export default function BookPage({ navigate, driverId }: Props) {
           <div style={{ marginBottom: "1rem" }}>
             <h4
               style={{
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 fontSize: "0.85rem",
                 marginBottom: "0.75rem",
                 fontWeight: 600,
@@ -944,7 +944,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                 flex: 1,
                 background: "none",
                 border: "1px solid #2a2a2a",
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 borderRadius: 8,
                 padding: "0.65rem",
                 cursor: "pointer",
@@ -977,7 +977,7 @@ export default function BookPage({ navigate, driverId }: Props) {
           <div className="card-dark" style={{ marginBottom: "1rem" }}>
             <h3
               style={{
-                color: "#14532d",
+                color: "#e2e8f0",
                 fontWeight: 700,
                 marginBottom: "1rem",
               }}
@@ -992,10 +992,10 @@ export default function BookPage({ navigate, driverId }: Props) {
                   alignItems: "center",
                   gap: "0.75rem",
                   padding: "0.75rem",
-                  background: "rgba(22,163,74,0.08)",
+                  background: "rgba(0,230,118,0.08)",
                   borderRadius: 10,
                   marginBottom: "1rem",
-                  border: "1px solid rgba(22,163,74,0.2)",
+                  border: "1px solid rgba(0,230,118,0.2)",
                 }}
               >
                 <img
@@ -1004,10 +1004,10 @@ export default function BookPage({ navigate, driverId }: Props) {
                   style={{ width: 48, height: 48, borderRadius: "50%" }}
                 />
                 <div>
-                  <p style={{ color: "#14532d", fontWeight: 700 }}>
+                  <p style={{ color: "#e2e8f0", fontWeight: 700 }}>
                     {driver.name}
                   </p>
-                  <p style={{ color: "#4b7e4b", fontSize: "0.82rem" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
                     {driver.city} • ⭐ {driver.rating} •{" "}
                     {driver.vehicleTypes[0]}
                   </p>
@@ -1037,17 +1037,17 @@ export default function BookPage({ navigate, driverId }: Props) {
                 fontSize: "0.88rem",
               }}
             >
-              <span style={{ color: "#6b7280" }}>Pickup</span>
-              <span style={{ color: "#14532d" }}>{pickup}</span>
-              <span style={{ color: "#6b7280" }}>Drop</span>
-              <span style={{ color: "#14532d" }}>{drop}</span>
-              <span style={{ color: "#6b7280" }}>Distance</span>
-              <span style={{ color: "#14532d" }}>{distanceKm} km</span>
-              <span style={{ color: "#6b7280" }}>Duration</span>
-              <span style={{ color: "#14532d" }}>{durationMin} min</span>
-              <span style={{ color: "#6b7280" }}>Payment</span>
-              <span style={{ color: "#14532d" }}>{paymentMethod}</span>
-              <span style={{ color: "#6b7280" }}>Total Fare</span>
+              <span style={{ color: "#64748b" }}>Pickup</span>
+              <span style={{ color: "#e2e8f0" }}>{pickup}</span>
+              <span style={{ color: "#64748b" }}>Drop</span>
+              <span style={{ color: "#e2e8f0" }}>{drop}</span>
+              <span style={{ color: "#64748b" }}>Distance</span>
+              <span style={{ color: "#e2e8f0" }}>{distanceKm} km</span>
+              <span style={{ color: "#64748b" }}>Duration</span>
+              <span style={{ color: "#e2e8f0" }}>{durationMin} min</span>
+              <span style={{ color: "#64748b" }}>Payment</span>
+              <span style={{ color: "#e2e8f0" }}>{paymentMethod}</span>
+              <span style={{ color: "#64748b" }}>Total Fare</span>
               <span
                 style={{
                   color: "#4ade80",
@@ -1068,7 +1068,7 @@ export default function BookPage({ navigate, driverId }: Props) {
                 flex: 1,
                 background: "none",
                 border: "1px solid #2a2a2a",
-                color: "#4b7e4b",
+                color: "#94a3b8",
                 borderRadius: 8,
                 padding: "0.65rem",
                 cursor: "pointer",
