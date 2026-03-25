@@ -1,6 +1,4 @@
-import "leaflet/dist/leaflet.css";
-import * as L from "leaflet";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MapCanvas from "../components/MapCanvas";
 import OTPModal from "../components/OTPModal";
 import type { Driver } from "../data/drivers";
@@ -16,6 +14,24 @@ import {
   saveAddress,
   uid,
 } from "../utils/store";
+
+// Load Leaflet dynamically from CDN
+function loadLeaflet(): Promise<any> {
+  return new Promise((resolve) => {
+    if ((window as any).L) {
+      resolve((window as any).L);
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+    document.head.appendChild(link);
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+    script.onload = () => resolve((window as any).L);
+    document.head.appendChild(script);
+  });
+}
 
 interface Props {
   navigate: (p: string) => void;
@@ -50,25 +66,214 @@ export default function BookPage({ navigate, driverId }: Props) {
 
   const [mapModal, setMapModal] = useState<"pickup" | "drop" | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const markerRef = useRef<L.Marker | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
   const [pendingCoords, setPendingCoords] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
 
+  // Inline map & autocomplete state
+  const [pickupCoords, setPickupCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+  const [dropCoords, setDropCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+  const [pickupSuggestions, setPickupSuggestions] = useState<any[]>([]);
+  const [dropSuggestions, setDropSuggestions] = useState<any[]>([]);
+  const [pickupSearching, setPickupSearching] = useState(false);
+  const [dropSearching, setDropSearching] = useState(false);
+  const inlineMapRef = useRef<HTMLDivElement>(null);
+  const inlineMapInstance = useRef<any>(null);
+  const pickupMarkerRef = useRef<any>(null);
+  const dropMarkerRef = useRef<any>(null);
+  const routeLineRef = useRef<any>(null);
+
   useEffect(() => {
-    // Fix leaflet default icon
-    (L.Icon.Default.prototype as any)._getIconUrl = undefined;
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-      iconUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
-      shadowUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+    // Preload leaflet
+    loadLeaflet().then((L) => {
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+        iconUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+      });
     });
   }, []);
+
+  // Haversine distance
+  const haversineKm = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number => {
+    const R = 6371;
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  };
+
+  // Update distance when both coords available
+  // biome-ignore lint/correctness/useExhaustiveDependencies: haversineKm is a stable function
+  useEffect(() => {
+    if (pickupCoords && dropCoords) {
+      const straight = haversineKm(
+        pickupCoords.lat,
+        pickupCoords.lng,
+        dropCoords.lat,
+        dropCoords.lng,
+      );
+      const road = straight * 1.3;
+      setDistanceKm(Math.round(road * 10) / 10);
+      setDurationMin(Math.round(road * 3));
+    }
+  }, [pickupCoords, dropCoords]);
+
+  // Inline map init when on details step
+  useEffect(() => {
+    if (step !== "details") return;
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      if (!inlineMapRef.current || inlineMapInstance.current) return;
+      loadLeaflet().then((L) => {
+        if (cancelled || !inlineMapRef.current || inlineMapInstance.current)
+          return;
+        const map = L.map(inlineMapRef.current).setView([20.5937, 78.9629], 5);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap",
+        }).addTo(map);
+        inlineMapInstance.current = map;
+      });
+    }, 200);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [step]);
+
+  // Update inline map markers
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional
+  useEffect(() => {
+    const map = inlineMapInstance.current;
+    if (!map) return;
+    loadLeaflet().then((LL: any) => {
+      if (routeLineRef.current) {
+        routeLineRef.current.remove();
+        routeLineRef.current = null;
+      }
+      if (pickupCoords) {
+        if (pickupMarkerRef.current) pickupMarkerRef.current.remove();
+        const gIcon = LL.divIcon({
+          html: '<div style="background:#22c55e;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 6px #22c55e"></div>',
+          className: "",
+          iconSize: [14, 14],
+          iconAnchor: [7, 7],
+        });
+        pickupMarkerRef.current = LL.marker(
+          [pickupCoords.lat, pickupCoords.lng],
+          { icon: gIcon },
+        )
+          .bindTooltip("Pickup")
+          .addTo(map);
+      }
+      if (dropCoords) {
+        if (dropMarkerRef.current) dropMarkerRef.current.remove();
+        const rIcon = LL.divIcon({
+          html: '<div style="background:#ef4444;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 6px #ef4444"></div>',
+          className: "",
+          iconSize: [14, 14],
+          iconAnchor: [7, 7],
+        });
+        dropMarkerRef.current = LL.marker([dropCoords.lat, dropCoords.lng], {
+          icon: rIcon,
+        })
+          .bindTooltip("Drop")
+          .addTo(map);
+      }
+      if (pickupCoords && dropCoords) {
+        routeLineRef.current = LL.polyline(
+          [
+            [pickupCoords.lat, pickupCoords.lng],
+            [dropCoords.lat, dropCoords.lng],
+          ],
+          { color: "#22c55e", weight: 2, dashArray: "6,6", opacity: 0.8 },
+        ).addTo(map);
+        map.fitBounds(
+          [
+            [pickupCoords.lat, pickupCoords.lng],
+            [dropCoords.lat, dropCoords.lng],
+          ],
+          { padding: [40, 40] },
+        );
+      } else if (pickupCoords) {
+        map.setView([pickupCoords.lat, pickupCoords.lng], 13);
+      } else if (dropCoords) {
+        map.setView([dropCoords.lat, dropCoords.lng], 13);
+      }
+    });
+  }, [pickupCoords, dropCoords]);
+
+  // Autocomplete search
+  const searchAddress = useCallback(
+    async (query: string, type: "pickup" | "drop") => {
+      if (query.length < 3) {
+        if (type === "pickup") setPickupSuggestions([]);
+        else setDropSuggestions([]);
+        return;
+      }
+      if (type === "pickup") setPickupSearching(true);
+      else setDropSearching(true);
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=in&format=json&limit=5&addressdetails=1`,
+          { headers: { "User-Agent": "DriveEase-App/1.0" } },
+        );
+        const data = await res.json();
+        if (type === "pickup") setPickupSuggestions(data);
+        else setDropSuggestions(data);
+      } catch {
+        // silently fail
+      } finally {
+        if (type === "pickup") setPickupSearching(false);
+        else setDropSearching(false);
+      }
+    },
+    [],
+  );
+
+  // Reverse geocode for map pin
+  const reverseGeocode = useCallback(
+    async (lat: number, lng: number): Promise<string> => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+          { headers: { "User-Agent": "DriveEase-App/1.0" } },
+        );
+        const data = await res.json();
+        return (
+          data.display_name || `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`
+        );
+      } catch {
+        return `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+      }
+    },
+    [],
+  );
+
+  // Debounce timers
+  const pickupDebounce = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dropDebounce = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!mapModal || !mapContainerRef.current) return;
@@ -79,21 +284,27 @@ export default function BookPage({ navigate, driverId }: Props) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
       }
-      const map = L.map(mapContainerRef.current).setView([20.5937, 78.9629], 5);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap contributors",
-      }).addTo(map);
-      mapInstanceRef.current = map;
-      map.on("click", (e: L.LeafletMouseEvent) => {
-        const { lat, lng } = e.latlng;
-        setPendingCoords({ lat, lng });
-        if (markerRef.current) markerRef.current.remove();
-        markerRef.current = L.marker([lat, lng], { draggable: true }).addTo(
-          map,
+      loadLeaflet().then((L) => {
+        if (!mapContainerRef.current) return;
+        const map = L.map(mapContainerRef.current).setView(
+          [20.5937, 78.9629],
+          5,
         );
-        markerRef.current.on("dragend", (de: L.LeafletEvent) => {
-          const pos = (de.target as L.Marker).getLatLng();
-          setPendingCoords({ lat: pos.lat, lng: pos.lng });
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+        }).addTo(map);
+        mapInstanceRef.current = map;
+        map.on("click", (e: any) => {
+          const { lat, lng } = e.latlng;
+          setPendingCoords({ lat, lng });
+          if (markerRef.current) markerRef.current.remove();
+          markerRef.current = L.marker([lat, lng], { draggable: true }).addTo(
+            map,
+          );
+          markerRef.current.on("dragend", (de: any) => {
+            const pos = de.target.getLatLng();
+            setPendingCoords({ lat: pos.lat, lng: pos.lng });
+          });
         });
       });
     }, 100);
@@ -105,13 +316,19 @@ export default function BookPage({ navigate, driverId }: Props) {
       }
       markerRef.current = null;
     };
+    // biome-ignore lint/correctness/useExhaustiveDependencies: intentional refresh on mapModal change
   }, [mapModal]);
 
-  const confirmLocation = () => {
+  const confirmLocation = async () => {
     if (!pendingCoords) return;
-    const label = `Lat: ${pendingCoords.lat.toFixed(4)}, Lng: ${pendingCoords.lng.toFixed(4)}`;
-    if (mapModal === "pickup") setPickup(label);
-    else if (mapModal === "drop") setDrop(label);
+    const label = await reverseGeocode(pendingCoords.lat, pendingCoords.lng);
+    if (mapModal === "pickup") {
+      setPickup(label);
+      setPickupCoords(pendingCoords);
+    } else if (mapModal === "drop") {
+      setDrop(label);
+      setDropCoords(pendingCoords);
+    }
     setMapModal(null);
     setPendingCoords(null);
   };
@@ -614,13 +831,82 @@ export default function BookPage({ navigate, driverId }: Props) {
                     ))}
                   </select>
                 )}
-                <input
-                  data-ocid="book.input"
-                  className="input-dark"
-                  placeholder="Enter pickup address or landmark"
-                  value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    data-ocid="book.input"
+                    className="input-dark"
+                    placeholder="Type pickup address to search..."
+                    value={pickup}
+                    onChange={(e) => {
+                      setPickup(e.target.value);
+                      if (pickupDebounce.current)
+                        clearTimeout(pickupDebounce.current);
+                      pickupDebounce.current = setTimeout(
+                        () => searchAddress(e.target.value, "pickup"),
+                        400,
+                      );
+                    }}
+                  />
+                  {pickupSearching && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        right: 10,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        fontSize: "0.75rem",
+                        color: "#64748b",
+                      }}
+                    >
+                      ⏳
+                    </span>
+                  )}
+                  {pickupSuggestions.length > 0 && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        right: 0,
+                        background: "#1e293b",
+                        border: "1px solid #334155",
+                        borderRadius: 8,
+                        zIndex: 9999,
+                        maxHeight: 200,
+                        overflowY: "auto",
+                      }}
+                    >
+                      {pickupSuggestions.map((s: any) => (
+                        <button
+                          key={s.place_id}
+                          type="button"
+                          onClick={() => {
+                            setPickup(s.display_name);
+                            setPickupCoords({
+                              lat: Number.parseFloat(s.lat),
+                              lng: Number.parseFloat(s.lon),
+                            });
+                            setPickupSuggestions([]);
+                          }}
+                          style={{
+                            display: "block",
+                            width: "100%",
+                            textAlign: "left",
+                            background: "transparent",
+                            border: "none",
+                            color: "#e2e8f0",
+                            padding: "0.55rem 0.75rem",
+                            fontSize: "0.82rem",
+                            cursor: "pointer",
+                            borderBottom: "1px solid #334155",
+                          }}
+                        >
+                          📍 {s.display_name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <button
                   data-ocid="book.primary_button"
                   type="button"
@@ -690,12 +976,81 @@ export default function BookPage({ navigate, driverId }: Props) {
                     ))}
                   </select>
                 )}
-                <input
-                  className="input-dark"
-                  placeholder="Enter drop address or landmark"
-                  value={drop}
-                  onChange={(e) => setDrop(e.target.value)}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    className="input-dark"
+                    placeholder="Type drop address to search..."
+                    value={drop}
+                    onChange={(e) => {
+                      setDrop(e.target.value);
+                      if (dropDebounce.current)
+                        clearTimeout(dropDebounce.current);
+                      dropDebounce.current = setTimeout(
+                        () => searchAddress(e.target.value, "drop"),
+                        400,
+                      );
+                    }}
+                  />
+                  {dropSearching && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        right: 10,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        fontSize: "0.75rem",
+                        color: "#64748b",
+                      }}
+                    >
+                      ⏳
+                    </span>
+                  )}
+                  {dropSuggestions.length > 0 && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        right: 0,
+                        background: "#1e293b",
+                        border: "1px solid #334155",
+                        borderRadius: 8,
+                        zIndex: 9999,
+                        maxHeight: 200,
+                        overflowY: "auto",
+                      }}
+                    >
+                      {dropSuggestions.map((s: any) => (
+                        <button
+                          key={s.place_id}
+                          type="button"
+                          onClick={() => {
+                            setDrop(s.display_name);
+                            setDropCoords({
+                              lat: Number.parseFloat(s.lat),
+                              lng: Number.parseFloat(s.lon),
+                            });
+                            setDropSuggestions([]);
+                          }}
+                          style={{
+                            display: "block",
+                            width: "100%",
+                            textAlign: "left",
+                            background: "transparent",
+                            border: "none",
+                            color: "#e2e8f0",
+                            padding: "0.55rem 0.75rem",
+                            fontSize: "0.82rem",
+                            cursor: "pointer",
+                            borderBottom: "1px solid #334155",
+                          }}
+                        >
+                          🎯 {s.display_name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <button
                   data-ocid="book.primary_button"
                   type="button"
@@ -738,6 +1093,68 @@ export default function BookPage({ navigate, driverId }: Props) {
                   />
                   Save this address
                 </label>
+              </div>
+
+              {/* Inline map */}
+              <div>
+                <p
+                  style={{
+                    color: "#94a3b8",
+                    fontSize: "0.85rem",
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  🗺️ Live Route Map
+                </p>
+                <div
+                  ref={inlineMapRef}
+                  id="inline-booking-map"
+                  style={{
+                    height: 280,
+                    borderRadius: 10,
+                    overflow: "hidden",
+                    border: "1px solid #334155",
+                  }}
+                />
+                {pickupCoords && dropCoords && (
+                  <div
+                    style={{
+                      background: "rgba(34,197,94,0.1)",
+                      border: "1px solid rgba(34,197,94,0.3)",
+                      borderRadius: 8,
+                      padding: "0.5rem 0.75rem",
+                      marginTop: "0.5rem",
+                      display: "flex",
+                      gap: "1rem",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#4ade80",
+                        fontSize: "0.85rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      📏 ~{distanceKm} km road distance
+                    </span>
+                    <span style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+                      ⏱ ~{durationMin} min estimated
+                    </span>
+                  </div>
+                )}
+                {!pickupCoords && !dropCoords && (
+                  <p
+                    style={{
+                      color: "#475569",
+                      fontSize: "0.78rem",
+                      marginTop: "0.4rem",
+                      textAlign: "center",
+                    }}
+                  >
+                    Type an address above to see it on the map
+                  </p>
+                )}
               </div>
 
               <div

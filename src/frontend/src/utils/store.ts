@@ -484,3 +484,53 @@ export function getCustomerNote(phone: string): CustomerNote | null {
 export function saveCustomerNote(n: CustomerNote): void {
   localStorage.setItem(`de_cust_note_${n.phone}`, JSON.stringify(n));
 }
+
+// ---- Staff Call Logs ----
+export interface StaffCallLog {
+  id: string;
+  staffName: string;
+  staffEmail: string;
+  customerPhone: string;
+  customerName: string;
+  callType: "manual-dial" | "callback";
+  duration: number;
+  timestamp: string;
+  disposition: string;
+  notes: string;
+}
+
+export function getStaffCallLogs(): StaffCallLog[] {
+  return get<StaffCallLog[]>("de_staff_call_logs", []);
+}
+export function saveStaffCallLog(log: StaffCallLog): void {
+  const logs = getStaffCallLogs();
+  set("de_staff_call_logs", [log, ...logs].slice(0, 500));
+}
+export function getStaffActivity(): {
+  staffName: string;
+  callsToday: number;
+  totalDurationToday: number;
+  lastActive: string;
+}[] {
+  const logs = getStaffCallLogs();
+  const today = new Date().toDateString();
+  const todayLogs = logs.filter(
+    (l) => new Date(l.timestamp).toDateString() === today,
+  );
+  const map: Record<string, { calls: number; duration: number; last: string }> =
+    {};
+  for (const l of todayLogs) {
+    if (!map[l.staffName])
+      map[l.staffName] = { calls: 0, duration: 0, last: l.timestamp };
+    map[l.staffName].calls++;
+    map[l.staffName].duration += l.duration;
+    if (l.timestamp > map[l.staffName].last)
+      map[l.staffName].last = l.timestamp;
+  }
+  return Object.entries(map).map(([name, d]) => ({
+    staffName: name,
+    callsToday: d.calls,
+    totalDurationToday: d.duration,
+    lastActive: d.last,
+  }));
+}

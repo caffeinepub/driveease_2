@@ -1,44 +1,36 @@
-# DriveEase - Enhancement Sprint
+# DriveEase - V25: Ameyo-Style Staff CRM + Booking Map Fix
 
 ## Current State
-DriveEase is a fully functional driver booking platform with:
-- Homepage with 3D-style CTA buttons
-- Driver registration (3-step with KYC docs + ₹150 payment)
-- Driver login portal with online/offline toggle and active ride management
-- Booking flow with fare estimate, ride states, OTP verification
-- Live Drivers page with city/state filters
-- Admin panel with full CRM (registrations, bookings, pricing, analytics, sync)
-- My Bookings page with wallet, fare breakdown, ride stepper
-- Plans, Insurance, Payment pages
-- IST timestamps throughout
-- PWA install button
+- StaffCRMPage.tsx: Ameyo-style dark CRM with customer search by phone, comment timeline, call modal (hold/mute/record), tag management, callbacks. No live monitoring dashboard or admin activity view.
+- AdminPage.tsx: Has staff/executive management tab, recordings tab, callbacks tab. No live staff activity monitoring.
+- BookPage.tsx: Has OpenStreetMap pin selector (click on map to drop pin), but no address autocomplete, no typing-based search, no real-time map update when typing address, no distance calculation from actual route.
 
 ## Requested Changes (Diff)
 
 ### Add
-- **AI Chatbot**: Floating button (bottom right), opens a chat panel with canned smart responses about bookings, pricing, driver info, and support. Responses should feel intelligent and contextual.
-- **Interactive Map Visualization**: On LiveDriversPage and BookPage, add a simulated map canvas (using CSS grid/SVG or canvas) showing driver dots with blinking green pulse animation, route line from pickup to drop, distance and ETA display
-- **Blinking Driver Markers**: Live driver cards get pulsing green ring animation for online drivers
-- **Futuristic Homepage Overhaul**: More glassmorphism, animated gradient orbs in background, Orbitron font for headings, neon-glow borders, 3D bubble buttons with perspective transform on hover
-- **SMS Confirmation Toast**: After booking confirmation, show a toast notification simulating SMS sent confirmation
-- **Route & ETA display in Book page**: Show simulated distance (based on pickup/drop text hash), ETA in minutes, and a mini route card
-- **Driver Tracking Simulation**: In active booking, show animated driver approach with progress indicator
+- **Staff CRM - Live Monitoring Dashboard** (Ameyo-style): New top section showing real-time stats: Total Calls Made Today, Active Staff, Total Customers Contacted, Average Call Duration. Agent list table showing each logged-in staff: name, status (Available/Break/On Call), calls handled, talk time. Per-staff session detail panel (click any staff row).
+- **Staff CRM - Call Activity Log**: Every call made by staff is logged with: staff name, customer phone, call type (manual dial), duration, timestamp, disposition tag.
+- **Admin Panel - Staff Activity Monitor tab**: New tab in admin showing all staff call logs, activity timeline, which staff is currently active, total calls per staff, recordings linked to staff. Admin can see all activity in one view with filters by staff name, date.
+- **BookPage - Address Autocomplete**: When user types in pickup or drop field, use OpenStreetMap Nominatim API (free, no key needed) to fetch India-specific address suggestions. Show dropdown of up to 5 matching addresses. On select, auto-fill address and update map pin.
+- **BookPage - Real-time map update**: Embed a persistent Leaflet map on the booking details step (not just in modal) showing both pickup and drop pins simultaneously. When user types or selects an address, map updates in real-time to show the pin.
+- **BookPage - Distance auto-calculation**: After both pickup and drop are geocoded, use Haversine formula or OpenRouteService free API to calculate straight-line distance (with 1.3x road multiplier as fallback). Display estimated distance in km and update fare estimate automatically.
+- **BookPage - Pickup/drop location via Nominatim**: Replace the coordinate-only label ("Lat: x.xxxx, Lng: y.yyyy") with actual human-readable address after reverse geocoding.
 
 ### Modify
-- **Header**: Add Driver Login button prominently in nav (not just bottom-left portal link)
-- **Live Drivers Page**: Enhance driver cards with pulsing online indicator, approximate ETA badge, better city filtering
-- **Admin Panel**: Ensure live sync badge shows prominently, add sound notification toggle
-- **Book Page**: Add map-style route visualization section between fare estimate and confirm step
+- **StaffCRMPage**: Add live stats bar at top (Total Calls, Active Staff, Avg Duration). Add agent activity table. Store call logs with staff name in localStorage for admin to read.
+- **AdminPage**: Add "Staff Activity" tab showing all staff call logs, per-staff stats, activity feed.
+- **BookPage**: Replace current map modal (pin-only) with inline dual map + address autocomplete with Nominatim + distance calculation.
 
 ### Remove
-- Nothing to remove
+- BookPage coordinate-only labels for address (replace with readable addresses)
 
 ## Implementation Plan
-1. Create `ChatBot.tsx` component - floating button + slide-up chat panel with smart Q&A
-2. Create `MapCanvas.tsx` - SVG-based simulated map with driver dots, route lines, ETA
-3. Update `HomePage.tsx` - Orbitron font import, glassmorphism hero, animated gradient orbs, neon 3D buttons
-4. Update `LiveDriversPage.tsx` - add MapCanvas, pulsing driver dots, ETA badges
-5. Update `BookPage.tsx` - add route visualization card with distance/ETA
-6. Update `App.tsx` - render ChatBot globally
-7. Update `Header.tsx` - add visible Driver Login nav link
-8. Update CSS (`index.css`) - add pulse animations, glow effects, Orbitron font
+1. Create a shared `staffCallLog` store utility (get/save call logs keyed by staff name + timestamp)
+2. Update StaffCRMPage: add live monitoring header stats, agent activity table, log every call to staffCallLog store
+3. Update AdminPage: add Staff Activity tab reading staffCallLog, showing per-staff stats, full activity timeline
+4. Update BookPage:
+   - Add Nominatim address autocomplete hooks for pickup and drop fields
+   - Add inline Leaflet dual map (shows both pickup & drop pins)
+   - Add real-time map update on address select
+   - Add distance calculation (Haversine with 1.3x multiplier) and fare update
+   - Replace coordinate labels with reverse-geocoded human-readable addresses

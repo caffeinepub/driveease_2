@@ -4,6 +4,7 @@ import {
   type CallbackRequest,
   type CommentEntry,
   type CustomerNote,
+  type StaffCallLog,
   addCommentEntry,
   getBookings,
   getCallRecordings,
@@ -11,9 +12,11 @@ import {
   getCommentHistory,
   getCustomerNote,
   getEnquiries,
+  getStaffCallLogs,
   getSubEnquiries,
   saveCallRecording,
   saveCustomerNote,
+  saveStaffCallLog,
   uid,
   updateCallbackRequest,
 } from "../utils/store";
@@ -362,10 +365,12 @@ function LoginScreen({ onLogin }: { onLogin: (exec: Executive) => void }) {
 function CallModal({
   customer,
   staffName,
+  staffEmail,
   onClose,
 }: {
   customer: CustomerProfile;
   staffName: string;
+  staffEmail: string;
   onClose: () => void;
 }) {
   const [callActive, setCallActive] = useState(false);
@@ -396,6 +401,20 @@ function CallModal({
       notes,
     };
     saveCallRecording(rec);
+    // Also save to staff call logs for activity tracking
+    const callLog: StaffCallLog = {
+      id: uid(),
+      staffName,
+      staffEmail,
+      customerPhone: customer.phone,
+      customerName: customer.name,
+      callType: "manual-dial",
+      duration: secs,
+      timestamp: new Date().toISOString(),
+      disposition: "completed",
+      notes,
+    };
+    saveStaffCallLog(callLog);
     if (notes.trim())
       addCommentEntry(customer.phone, staffName, `[Call Note] ${notes}`);
     onClose();
@@ -634,12 +653,19 @@ export default function StaffCRMPage() {
   const [callModalOpen, setCallModalOpen] = useState(false);
   const [recordings, setRecordings] = useState<CallRecording[]>([]);
   const [callbacks, setCallbacks] = useState<CallbackRequest[]>([]);
+  const [staffStatus, setStaffStatus] = useState<"available" | "busy">(
+    "available",
+  );
+  const [staffCallLogs, setStaffCallLogs] = useState<StaffCallLog[]>([]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional refresh on tab change
   useEffect(() => {
     setRecordings(getCallRecordings());
     setCallbacks(getCallbackRequests());
-  }, [activeTab]);
+    setStaffCallLogs(
+      getStaffCallLogs().filter((l) => l.staffEmail === exec?.email),
+    );
+  }, [activeTab, exec?.email]);
 
   const doSearch = () => {
     const found = searchCustomer(searchPhone);
@@ -680,7 +706,7 @@ export default function StaffCRMPage() {
   const myRecordings = recordings.filter((r) => r.staffName === exec.name);
   const pendingCallbacks = callbacks.filter((c) => c.status === "pending");
 
-  const todayCalls = myRecordings.filter((r) => {
+  const _todayCalls = myRecordings.filter((r) => {
     const d = new Date(r.recordedAt);
     const today = new Date();
     return d.toDateString() === today.toDateString();
@@ -796,6 +822,79 @@ export default function StaffCRMPage() {
           {/* ── Dashboard ── */}
           {activeTab === "dashboard" && (
             <div>
+              {/* Live Monitoring Header - Ameyo style */}
+              <div
+                style={{
+                  background:
+                    "linear-gradient(135deg, #020617 0%, #0f172a 100%)",
+                  border: "1px solid #1e3a5f",
+                  borderRadius: 12,
+                  padding: "1rem 1.25rem",
+                  marginBottom: "1.25rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: "0.75rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      background:
+                        staffStatus === "available" ? "#22c55e" : "#f59e0b",
+                      boxShadow: `0 0 8px ${staffStatus === "available" ? "#22c55e" : "#f59e0b"}`,
+                    }}
+                  />
+                  <span
+                    style={{
+                      color: "#e2e8f0",
+                      fontWeight: 700,
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Live Monitoring — {exec.name}
+                  </span>
+                  <span style={{ color: "#475569", fontSize: "0.78rem" }}>
+                    {new Date().toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <button
+                  data-ocid="staff.toggle"
+                  type="button"
+                  onClick={() =>
+                    setStaffStatus((s) =>
+                      s === "available" ? "busy" : "available",
+                    )
+                  }
+                  style={{
+                    border: "none",
+                    borderRadius: 20,
+                    padding: "0.3rem 1rem",
+                    cursor: "pointer",
+                    fontWeight: 700,
+                    fontSize: "0.8rem",
+                    background:
+                      staffStatus === "available"
+                        ? "rgba(34,197,94,0.2)"
+                        : "rgba(245,158,11,0.2)",
+                    color: staffStatus === "available" ? "#22c55e" : "#f59e0b",
+                  }}
+                >
+                  {staffStatus === "available" ? "● Available" : "⚡ On Call"}
+                </button>
+              </div>
+
+              {/* Stats cards */}
               <div
                 style={{
                   display: "flex",
@@ -804,43 +903,186 @@ export default function StaffCRMPage() {
                   marginBottom: "1.5rem",
                 }}
               >
-                {[
-                  ["📞", "Calls Today", todayCalls, "#22c55e"],
-                  [
-                    "🔔",
-                    "Pending Callbacks",
-                    pendingCallbacks.length,
-                    "#f59e0b",
-                  ],
-                  ["📝", "Total Recordings", myRecordings.length, "#3b82f6"],
-                  ["💬", "Total Comments", comments.length, "#8b5cf6"],
-                ].map(([icon, label, val, color]) => (
-                  <div key={label as string} style={S.statCard}>
-                    <div style={{ fontSize: "1.5rem", marginBottom: "0.4rem" }}>
-                      {icon}
+                {(() => {
+                  const todayLogsCount = staffCallLogs.filter(
+                    (l) =>
+                      new Date(l.timestamp).toDateString() ===
+                      new Date().toDateString(),
+                  );
+                  const avgDur =
+                    todayLogsCount.length > 0
+                      ? Math.round(
+                          todayLogsCount.reduce((a, b) => a + b.duration, 0) /
+                            todayLogsCount.length,
+                        )
+                      : 0;
+                  const uniqueCx = new Set(
+                    todayLogsCount.map((l) => l.customerPhone),
+                  ).size;
+                  return [
+                    ["📞", "Calls Today", todayLogsCount.length, "#22c55e"],
+                    [
+                      "⏱️",
+                      "Avg Duration",
+                      `${Math.floor(avgDur / 60)}m ${avgDur % 60}s`,
+                      "#3b82f6",
+                    ],
+                    ["👥", "Customers Contacted", uniqueCx, "#8b5cf6"],
+                    [
+                      "🔔",
+                      "Pending Callbacks",
+                      pendingCallbacks.length,
+                      "#f59e0b",
+                    ],
+                  ].map(([icon, label, val, color]) => (
+                    <div key={label as string} style={S.statCard}>
+                      <div
+                        style={{ fontSize: "1.5rem", marginBottom: "0.4rem" }}
+                      >
+                        {icon}
+                      </div>
+                      <div
+                        style={{
+                          color: color as string,
+                          fontSize: "1.5rem",
+                          fontWeight: 800,
+                        }}
+                      >
+                        {val}
+                      </div>
+                      <div style={{ color: "#64748b", fontSize: "0.82rem" }}>
+                        {label}
+                      </div>
                     </div>
-                    <div
+                  ));
+                })()}
+              </div>
+
+              {/* My Call Activity table */}
+              <div style={S.card}>
+                <p
+                  style={{
+                    color: "#94a3b8",
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                    marginBottom: "1rem",
+                  }}
+                >
+                  📋 My Call Activity Today
+                </p>
+                {staffCallLogs.filter(
+                  (l) =>
+                    new Date(l.timestamp).toDateString() ===
+                    new Date().toDateString(),
+                ).length === 0 ? (
+                  <p
+                    data-ocid="staff.empty_state"
+                    style={{ color: "#475569", fontSize: "0.85rem" }}
+                  >
+                    No calls recorded today. Start a call from the Search
+                    Customer tab.
+                  </p>
+                ) : (
+                  <div style={{ overflowX: "auto" }}>
+                    <table
                       style={{
-                        color: color as string,
-                        fontSize: "1.5rem",
-                        fontWeight: 800,
+                        width: "100%",
+                        borderCollapse: "collapse",
+                        fontSize: "0.83rem",
                       }}
                     >
-                      {val}
-                    </div>
-                    <div style={{ color: "#64748b", fontSize: "0.82rem" }}>
-                      {label}
-                    </div>
+                      <thead>
+                        <tr>
+                          {[
+                            "Customer",
+                            "Phone",
+                            "Duration",
+                            "Disposition",
+                            "Time",
+                          ].map((h) => (
+                            <th
+                              key={h}
+                              style={{
+                                color: "#64748b",
+                                fontWeight: 600,
+                                padding: "0.5rem 0.75rem",
+                                textAlign: "left",
+                                borderBottom: "1px solid #334155",
+                              }}
+                            >
+                              {h}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {staffCallLogs
+                          .filter(
+                            (l) =>
+                              new Date(l.timestamp).toDateString() ===
+                              new Date().toDateString(),
+                          )
+                          .map((log, i) => (
+                            <tr
+                              key={log.id}
+                              data-ocid={`staff.item.${i + 1}`}
+                              style={{ borderBottom: "1px solid #1e293b" }}
+                            >
+                              <td
+                                style={{
+                                  color: "#e2e8f0",
+                                  padding: "0.5rem 0.75rem",
+                                }}
+                              >
+                                {log.customerName}
+                              </td>
+                              <td
+                                style={{
+                                  color: "#22c55e",
+                                  padding: "0.5rem 0.75rem",
+                                }}
+                              >
+                                {log.customerPhone}
+                              </td>
+                              <td
+                                style={{
+                                  color: "#94a3b8",
+                                  padding: "0.5rem 0.75rem",
+                                }}
+                              >
+                                {Math.floor(log.duration / 60)}m{" "}
+                                {log.duration % 60}s
+                              </td>
+                              <td style={{ padding: "0.5rem 0.75rem" }}>
+                                <span
+                                  style={{
+                                    background: "rgba(34,197,94,0.15)",
+                                    color: "#22c55e",
+                                    borderRadius: 20,
+                                    padding: "0.15rem 0.5rem",
+                                    fontSize: "0.75rem",
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  {log.disposition || "completed"}
+                                </span>
+                              </td>
+                              <td
+                                style={{
+                                  color: "#64748b",
+                                  padding: "0.5rem 0.75rem",
+                                }}
+                              >
+                                {new Date(log.timestamp).toLocaleTimeString(
+                                  "en-IN",
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
                   </div>
-                ))}
-              </div>
-              <div style={S.card}>
-                <p style={{ color: "#64748b", fontSize: "0.88rem" }}>
-                  Welcome back,{" "}
-                  <strong style={{ color: "#22c55e" }}>{exec.name}</strong>! Use
-                  the sidebar to search customers, manage calls, and handle
-                  callbacks.
-                </p>
+                )}
               </div>
             </div>
           )}
@@ -1655,6 +1897,7 @@ export default function StaffCRMPage() {
         <CallModal
           customer={customer}
           staffName={exec.name}
+          staffEmail={exec.email}
           onClose={() => {
             setCallModalOpen(false);
             setRecordings(getCallRecordings());

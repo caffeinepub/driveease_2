@@ -10,6 +10,7 @@ import {
   type Enquiry,
   type PricingConfig,
   type Registration,
+  type StaffCallLog,
   clearCallRecordings,
   getBookings,
   getCallRecordings,
@@ -20,6 +21,8 @@ import {
   getEnquiries,
   getPricingConfig,
   getRegistrations,
+  getStaffActivity,
+  getStaffCallLogs,
   getSubEnquiries,
   saveCallRecording,
   saveComment,
@@ -982,6 +985,397 @@ function StaffTab() {
 }
 
 // ─── Main Admin Page ───────────────────────────────────────────────────────
+// ─── Staff Activity Tab ───────────────────────────────────────────────────
+function StaffActivityTab() {
+  const [allLogs, setAllLogs] = useState<StaffCallLog[]>([]);
+  const [filterStaff, setFilterStaff] = useState<string>("");
+  const [viewingStaff, setViewingStaff] = useState<string | null>(null);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: load once
+  useEffect(() => {
+    setAllLogs(getStaffCallLogs());
+  }, []);
+
+  const today = new Date().toDateString();
+  const todayLogs = allLogs.filter(
+    (l) => new Date(l.timestamp).toDateString() === today,
+  );
+  const allStaffActivity = getStaffActivity();
+  const uniqueStaff = Array.from(new Set(allLogs.map((l) => l.staffName)));
+  const uniqueCxToday = new Set(todayLogs.map((l) => l.customerPhone)).size;
+  const totalTalkToday = todayLogs.reduce((a, b) => a + b.duration, 0);
+
+  const filteredLogs = filterStaff
+    ? allLogs.filter((l) => l.staffName === filterStaff)
+    : allLogs;
+
+  const cardS = {
+    background: "#fff",
+    borderRadius: 10,
+    padding: "1rem 1.25rem",
+    border: "1px solid #e2e8f0",
+    flex: 1,
+    minWidth: 140,
+  } as React.CSSProperties;
+
+  return (
+    <div>
+      <h2
+        style={{
+          fontWeight: 700,
+          color: "#1e293b",
+          fontSize: "1.2rem",
+          marginBottom: "1.25rem",
+        }}
+      >
+        📊 Staff Activity Monitor
+      </h2>
+
+      {/* Summary cards */}
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          flexWrap: "wrap",
+          marginBottom: "1.5rem",
+        }}
+      >
+        {[
+          ["Total Calls Today", todayLogs.length, "#3b82f6"],
+          ["Staff Active Today", allStaffActivity.length, "#22c55e"],
+          ["Customers Contacted", uniqueCxToday, "#8b5cf6"],
+          [
+            "Total Talk Time",
+            `${Math.floor(totalTalkToday / 60)}m ${totalTalkToday % 60}s`,
+            "#f59e0b",
+          ],
+        ].map(([label, val, color]) => (
+          <div key={label as string} style={cardS}>
+            <div
+              style={{
+                color: color as string,
+                fontSize: "1.5rem",
+                fontWeight: 800,
+              }}
+            >
+              {val}
+            </div>
+            <div
+              style={{
+                color: "#64748b",
+                fontSize: "0.82rem",
+                marginTop: "0.2rem",
+              }}
+            >
+              {label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Staff Performance Table */}
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: 12,
+          border: "1px solid #e2e8f0",
+          padding: "1.25rem",
+          marginBottom: "1.5rem",
+        }}
+      >
+        <h3
+          style={{
+            color: "#1e293b",
+            fontWeight: 700,
+            fontSize: "0.95rem",
+            marginBottom: "1rem",
+          }}
+        >
+          Staff Performance Today
+        </h3>
+        {allStaffActivity.length === 0 ? (
+          <p
+            data-ocid="admin.staff-activity.empty_state"
+            style={{ color: "#94a3b8", fontSize: "0.88rem" }}
+          >
+            No staff activity today.
+          </p>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: "0.88rem",
+              }}
+            >
+              <thead>
+                <tr>
+                  {[
+                    "Name",
+                    "Calls Today",
+                    "Total Duration",
+                    "Avg Duration",
+                    "Last Active",
+                    "",
+                  ].map((h) => (
+                    <th
+                      key={h}
+                      style={{
+                        color: "#64748b",
+                        fontWeight: 600,
+                        padding: "0.6rem 0.75rem",
+                        textAlign: "left",
+                        borderBottom: "1px solid #e2e8f0",
+                      }}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {allStaffActivity.map((s, i) => {
+                  const avg =
+                    s.callsToday > 0
+                      ? Math.round(s.totalDurationToday / s.callsToday)
+                      : 0;
+                  return (
+                    <tr
+                      key={s.staffName}
+                      data-ocid={`admin.staff-activity.item.${i + 1}`}
+                      style={{ borderBottom: "1px solid #f1f5f9" }}
+                    >
+                      <td
+                        style={{
+                          padding: "0.6rem 0.75rem",
+                          fontWeight: 600,
+                          color: "#1e293b",
+                        }}
+                      >
+                        {s.staffName}
+                      </td>
+                      <td
+                        style={{
+                          padding: "0.6rem 0.75rem",
+                          color: "#3b82f6",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {s.callsToday}
+                      </td>
+                      <td
+                        style={{ padding: "0.6rem 0.75rem", color: "#475569" }}
+                      >
+                        {Math.floor(s.totalDurationToday / 60)}m{" "}
+                        {s.totalDurationToday % 60}s
+                      </td>
+                      <td
+                        style={{ padding: "0.6rem 0.75rem", color: "#475569" }}
+                      >
+                        {Math.floor(avg / 60)}m {avg % 60}s
+                      </td>
+                      <td
+                        style={{
+                          padding: "0.6rem 0.75rem",
+                          color: "#94a3b8",
+                          fontSize: "0.82rem",
+                        }}
+                      >
+                        {new Date(s.lastActive).toLocaleTimeString("en-IN")}
+                      </td>
+                      <td style={{ padding: "0.6rem 0.75rem" }}>
+                        <button
+                          data-ocid="admin.staff-activity.primary_button"
+                          type="button"
+                          onClick={() =>
+                            setViewingStaff(
+                              viewingStaff === s.staffName ? null : s.staffName,
+                            )
+                          }
+                          style={{
+                            background: "#eff6ff",
+                            color: "#3b82f6",
+                            border: "none",
+                            borderRadius: 6,
+                            padding: "0.3rem 0.65rem",
+                            fontSize: "0.78rem",
+                            cursor: "pointer",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {viewingStaff === s.staffName
+                            ? "Hide Logs"
+                            : "View Logs"}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Full Call Log */}
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: 12,
+          border: "1px solid #e2e8f0",
+          padding: "1.25rem",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "1rem",
+            flexWrap: "wrap",
+            gap: "0.75rem",
+          }}
+        >
+          <h3
+            style={{
+              color: "#1e293b",
+              fontWeight: 700,
+              fontSize: "0.95rem",
+              margin: 0,
+            }}
+          >
+            All Call Logs
+          </h3>
+          <select
+            data-ocid="admin.staff-activity.select"
+            value={filterStaff}
+            onChange={(e) => setFilterStaff(e.target.value)}
+            style={{
+              background: "#f8fafc",
+              border: "1px solid #e2e8f0",
+              borderRadius: 7,
+              padding: "0.4rem 0.75rem",
+              fontSize: "0.85rem",
+              color: "#1e293b",
+              cursor: "pointer",
+            }}
+          >
+            <option value="">All Staff</option>
+            {uniqueStaff.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+        {filteredLogs.length === 0 ? (
+          <p
+            data-ocid="admin.staff-activity.empty_state"
+            style={{ color: "#94a3b8", fontSize: "0.88rem" }}
+          >
+            No call logs found.
+          </p>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: "0.83rem",
+              }}
+            >
+              <thead>
+                <tr>
+                  {[
+                    "Staff",
+                    "Customer",
+                    "Phone",
+                    "Duration",
+                    "Disposition",
+                    "Notes",
+                    "Time",
+                  ].map((h) => (
+                    <th
+                      key={h}
+                      style={{
+                        color: "#64748b",
+                        fontWeight: 600,
+                        padding: "0.5rem 0.75rem",
+                        textAlign: "left",
+                        borderBottom: "1px solid #e2e8f0",
+                      }}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredLogs.map((log, i) => (
+                  <tr
+                    key={log.id}
+                    data-ocid={`admin.staff-activity.item.${i + 1}`}
+                    style={{ borderBottom: "1px solid #f1f5f9" }}
+                  >
+                    <td
+                      style={{
+                        padding: "0.5rem 0.75rem",
+                        color: "#1e293b",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {log.staffName}
+                    </td>
+                    <td style={{ padding: "0.5rem 0.75rem", color: "#475569" }}>
+                      {log.customerName}
+                    </td>
+                    <td style={{ padding: "0.5rem 0.75rem", color: "#3b82f6" }}>
+                      {log.customerPhone}
+                    </td>
+                    <td style={{ padding: "0.5rem 0.75rem", color: "#475569" }}>
+                      {Math.floor(log.duration / 60)}m {log.duration % 60}s
+                    </td>
+                    <td style={{ padding: "0.5rem 0.75rem" }}>
+                      <span
+                        style={{
+                          background: "#f0fdf4",
+                          color: "#16a34a",
+                          borderRadius: 20,
+                          padding: "0.15rem 0.5rem",
+                          fontSize: "0.75rem",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {log.disposition || "completed"}
+                      </span>
+                    </td>
+                    <td
+                      style={{
+                        padding: "0.5rem 0.75rem",
+                        color: "#64748b",
+                        maxWidth: 150,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {log.notes || "—"}
+                    </td>
+                    <td style={{ padding: "0.5rem 0.75rem", color: "#94a3b8" }}>
+                      {new Date(log.timestamp).toLocaleString("en-IN")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [auth, setAuth] = useState<AuthState | null>(getAuthState);
   const [tab, setTab] = useState("dashboard");
@@ -1284,7 +1678,15 @@ export default function AdminPage() {
       perm: "callbacks" as keyof ExecPermissions,
     },
     ...(isFounder
-      ? [{ id: "staff", icon: "🧑‍💼", label: "Staff", perm: null }]
+      ? [
+          { id: "staff", icon: "🧑‍💼", label: "Staff", perm: null },
+          {
+            id: "staff-activity",
+            icon: "📊",
+            label: "Staff Activity",
+            perm: null,
+          },
+        ]
       : []),
   ];
 
@@ -4453,6 +4855,9 @@ Notes: ${r.notes}`;
 
           {/* Staff */}
           {tab === "staff" && isFounder && <StaffTab />}
+
+          {/* Staff Activity */}
+          {tab === "staff-activity" && isFounder && <StaffActivityTab />}
         </main>
       </div>
     </div>
