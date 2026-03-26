@@ -34,7 +34,11 @@ import {
   updateEnquiry,
   updateRegistration,
 } from "../utils/store";
-import { pullAllAndMerge, pushAll } from "../utils/syncService";
+import {
+  pullAllAndMerge,
+  pushAll,
+  subscribeToChanges,
+} from "../utils/syncService";
 
 const ADMIN_PASS = "126312";
 
@@ -1479,6 +1483,16 @@ export default function AdminPage() {
     } catch {
       setLiveStatus("reconnecting");
     }
+    // Firebase real-time listener for instant cross-device updates
+    const unsubFirebase = subscribeToChanges(() => {
+      try {
+        loadData(true);
+        setLiveStatus("live");
+      } catch {
+        setLiveStatus("reconnecting");
+      }
+    });
+    // Fallback polling every 30s in case Firebase is unavailable
     const id = setInterval(() => {
       try {
         loadData(true);
@@ -1486,8 +1500,11 @@ export default function AdminPage() {
       } catch {
         setLiveStatus("reconnecting");
       }
-    }, 20000);
-    return () => clearInterval(id);
+    }, 30000);
+    return () => {
+      unsubFirebase();
+      clearInterval(id);
+    };
   }, [auth]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: tab sync

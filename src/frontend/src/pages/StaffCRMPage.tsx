@@ -20,7 +20,11 @@ import {
   uid,
   updateCallbackRequest,
 } from "../utils/store";
-import { pullAllAndMerge, pushItem } from "../utils/syncService";
+import {
+  pullAllAndMerge,
+  pushItem,
+  subscribeToChanges,
+} from "../utils/syncService";
 
 interface Executive {
   id: string;
@@ -659,6 +663,23 @@ export default function StaffCRMPage() {
     "available",
   );
   const [staffCallLogs, setStaffCallLogs] = useState<StaffCallLog[]>([]);
+
+  // Firebase real-time subscription for instant data updates
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional
+  useEffect(() => {
+    if (!exec) return;
+    // Initial pull from Firebase
+    pullAllAndMerge().catch(() => {});
+    // Subscribe to real-time changes
+    const unsub = subscribeToChanges(() => {
+      setRecordings(getCallRecordings());
+      setCallbacks(getCallbackRequests());
+      setStaffCallLogs(
+        getStaffCallLogs().filter((l) => l.staffEmail === exec?.email),
+      );
+    });
+    return unsub;
+  }, [exec]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional refresh on tab change
   useEffect(() => {
