@@ -1425,52 +1425,67 @@ export default function AdminPage() {
   const [callbacks, setCallbacks] = useState<CallbackRequest[]>([]);
 
   const loadData = (withAlert = false) => {
-    // Pull from remote sync service (async, best-effort)
+    // Pull DIRECTLY from Firestore (primary source), then update UI from localStorage cache
     pullAllAndMerge()
       .then((hasNew) => {
-        if (hasNew && withAlert) {
+        // After Firestore data is merged into localStorage, update all state
+        const newBookings = getBookings();
+        const newRegs = getRegistrations();
+        const newEnqs = getEnquiries();
+        const newSubEnqs = getSubEnquiries();
+        const pendingRegs = newRegs.filter(
+          (r) => r.status === "pending",
+        ).length;
+        const pendingBookings = newBookings.filter(
+          (b) => b.status === "pending",
+        ).length;
+        if (
+          withAlert &&
+          (hasNew ||
+            pendingRegs > prevPendingRegs ||
+            pendingBookings > prevPendingBookings ||
+            newEnqs.length > prevEnquiries.current ||
+            newSubEnqs.length > prevSubEnqs.current)
+        ) {
           playAlert();
           setSyncDone(true);
           setTimeout(() => setSyncDone(false), 3000);
         }
+        setPrevPendingRegs(pendingRegs);
+        setPrevPendingBookings(pendingBookings);
+        prevEnquiries.current = newEnqs.length;
+        prevSubEnqs.current = newSubEnqs.length;
+        setBookings(newBookings);
+        setDrivers(getDrivers());
+        setRegs(newRegs);
+        setCustomers(getCustomers());
+        setEnquiries(newEnqs);
+        setSubEnqs(newSubEnqs);
+        setRecordings(getCallRecordings());
+        setCallbacks(getCallbackRequests());
+        setLastSync(new Date());
       })
-      .catch(() => {});
+      .catch(() => {
+        // Fallback: load from localStorage if Firestore unreachable
+        setBookings(getBookings());
+        setDrivers(getDrivers());
+        setRegs(getRegistrations());
+        setCustomers(getCustomers());
+        setEnquiries(getEnquiries());
+        setSubEnqs(getSubEnquiries());
+        setRecordings(getCallRecordings());
+        setCallbacks(getCallbackRequests());
+        setLastSync(new Date());
+      });
+    // Immediately show cached data while Firestore loads
+    setBookings(getBookings());
+    setDrivers(getDrivers());
+    setRegs(getRegistrations());
+    setCustomers(getCustomers());
+    setEnquiries(getEnquiries());
+    setSubEnqs(getSubEnquiries());
     setRecordings(getCallRecordings());
     setCallbacks(getCallbackRequests());
-    const newBookings = getBookings();
-    const newRegs = getRegistrations();
-    const pendingRegs = newRegs.filter((r) => r.status === "pending").length;
-    const pendingBookings = newBookings.filter(
-      (b) => b.status === "pending",
-    ).length;
-    if (
-      withAlert &&
-      (pendingRegs > prevPendingRegs || pendingBookings > prevPendingBookings)
-    )
-      playAlert();
-    const newEnqs = getEnquiries();
-    const newSubEnqs = getSubEnquiries();
-    if (
-      withAlert &&
-      (pendingRegs > prevPendingRegs ||
-        pendingBookings > prevPendingBookings ||
-        newEnqs.length > prevEnquiries.current ||
-        newSubEnqs.length > prevSubEnqs.current)
-    ) {
-      playAlert();
-      setSyncDone(true);
-      setTimeout(() => setSyncDone(false), 3000);
-    }
-    setPrevPendingRegs(pendingRegs);
-    setPrevPendingBookings(pendingBookings);
-    prevEnquiries.current = newEnqs.length;
-    prevSubEnqs.current = newSubEnqs.length;
-    setBookings(newBookings);
-    setDrivers(getDrivers());
-    setRegs(newRegs);
-    setCustomers(getCustomers());
-    setEnquiries(newEnqs);
-    setSubEnqs(newSubEnqs);
     setLastSync(new Date());
   };
 

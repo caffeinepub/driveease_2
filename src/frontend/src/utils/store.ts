@@ -1,5 +1,6 @@
 import { getAvatar } from "../data/drivers";
 import type { Driver } from "../data/drivers";
+import { pushItem, pushList } from "./syncService";
 
 const KEYS = {
   drivers: "de_drivers",
@@ -52,6 +53,7 @@ export function getPricingConfig(): PricingConfig {
 }
 export function savePricingConfig(c: PricingConfig): void {
   set(KEYS.pricingConfig, c);
+  // Pricing config is admin-only; no need to push to Firestore
 }
 
 export function calculateFare(
@@ -106,6 +108,10 @@ export function getDrivers(): Driver[] {
 }
 export function saveDrivers(d: Driver[]) {
   set(KEYS.drivers, d);
+  // Push each driver to Firestore
+  for (const driver of d) {
+    pushItem("drivers", driver as unknown as { id: string }).catch(() => {});
+  }
 }
 
 export function generateRideOtp(): string {
@@ -140,7 +146,6 @@ export interface Booking {
   createdAt: string;
   rideOtp?: string;
   rideOtpStatus?: "pending" | "verified";
-  // Extended ride state fields
   rideState?:
     | "searching"
     | "assigned"
@@ -165,10 +170,14 @@ export function addBooking(b: Booking) {
   const arr = getBookings();
   arr.unshift(b);
   set(KEYS.bookings, arr);
+  pushItem("bookings", b as unknown as { id: string }).catch(() => {});
 }
 export function updateBooking(id: string, patch: Partial<Booking>) {
   const arr = getBookings().map((b) => (b.id === id ? { ...b, ...patch } : b));
   set(KEYS.bookings, arr);
+  const updated = arr.find((b) => b.id === id);
+  if (updated)
+    pushItem("bookings", updated as unknown as { id: string }).catch(() => {});
 }
 export function updateBookingRideOtp(id: string, status: "verified") {
   updateBooking(id, { rideOtpStatus: status, status: "in-progress" });
@@ -204,12 +213,18 @@ export function addRegistration(r: Registration) {
   const arr = getRegistrations();
   arr.unshift(r);
   set(KEYS.registrations, arr);
+  pushItem("registrations", r as unknown as { id: string }).catch(() => {});
 }
 export function updateRegistration(id: string, patch: Partial<Registration>) {
   const arr = getRegistrations().map((r) =>
     r.id === id ? { ...r, ...patch } : r,
   );
   set(KEYS.registrations, arr);
+  const updated = arr.find((r) => r.id === id);
+  if (updated)
+    pushItem("registrations", updated as unknown as { id: string }).catch(
+      () => {},
+    );
   if (patch.status === "approved") {
     const reg = arr.find((r) => r.id === id);
     if (reg) {
@@ -259,6 +274,7 @@ export function loginCustomer(phone: string, name: string) {
   else arr.unshift(c);
   set(KEYS.customers, arr);
   set(KEYS.currentCustomer, c);
+  pushItem("customers", { id: phone, ...c }).catch(() => {});
 }
 export function getCurrentCustomer(): Customer | null {
   return get<Customer | null>(KEYS.currentCustomer, null);
@@ -299,12 +315,16 @@ export function addEnquiry(e: Enquiry) {
   const arr = getEnquiries();
   arr.unshift(e);
   set(KEYS.enquiries, arr);
+  pushItem("enquiries", e as unknown as { id: string }).catch(() => {});
 }
 export function updateEnquiry(id: string, patch: Partial<Enquiry>) {
   set(
     KEYS.enquiries,
     getEnquiries().map((e) => (e.id === id ? { ...e, ...patch } : e)),
   );
+  const updated = getEnquiries().find((e) => e.id === id);
+  if (updated)
+    pushItem("enquiries", updated as unknown as { id: string }).catch(() => {});
 }
 
 export interface SubEnquiry {
@@ -321,6 +341,7 @@ export function addSubEnquiry(e: SubEnquiry) {
   const arr = getSubEnquiries();
   arr.unshift(e);
   set(KEYS.subEnquiries, arr);
+  pushItem("sub_enquiries", e as unknown as { id: string }).catch(() => {});
 }
 
 export function getSavedAddresses(phone: string): string[] {
@@ -395,6 +416,7 @@ export function saveCallRecording(r: CallRecording): void {
   const arr = getCallRecordings();
   arr.unshift(r);
   set(KEYS.callRecordings, arr);
+  pushItem("call_recordings", r as unknown as { id: string }).catch(() => {});
 }
 export function clearCallRecordings(): void {
   set(KEYS.callRecordings, []);
@@ -416,15 +438,21 @@ export function saveCallbackRequest(r: CallbackRequest): void {
   const arr = getCallbackRequests();
   arr.unshift(r);
   set(KEYS.callbackRequests, arr);
+  pushItem("callback_requests", r as unknown as { id: string }).catch(() => {});
 }
 export function updateCallbackRequest(
   id: string,
   patch: Partial<CallbackRequest>,
 ): void {
-  set(
-    KEYS.callbackRequests,
-    getCallbackRequests().map((r) => (r.id === id ? { ...r, ...patch } : r)),
+  const arr = getCallbackRequests().map((r) =>
+    r.id === id ? { ...r, ...patch } : r,
   );
+  set(KEYS.callbackRequests, arr);
+  const updated = arr.find((r) => r.id === id);
+  if (updated)
+    pushItem("callback_requests", updated as unknown as { id: string }).catch(
+      () => {},
+    );
 }
 
 export function uid(): string {
@@ -453,15 +481,19 @@ export function addCommentEntry(
   staffName: string,
   text: string,
 ): void {
-  const arr = getCommentHistory(recordId);
-  arr.unshift({
+  const entry: CommentEntry = {
     id: uid(),
     recordId,
     staffName,
     text,
     createdAt: new Date().toISOString(),
-  });
+  };
+  const arr = getCommentHistory(recordId);
+  arr.unshift(entry);
   localStorage.setItem(`de_comment_hist_${recordId}`, JSON.stringify(arr));
+  pushItem("comment_history", entry as unknown as { id: string }).catch(
+    () => {},
+  );
 }
 
 // ---- Customer Notes ----
@@ -504,7 +536,9 @@ export function getStaffCallLogs(): StaffCallLog[] {
 }
 export function saveStaffCallLog(log: StaffCallLog): void {
   const logs = getStaffCallLogs();
-  set("de_staff_call_logs", [log, ...logs].slice(0, 500));
+  const updated = [log, ...logs].slice(0, 500);
+  set("de_staff_call_logs", updated);
+  pushItem("staff_call_logs", log as unknown as { id: string }).catch(() => {});
 }
 export function getStaffActivity(): {
   staffName: string;
