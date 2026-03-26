@@ -14,6 +14,7 @@ import {
   saveAddress,
   uid,
 } from "../utils/store";
+import { pushItem } from "../utils/syncService";
 
 // Load Leaflet dynamically from CDN
 function loadLeaflet(): Promise<any> {
@@ -422,6 +423,7 @@ export default function BookPage({ navigate, driverId }: Props) {
       driverEarnings,
     };
     addBooking(b);
+    pushItem("bookings", b as unknown as { id: string });
     setBooking(b);
     setSearching(true);
 

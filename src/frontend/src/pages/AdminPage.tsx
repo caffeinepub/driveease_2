@@ -34,6 +34,7 @@ import {
   updateEnquiry,
   updateRegistration,
 } from "../utils/store";
+import { pullAllAndMerge, pushAll } from "../utils/syncService";
 
 const ADMIN_PASS = "126312";
 
@@ -1420,6 +1421,16 @@ export default function AdminPage() {
   const [callbacks, setCallbacks] = useState<CallbackRequest[]>([]);
 
   const loadData = (withAlert = false) => {
+    // Pull from remote sync service (async, best-effort)
+    pullAllAndMerge()
+      .then((hasNew) => {
+        if (hasNew && withAlert) {
+          playAlert();
+          setSyncDone(true);
+          setTimeout(() => setSyncDone(false), 3000);
+        }
+      })
+      .catch(() => {});
     setRecordings(getCallRecordings());
     setCallbacks(getCallbackRequests());
     const newBookings = getBookings();
@@ -1508,6 +1519,7 @@ export default function AdminPage() {
 
   const syncNow = () => {
     setSyncLoading(true);
+    pushAll().catch(() => {});
     try {
       loadData(true);
       setLiveStatus("live");

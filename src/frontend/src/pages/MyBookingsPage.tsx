@@ -13,6 +13,7 @@ import {
   uid,
   updateBooking,
 } from "../utils/store";
+import { pushItem } from "../utils/syncService";
 
 interface Props {
   navigate: (p: string) => void;
@@ -767,6 +768,10 @@ export default function MyBookingsPage({ navigate }: Props) {
                     note: callbackNote,
                   };
                   saveCallbackRequest(req);
+                  pushItem(
+                    "callback_requests",
+                    req as unknown as { id: string },
+                  );
                   setCallbackSuccess(callbackModal);
                   setCallbackModal(null);
                 }}

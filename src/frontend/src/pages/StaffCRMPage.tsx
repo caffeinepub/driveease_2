@@ -20,6 +20,7 @@ import {
   uid,
   updateCallbackRequest,
 } from "../utils/store";
+import { pullAllAndMerge, pushItem } from "../utils/syncService";
 
 interface Executive {
   id: string;
@@ -401,6 +402,7 @@ function CallModal({
       notes,
     };
     saveCallRecording(rec);
+    pushItem("call_recordings", rec as unknown as { id: string });
     // Also save to staff call logs for activity tracking
     const callLog: StaffCallLog = {
       id: uid(),
@@ -683,6 +685,13 @@ export default function StaffCRMPage() {
   const saveComment = () => {
     if (!newComment.trim() || !customer || !exec) return;
     addCommentEntry(customer.phone, exec.name, newComment.trim());
+    pushItem("comment_history", {
+      id: Date.now().toString(),
+      recordId: customer.phone,
+      text: newComment.trim(),
+      staffName: exec.name,
+      createdAt: new Date().toISOString(),
+    } as unknown as { id: string });
     setComments(getCommentHistory(customer.phone));
     setNewComment("");
   };

@@ -5,6 +5,7 @@ import {
   getRegistrations,
   uid,
 } from "../utils/store";
+import { pushItem } from "../utils/syncService";
 
 const STATES = [
   "Andhra Pradesh",
@@ -203,6 +204,7 @@ export default function DriverRegisterPage() {
       submittedAt: new Date().toISOString(),
     };
     addRegistration(r);
+    pushItem("registrations", r as unknown as { id: string });
     localStorage.setItem("de_reg_phone", form.phone);
     setSubmitted(true);
   };

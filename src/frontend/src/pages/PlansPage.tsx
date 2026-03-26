@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { type SubEnquiry, addSubEnquiry, uid } from "../utils/store";
+import { pushItem } from "../utils/syncService";
 
 const PLANS = [
   {
@@ -95,6 +96,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       createdAt: new Date().toISOString(),
     };
     addSubEnquiry(e);
+    pushItem("sub_enquiries", e as unknown as { id: string });
     setSuccess(true);
     setSubmitted(true);
   };
