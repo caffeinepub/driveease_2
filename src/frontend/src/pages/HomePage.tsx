@@ -267,7 +267,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* ANNOUNCEMENT STRIP */}
       <div
         style={{
-          background: "#FF6200",
+          background: "#F5C100",
           overflow: "hidden",
           padding: "0.55rem 0",
           position: "relative",
@@ -371,7 +371,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               onClick={() => navigate("book")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "#FF6200",
+                background: "#F5C100",
                 boxShadow: "0 4px 24px #1565C077",
                 minHeight: 48,
               }}
@@ -495,7 +495,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* BRANDING BANNER */}
       <section
         style={{
-          background: "#FF6200",
+          background: "#F5C100",
           padding: "3.5rem 1rem",
           position: "relative",
           overflow: "hidden",
@@ -996,7 +996,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             onClick={() => navigate("book")}
             className="font-bold px-10 py-4 rounded-full text-white text-lg shadow-xl transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "#FF6200",
+              background: "#F5C100",
               boxShadow: "0 6px 32px #1565C066",
             }}
           >
@@ -1319,7 +1319,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                       width: 40,
                       height: 40,
                       borderRadius: "50%",
-                      background: "#FF6200",
+                      background: "#F5C100",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1498,7 +1498,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           onClick={() => navigate("book")}
           className="flex-1 font-bold py-3 rounded-full text-white mr-2 text-sm"
           style={{
-            background: "#FF6200",
+            background: "#F5C100",
           }}
         >
           🚗 Book Now

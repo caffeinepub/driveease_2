@@ -81,7 +81,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           height: 600,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(255,98,0,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(245,193,0,0.06) 0%, transparent 70%)",
           top: "50%",
           left: "50%",
           transform: "translate(-50%,-50%)",
@@ -106,7 +106,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
               fontWeight: 700,
-              color: "#FF6200",
+              color: "#F5C100",
               animation: "splashSlideUp 0.6s cubic-bezier(0.22,1,0.36,1) both",
               textAlign: "center",
             }}
@@ -120,7 +120,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
               fontWeight: 700,
-              color: "#FF6200",
+              color: "#F5C100",
               animation: "splashFadeOut 0.35s ease forwards",
               textAlign: "center",
             }}
@@ -142,7 +142,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             Welcome To{" "}
             <span
               style={{
-                color: "#FF6200",
+                color: "#F5C100",
                 fontFamily: "'Orbitron', monospace",
               }}
             >
@@ -162,9 +162,9 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             width: 88,
             height: 88,
             borderRadius: "50%",
-            background: "#FF6200",
+            background: "#F5C100",
             boxShadow:
-              "0 8px 40px rgba(255,98,0,0.4), 0 2px 8px rgba(255,98,0,0.2)",
+              "0 8px 40px rgba(245,193,0,0.4), 0 2px 8px rgba(245,193,0,0.2)",
             marginBottom: "1.2rem",
             animation: "pulse-glow-orange 2s ease-in-out infinite",
           }}
@@ -177,7 +177,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             fontFamily: "'Orbitron', sans-serif",
             fontSize: "clamp(2rem, 6vw, 2.8rem)",
             fontWeight: 800,
-            color: "#FF6200",
+            color: "#F5C100",
             letterSpacing: "0.05em",
             lineHeight: 1.1,
           }}
@@ -241,10 +241,10 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           style={{
             height: "100%",
             width: `${progress}%`,
-            background: "#FF6200",
+            background: "#F5C100",
             borderRadius: 99,
             transition: "width 0.03s linear",
-            boxShadow: "0 0 12px rgba(255,98,0,0.6)",
+            boxShadow: "0 0 12px rgba(245,193,0,0.6)",
           }}
         />
       </div>
@@ -263,11 +263,11 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       <style>{`
         @keyframes pulse-glow-orange {
           0%, 100% {
-            box-shadow: 0 8px 40px rgba(255,98,0,0.4), 0 2px 8px rgba(255,98,0,0.2);
+            box-shadow: 0 8px 40px rgba(245,193,0,0.4), 0 2px 8px rgba(245,193,0,0.2);
             transform: scale(1);
           }
           50% {
-            box-shadow: 0 12px 60px rgba(255,98,0,0.6), 0 4px 16px rgba(255,98,0,0.3);
+            box-shadow: 0 12px 60px rgba(245,193,0,0.6), 0 4px 16px rgba(245,193,0,0.3);
             transform: scale(1.04);
           }
         }

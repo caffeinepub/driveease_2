@@ -98,7 +98,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             style={{
               width: 36,
               height: 36,
-              background: "#FF6200",
+              background: "#F5C100",
               borderRadius: 10,
               display: "flex",
               alignItems: "center",
@@ -113,7 +113,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               fontFamily: "'Orbitron', monospace",
               fontWeight: 700,
               fontSize: "1.2rem",
-              color: "#FF6200",
+              color: "#F5C100",
               letterSpacing: "0.04em",
             }}
           >
@@ -140,11 +140,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go(item.page)}
               style={{
                 background: isActive(item.page)
-                  ? "rgba(255,98,0,0.12)"
+                  ? "rgba(245,193,0,0.12)"
                   : "transparent",
-                color: isActive(item.page) ? "#FF6200" : "#cccccc",
+                color: isActive(item.page) ? "#F5C100" : "#cccccc",
                 border: isActive(item.page)
-                  ? "1px solid rgba(255,98,0,0.35)"
+                  ? "1px solid rgba(245,193,0,0.35)"
                   : "1px solid transparent",
                 borderRadius: 9999,
                 padding: "0.45rem 1rem",
@@ -157,8 +157,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               }}
               onMouseEnter={(e) => {
                 if (!isActive(item.page)) {
-                  e.currentTarget.style.color = "#FF6200";
-                  e.currentTarget.style.background = "rgba(255,98,0,0.08)";
+                  e.currentTarget.style.color = "#F5C100";
+                  e.currentTarget.style.background = "rgba(245,193,0,0.08)";
                 }
               }}
               onMouseLeave={(e) => {
@@ -192,15 +192,15 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   width: 34,
                   height: 34,
                   borderRadius: "50%",
-                  background: "#FF6200",
+                  background: "#F5C100",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontWeight: 700,
                   fontSize: "0.85rem",
-                  color: "#ffffff",
+                  color: "#1a1a1a",
                   cursor: "pointer",
-                  border: "2px solid rgba(255,98,0,0.5)",
+                  border: "2px solid rgba(245,193,0,0.5)",
                 }}
               >
                 {(customer?.name || customer?.phone || "U")[0].toUpperCase()}
@@ -251,8 +251,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             onClick={() => go("driver-login")}
             style={{
               background: "none",
-              border: "1px solid rgba(255,98,0,0.4)",
-              color: "#FF6200",
+              border: "1px solid rgba(245,193,0,0.4)",
+              color: "#F5C100",
               borderRadius: 8,
               padding: "0.45rem 1rem",
               cursor: "pointer",
@@ -263,12 +263,12 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               transition: "all 0.18s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,98,0,0.1)";
-              e.currentTarget.style.borderColor = "rgba(255,98,0,0.7)";
+              e.currentTarget.style.background = "rgba(245,193,0,0.1)";
+              e.currentTarget.style.borderColor = "rgba(245,193,0,0.7)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "none";
-              e.currentTarget.style.borderColor = "rgba(255,98,0,0.4)";
+              e.currentTarget.style.borderColor = "rgba(245,193,0,0.4)";
             }}
           >
             🚖 Driver Login
@@ -306,7 +306,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "#FF6200" : "#cccccc",
+              background: mobileOpen ? "#F5C100" : "#cccccc",
               borderRadius: 2,
               transition: "all 0.2s",
               transform: mobileOpen ? "translateY(7px) rotate(45deg)" : "none",
@@ -327,7 +327,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "#FF6200" : "#cccccc",
+              background: mobileOpen ? "#F5C100" : "#cccccc",
               borderRadius: 2,
               transition: "all 0.2s",
               transform: mobileOpen
@@ -359,11 +359,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={() => go(item.page)}
                 style={{
                   background: isActive(item.page)
-                    ? "rgba(255,98,0,0.12)"
+                    ? "rgba(245,193,0,0.12)"
                     : "transparent",
-                  color: isActive(item.page) ? "#FF6200" : "#cccccc",
+                  color: isActive(item.page) ? "#F5C100" : "#cccccc",
                   border: isActive(item.page)
-                    ? "1px solid rgba(255,98,0,0.35)"
+                    ? "1px solid rgba(245,193,0,0.35)"
                     : "1px solid transparent",
                   borderRadius: 10,
                   padding: "0.75rem 1rem",
@@ -431,8 +431,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go("driver-login")}
               style={{
                 background: "transparent",
-                color: "#FF6200",
-                border: "1px solid rgba(255,98,0,0.4)",
+                color: "#F5C100",
+                border: "1px solid rgba(245,193,0,0.4)",
                 borderRadius: 10,
                 padding: "0.75rem 1rem",
                 cursor: "pointer",

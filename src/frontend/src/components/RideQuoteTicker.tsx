@@ -34,8 +34,8 @@ export default function RideQuoteTicker() {
         display: "flex",
         alignItems: "center",
         gap: "0.75rem",
-        background: "rgba(255,98,0,0.06)",
-        borderLeft: "3px solid #FF6200",
+        background: "rgba(245,193,0,0.06)",
+        borderLeft: "3px solid #F5C100",
         padding: "0.45rem 1rem",
         margin: "0 0 0.5rem 0",
       }}

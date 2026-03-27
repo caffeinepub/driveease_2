@@ -1384,7 +1384,7 @@ td:last-child{text-align:right;font-weight:600;}
       }}
     >
       <style>{`
-        @keyframes loginGlow{0%,100%{box-shadow:0 0 18px 4px #FF620055,0 0 32px 8px #42A5F533}33%{box-shadow:0 0 18px 4px #42A5F555,0 0 32px 8px #FF620033}66%{box-shadow:0 0 18px 4px #66BB6A55,0 0 32px 8px #FF620033}}
+        @keyframes loginGlow{0%,100%{box-shadow:0 0 18px 4px #F5C10055,0 0 32px 8px #42A5F533}33%{box-shadow:0 0 18px 4px #42A5F555,0 0 32px 8px #F5C10033}66%{box-shadow:0 0 18px 4px #66BB6A55,0 0 32px 8px #F5C10033}}
         @keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
       `}</style>
       <div
@@ -1402,7 +1402,7 @@ td:last-child{text-align:right;font-weight:600;}
               width: 72,
               height: 72,
               borderRadius: "50%",
-              background: "#FF6200",
+              background: "#F5C100",
               margin: "0 auto 1rem",
               display: "flex",
               alignItems: "center",
@@ -1419,7 +1419,7 @@ td:last-child{text-align:right;font-weight:600;}
               fontWeight: 800,
               fontSize: "1.6rem",
               marginBottom: "0.25rem",
-              background: "#FF6200",
+              background: "#F5C100",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}

@@ -101,14 +101,14 @@ export default function ChatBot() {
           width: 56,
           height: 56,
           borderRadius: "50%",
-          background: "#FF6200",
+          background: "#F5C100",
           border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.5rem",
-          boxShadow: "0 4px 20px rgba(255,98,0,0.5)",
+          boxShadow: "0 4px 20px rgba(245,193,0,0.5)",
         }}
       >
         🤖
@@ -132,7 +132,7 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             boxShadow:
-              "0 0 40px rgba(255,98,0,0.1), 0 20px 60px rgba(0,0,0,0.7)",
+              "0 0 40px rgba(245,193,0,0.1), 0 20px 60px rgba(0,0,0,0.7)",
             overflow: "hidden",
             animation: "slideUpIn 0.25s ease-out",
           }}
@@ -145,7 +145,7 @@ export default function ChatBot() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              background: "rgba(255,98,0,0.05)",
+              background: "rgba(245,193,0,0.05)",
             }}
           >
             <div
@@ -223,7 +223,7 @@ export default function ChatBot() {
                         ? "16px 16px 4px 16px"
                         : "16px 16px 16px 4px",
                     background:
-                      msg.role === "user" ? "#FF6200" : "rgba(40,40,40,0.9)",
+                      msg.role === "user" ? "#F5C100" : "rgba(40,40,40,0.9)",
                     border: msg.role === "user" ? "none" : "1px solid #333333",
                     color: "#ffffff",
                     fontSize: "0.87rem",
@@ -279,7 +279,7 @@ export default function ChatBot() {
               data-ocid="chatbot.submit_button"
               onClick={send}
               style={{
-                background: "#FF6200",
+                background: "#F5C100",
                 border: "none",
                 borderRadius: 10,
                 color: "white",

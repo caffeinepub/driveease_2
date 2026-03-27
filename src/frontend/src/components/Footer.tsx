@@ -32,21 +32,21 @@ export default function Footer({ navigate }: FooterProps) {
             >
               <div
                 style={{
-                  background: "#FF6200",
+                  background: "#F5C100",
                   borderRadius: 8,
                   width: 32,
                   height: 32,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 2px 8px rgba(255,98,0,0.3)",
+                  boxShadow: "0 2px 8px rgba(245,193,0,0.3)",
                 }}
               >
                 <span style={{ fontSize: "1rem" }}>🚗</span>
               </div>
               <span
                 style={{
-                  color: "#FF6200",
+                  color: "#F5C100",
                   fontWeight: 800,
                   fontSize: "1.1rem",
                   fontFamily: "'Orbitron', monospace",
@@ -63,7 +63,7 @@ export default function Footer({ navigate }: FooterProps) {
             </p>
             <p
               style={{
-                color: "#FF6200",
+                color: "#F5C100",
                 marginTop: "0.75rem",
                 fontSize: "0.9rem",
                 fontWeight: 500,
@@ -107,7 +107,7 @@ export default function Footer({ navigate }: FooterProps) {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#FF6200";
+                  e.currentTarget.style.color = "#F5C100";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = "#888888";
@@ -140,7 +140,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="tel:+917836887228"
               style={{
-                color: "#FF6200",
+                color: "#F5C100",
                 fontSize: "0.9rem",
                 display: "block",
                 marginBottom: "0.5rem",
@@ -168,8 +168,8 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                background: "#FF6200",
-                color: "white",
+                background: "#F5C100",
+                color: "#1a1a1a",
                 padding: "0.4rem 0.8rem",
                 borderRadius: 6,
                 fontSize: "0.85rem",
@@ -198,9 +198,9 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                background: "rgba(255,98,0,0.1)",
-                border: "1px solid rgba(255,98,0,0.3)",
-                color: "#FF6200",
+                background: "rgba(245,193,0,0.1)",
+                border: "1px solid rgba(245,193,0,0.3)",
+                color: "#F5C100",
                 padding: "0.5rem 0.75rem",
                 borderRadius: 8,
                 fontSize: "0.88rem",
@@ -250,7 +250,7 @@ export default function Footer({ navigate }: FooterProps) {
               target="_blank"
               rel="noreferrer"
               style={{
-                color: "#FF6200",
+                color: "#F5C100",
                 textDecoration: "none",
                 fontWeight: 600,
               }}
@@ -267,8 +267,8 @@ export default function Footer({ navigate }: FooterProps) {
           position: "fixed",
           bottom: "1.5rem",
           right: "1.5rem",
-          background: "#FF6200",
-          color: "white",
+          background: "#F5C100",
+          color: "#1a1a1a",
           width: 52,
           height: 52,
           borderRadius: "50%",
@@ -276,7 +276,7 @@ export default function Footer({ navigate }: FooterProps) {
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.6rem",
-          boxShadow: "0 4px 20px rgba(255,98,0,0.4)",
+          boxShadow: "0 4px 20px rgba(245,193,0,0.4)",
           zIndex: 999,
           textDecoration: "none",
           transition: "transform 0.2s",
