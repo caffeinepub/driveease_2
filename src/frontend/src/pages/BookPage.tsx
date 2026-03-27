@@ -101,6 +101,8 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
     lng: number;
   } | null>(null);
   const [distanceKm, setDistanceKm] = useState(10);
+  const [durationMin, setDurationMin] = useState(30);
+  const [osrmLoading, setOsrmLoading] = useState(false);
 
   // Step 2
   const [selectedDriver, setSelectedDriver] = useState<
@@ -126,7 +128,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
   const pickupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dropTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const calcDistance = useCallback(
+  const calcHaversine = useCallback(
     (p: { lat: number; lng: number }, d: { lat: number; lng: number }) => {
       const R = 6371;
       const dLat = ((d.lat - p.lat) * Math.PI) / 180;
@@ -141,11 +143,29 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
     [],
   );
 
+  // Fetch OSRM route when both coords are set
   useEffect(() => {
-    if (pickupCoords && dropCoords) {
-      setDistanceKm(calcDistance(pickupCoords, dropCoords));
-    }
-  }, [pickupCoords, dropCoords, calcDistance]);
+    if (!pickupCoords || !dropCoords) return;
+    const fallback = calcHaversine(pickupCoords, dropCoords);
+    setDistanceKm(fallback);
+    setDurationMin(Math.round(fallback * 3));
+
+    setOsrmLoading(true);
+    const url = `https://router.project-osrm.org/route/v1/driving/${pickupCoords.lng},${pickupCoords.lat};${dropCoords.lng},${dropCoords.lat}?overview=false&annotations=false`;
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.routes?.[0]) {
+          const route = data.routes[0];
+          setDistanceKm(route.distance / 1000);
+          setDurationMin(Math.round(route.duration / 60));
+        }
+      })
+      .catch(() => {
+        // silently fall back to haversine
+      })
+      .finally(() => setOsrmLoading(false));
+  }, [pickupCoords, dropCoords, calcHaversine]);
 
   // Init leaflet map on step 1
   useEffect(() => {
@@ -177,12 +197,12 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
       if (!map || !L) return;
       const greenIcon = L.divIcon({
         className: "",
-        html: '<div style="background:#00e676;width:14px;height:14px;border-radius:50%;border:2px solid white"></div>',
+        html: '<div style="background:#16a34a;width:14px;height:14px;border-radius:50%;border:2px solid white"></div>',
         iconSize: [14, 14],
       });
       const redIcon = L.divIcon({
         className: "",
-        html: '<div style="background:#f87171;width:14px;height:14px;border-radius:50%;border:2px solid white"></div>',
+        html: '<div style="background:#ef4444;width:14px;height:14px;border-radius:50%;border:2px solid white"></div>',
         iconSize: [14, 14],
       });
       if (pickupCoords) {
@@ -340,7 +360,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
       days: bookingType === "Monthly" ? 30 : 1,
       amount: estimatedFare(),
       distanceKm,
-      durationMin: Math.round(distanceKm * 3),
+      durationMin,
       fareBreakdown: undefined,
       insurance: false,
       status: "pending" as Booking["status"],
@@ -369,19 +389,20 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
     );
   }
 
+  // Light theme styles
   const cardStyle: React.CSSProperties = {
-    background: "#0d1420",
-    border: "1px solid rgba(0,230,118,0.18)",
+    background: "#ffffff",
+    border: "1px solid #e2e8f0",
     borderRadius: 16,
     padding: "2rem",
-    boxShadow: "0 0 24px rgba(0,230,118,0.06)",
+    boxShadow: "0 2px 16px rgba(0,0,0,0.06)",
   };
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    background: "#111827",
-    border: "1px solid rgba(0,230,118,0.25)",
-    color: "#e2e8f0",
+    background: "#f8fafc",
+    border: "1px solid #cbd5e1",
+    color: "#1e293b",
     borderRadius: 10,
     padding: "0.75rem 1rem",
     fontSize: "1rem",
@@ -399,13 +420,14 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           alignItems: "center",
           justifyContent: "center",
           padding: "2rem",
+          background: "#f8fafc",
         }}
       >
         <div style={{ ...cardStyle, textAlign: "center", maxWidth: 440 }}>
           <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🎉</div>
           <h2
             style={{
-              color: "#4ade80",
+              color: "#16a34a",
               fontWeight: 800,
               fontSize: "1.5rem",
               marginBottom: "0.5rem",
@@ -413,10 +435,10 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           >
             Booking Confirmed!
           </h2>
-          <p style={{ color: "#94a3b8", marginBottom: "0.5rem" }}>
+          <p style={{ color: "#475569", marginBottom: "0.5rem" }}>
             Your driver has been notified.
           </p>
-          <p style={{ color: "#64748b", fontSize: "0.85rem" }}>
+          <p style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
             Redirecting to My Bookings...
           </p>
         </div>
@@ -425,10 +447,18 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
   }
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: "2rem 1rem" }}>
+    <div
+      style={{
+        maxWidth: 720,
+        margin: "0 auto",
+        padding: "2rem 1rem",
+        background: "#f8fafc",
+        minHeight: "80vh",
+      }}
+    >
       <h1
         style={{
-          color: "#fff",
+          color: "#1e293b",
           fontWeight: 800,
           fontSize: "1.75rem",
           marginBottom: "0.5rem",
@@ -439,7 +469,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
       </h1>
       <p
         style={{
-          color: "#94a3b8",
+          color: "#64748b",
           textAlign: "center",
           marginBottom: "2rem",
           fontSize: "0.9rem",
@@ -481,17 +511,17 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                     background: done
                       ? "#16a34a"
                       : active
-                        ? "rgba(0,230,118,0.2)"
-                        : "rgba(255,255,255,0.06)",
+                        ? "rgba(22,163,74,0.12)"
+                        : "#f1f5f9",
                     border: active
-                      ? "2px solid #00e676"
+                      ? "2px solid #16a34a"
                       : done
                         ? "2px solid #16a34a"
-                        : "2px solid rgba(255,255,255,0.1)",
+                        : "2px solid #e2e8f0",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: done ? "#fff" : active ? "#00e676" : "#6b7280",
+                    color: done ? "#fff" : active ? "#16a34a" : "#94a3b8",
                     fontWeight: 700,
                     fontSize: "0.9rem",
                     transition: "all 0.3s",
@@ -502,7 +532,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                 <span
                   style={{
                     fontSize: "0.72rem",
-                    color: active ? "#00e676" : done ? "#4ade80" : "#6b7280",
+                    color: active ? "#16a34a" : done ? "#22c55e" : "#94a3b8",
                     textAlign: "center",
                     lineHeight: 1.3,
                   }}
@@ -516,7 +546,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         <div
           style={{
             height: 4,
-            background: "rgba(255,255,255,0.07)",
+            background: "#e2e8f0",
             borderRadius: 99,
             overflow: "hidden",
           }}
@@ -524,7 +554,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           <div
             style={{
               height: "100%",
-              background: "linear-gradient(90deg,#00e676,#16a34a)",
+              background: "linear-gradient(90deg,#16a34a,#22c55e)",
               width: `${((step - 1) / 3) * 100}%`,
               transition: "width 0.4s ease",
               borderRadius: 99,
@@ -538,11 +568,11 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         <div
           data-ocid="book.error_state"
           style={{
-            background: "rgba(248,113,113,0.1)",
-            border: "1px solid rgba(248,113,113,0.3)",
+            background: "rgba(239,68,68,0.06)",
+            border: "1px solid rgba(239,68,68,0.3)",
             borderRadius: 10,
             padding: "0.75rem 1rem",
-            color: "#f87171",
+            color: "#dc2626",
             marginBottom: "1rem",
             fontSize: "0.9rem",
           }}
@@ -556,7 +586,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         <div style={cardStyle}>
           <h2
             style={{
-              color: "#fff",
+              color: "#1e293b",
               fontWeight: 700,
               fontSize: "1.2rem",
               marginBottom: "1.5rem",
@@ -568,10 +598,11 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#475569",
                 fontSize: "0.85rem",
                 display: "block",
                 marginBottom: "0.5rem",
+                fontWeight: 500,
               }}
             >
               Pickup Location
@@ -586,12 +617,13 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             {pickupSuggestions.length > 0 && (
               <div
                 style={{
-                  background: "#1e293b",
-                  border: "1px solid rgba(0,230,118,0.2)",
+                  background: "#ffffff",
+                  border: "1px solid #e2e8f0",
                   borderRadius: 8,
                   marginTop: 4,
                   maxHeight: 200,
                   overflowY: "auto",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                 }}
               >
                 {pickupSuggestions.map((s) => (
@@ -606,10 +638,10 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                       padding: "0.6rem 0.9rem",
                       background: "none",
                       border: "none",
-                      color: "#cbd5e1",
+                      color: "#334155",
                       cursor: "pointer",
                       fontSize: "0.82rem",
-                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      borderBottom: "1px solid #f1f5f9",
                     }}
                   >
                     {s.display_name}
@@ -622,10 +654,11 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#475569",
                 fontSize: "0.85rem",
                 display: "block",
                 marginBottom: "0.5rem",
+                fontWeight: 500,
               }}
             >
               Drop Location
@@ -640,12 +673,13 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             {dropSuggestions.length > 0 && (
               <div
                 style={{
-                  background: "#1e293b",
-                  border: "1px solid rgba(0,230,118,0.2)",
+                  background: "#ffffff",
+                  border: "1px solid #e2e8f0",
                   borderRadius: 8,
                   marginTop: 4,
                   maxHeight: 200,
                   overflowY: "auto",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                 }}
               >
                 {dropSuggestions.map((s) => (
@@ -660,10 +694,10 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                       padding: "0.6rem 0.9rem",
                       background: "none",
                       border: "none",
-                      color: "#cbd5e1",
+                      color: "#334155",
                       cursor: "pointer",
                       fontSize: "0.82rem",
-                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      borderBottom: "1px solid #f1f5f9",
                     }}
                   >
                     {s.display_name}
@@ -675,16 +709,19 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           {pickupCoords && dropCoords && (
             <div
               style={{
-                background: "rgba(0,230,118,0.07)",
+                background: "#f0fdf4",
+                border: "1px solid #bbf7d0",
                 borderRadius: 8,
                 padding: "0.6rem 0.9rem",
                 marginBottom: "1rem",
-                color: "#4ade80",
+                color: "#15803d",
                 fontSize: "0.85rem",
+                fontWeight: 500,
               }}
             >
-              📏 ~{distanceKm.toFixed(1)} km · ~{Math.round(distanceKm * 3)} min
-              estimated
+              {osrmLoading
+                ? "🚦 Calculating road distance..."
+                : `📍 ${distanceKm.toFixed(1)} km road distance • ~${durationMin} min estimated`}
             </div>
           )}
           <div
@@ -693,7 +730,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
               height: 220,
               borderRadius: 12,
               overflow: "hidden",
-              border: "1px solid rgba(0,230,118,0.15)",
+              border: "1px solid #e2e8f0",
               marginBottom: "1.5rem",
             }}
           />
@@ -705,7 +742,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         <div style={cardStyle}>
           <h2
             style={{
-              color: "#fff",
+              color: "#1e293b",
               fontWeight: 700,
               fontSize: "1.2rem",
               marginBottom: "1.5rem",
@@ -724,15 +761,19 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                 onClick={() => setSelectedDriver(d)}
                 style={{
                   background:
-                    selectedDriver?.id === d.id
-                      ? "rgba(0,230,118,0.12)"
-                      : "rgba(255,255,255,0.03)",
-                  border: `2px solid ${selectedDriver?.id === d.id ? "#00e676" : "rgba(255,255,255,0.1)"}`,
+                    selectedDriver?.id === d.id ? "#f0fdf4" : "#ffffff",
+                  border: `2px solid ${
+                    selectedDriver?.id === d.id ? "#16a34a" : "#e2e8f0"
+                  }`,
                   borderRadius: 12,
                   padding: "1rem 1.25rem",
                   cursor: "pointer",
                   textAlign: "left",
                   transition: "all 0.2s",
+                  boxShadow:
+                    selectedDriver?.id === d.id
+                      ? "0 2px 12px rgba(22,163,74,0.15)"
+                      : "0 1px 4px rgba(0,0,0,0.04)",
                 }}
               >
                 <div
@@ -746,13 +787,13 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                       height: 56,
                       borderRadius: "50%",
                       objectFit: "cover",
-                      border: "2px solid rgba(0,230,118,0.3)",
+                      border: "2px solid #e2e8f0",
                     }}
                   />
                   <div style={{ flex: 1 }}>
                     <div
                       style={{
-                        color: "#fff",
+                        color: "#1e293b",
                         fontWeight: 700,
                         fontSize: "1rem",
                       }}
@@ -761,7 +802,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                     </div>
                     <div
                       style={{
-                        color: "#94a3b8",
+                        color: "#64748b",
                         fontSize: "0.82rem",
                         marginTop: 2,
                       }}
@@ -772,7 +813,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                   <div style={{ textAlign: "right" }}>
                     <div
                       style={{
-                        color: "#fbbf24",
+                        color: "#f59e0b",
                         fontWeight: 700,
                         fontSize: "1rem",
                       }}
@@ -782,9 +823,10 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                     {selectedDriver?.id === d.id && (
                       <div
                         style={{
-                          color: "#00e676",
+                          color: "#16a34a",
                           fontSize: "0.8rem",
                           marginTop: 4,
+                          fontWeight: 600,
                         }}
                       >
                         ✓ Selected
@@ -803,7 +845,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         <div style={cardStyle}>
           <h2
             style={{
-              color: "#fff",
+              color: "#1e293b",
               fontWeight: 700,
               fontSize: "1.2rem",
               marginBottom: "1.5rem",
@@ -823,10 +865,11 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#94a3b8",
+                  color: "#475569",
                   fontSize: "0.85rem",
                   display: "block",
                   marginBottom: "0.5rem",
+                  fontWeight: 500,
                 }}
               >
                 Date
@@ -834,7 +877,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
               <input
                 data-ocid="book.date_input"
                 type="date"
-                style={{ ...inputStyle, colorScheme: "dark" }}
+                style={{ ...inputStyle, colorScheme: "light" }}
                 value={bookingDate}
                 min={new Date().toISOString().slice(0, 10)}
                 onChange={(e) => setBookingDate(e.target.value)}
@@ -844,10 +887,11 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#94a3b8",
+                  color: "#475569",
                   fontSize: "0.85rem",
                   display: "block",
                   marginBottom: "0.5rem",
+                  fontWeight: 500,
                 }}
               >
                 Time
@@ -855,7 +899,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
               <input
                 data-ocid="book.time_input"
                 type="time"
-                style={{ ...inputStyle, colorScheme: "dark" }}
+                style={{ ...inputStyle, colorScheme: "light" }}
                 value={bookingTime}
                 onChange={(e) => setBookingTime(e.target.value)}
               />
@@ -865,10 +909,11 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#475569",
                 fontSize: "0.85rem",
                 display: "block",
                 marginBottom: "0.75rem",
+                fontWeight: 500,
               }}
             >
               Booking Type
@@ -884,17 +929,17 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                     style={{
                       padding: "0.6rem 1.25rem",
                       borderRadius: 9999,
-                      border: `2px solid ${bookingType === t ? "#00e676" : "rgba(255,255,255,0.12)"}`,
-                      background:
-                        bookingType === t
-                          ? "rgba(0,230,118,0.15)"
-                          : "transparent",
-                      color: bookingType === t ? "#00e676" : "#94a3b8",
+                      border: `2px solid ${
+                        bookingType === t ? "#16a34a" : "#e2e8f0"
+                      }`,
+                      background: bookingType === t ? "#f0fdf4" : "#ffffff",
+                      color: bookingType === t ? "#16a34a" : "#64748b",
                       cursor: "pointer",
                       fontWeight: bookingType === t ? 600 : 400,
                       fontSize: "0.875rem",
                       fontFamily: "'Poppins', sans-serif",
                       minHeight: 44,
+                      transition: "all 0.2s",
                     }}
                   >
                     {t}
@@ -911,7 +956,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         <div style={cardStyle}>
           <h2
             style={{
-              color: "#fff",
+              color: "#1e293b",
               fontWeight: 700,
               fontSize: "1.2rem",
               marginBottom: "1.5rem",
@@ -945,16 +990,16 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  borderBottom: "1px solid rgba(255,255,255,0.07)",
+                  borderBottom: "1px solid #f1f5f9",
                   paddingBottom: "0.6rem",
                 }}
               >
-                <span style={{ color: "#94a3b8", fontSize: "0.875rem" }}>
+                <span style={{ color: "#64748b", fontSize: "0.875rem" }}>
                   {label}
                 </span>
                 <span
                   style={{
-                    color: "#e2e8f0",
+                    color: "#1e293b",
                     fontWeight: 600,
                     fontSize: "0.875rem",
                     maxWidth: "55%",
@@ -968,12 +1013,13 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           </div>
           <div
             style={{
-              background: "rgba(0,230,118,0.07)",
+              background: "#f0fdf4",
+              border: "1px solid #bbf7d0",
               borderRadius: 10,
               padding: "0.75rem 1rem",
               marginBottom: "1.5rem",
               fontSize: "0.82rem",
-              color: "#4ade80",
+              color: "#15803d",
             }}
           >
             ℹ️ A confirmation SMS will be sent to your registered phone number.
@@ -1011,15 +1057,16 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             data-ocid="book.back_button"
             onClick={prevStep}
             style={{
-              background: "transparent",
-              border: "1px solid rgba(255,255,255,0.15)",
-              color: "#94a3b8",
+              background: "#ffffff",
+              border: "1px solid #e2e8f0",
+              color: "#475569",
               borderRadius: 10,
               padding: "0.75rem 1.5rem",
               cursor: "pointer",
               fontFamily: "'Poppins', sans-serif",
               fontSize: "0.9rem",
               minHeight: 48,
+              fontWeight: 500,
             }}
           >
             ← Back

@@ -175,12 +175,12 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
           ))}
         </nav>
 
-        {/* Right side: auth + Book Now */}
+        {/* Right side: auth + Driver Login + Book Now */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
+            gap: "0.5rem",
             flexShrink: 0,
           }}
           className="hidden-mobile"
@@ -240,11 +240,41 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 fontSize: "0.875rem",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 500,
+                whiteSpace: "nowrap",
               }}
             >
               Login / Signup
             </button>
           )}
+          {/* Driver Login button */}
+          <button
+            type="button"
+            data-ocid="nav.driver_login_button"
+            onClick={() => go("driver-login")}
+            style={{
+              background: "none",
+              border: "1px solid rgba(251,191,36,0.45)",
+              color: "#fbbf24",
+              borderRadius: 8,
+              padding: "0.45rem 1rem",
+              cursor: "pointer",
+              fontSize: "0.875rem",
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+              transition: "all 0.18s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(251,191,36,0.1)";
+              e.currentTarget.style.borderColor = "rgba(251,191,36,0.7)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "none";
+              e.currentTarget.style.borderColor = "rgba(251,191,36,0.45)";
+            }}
+          >
+            🚖 Driver Login
+          </button>
           <button
             type="button"
             data-ocid="nav.book_now_button"
@@ -396,6 +426,26 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 Login / Signup
               </button>
             )}
+            {/* Driver Login - mobile */}
+            <button
+              type="button"
+              data-ocid="nav.mobile_driver_login_button"
+              onClick={() => go("driver-login")}
+              style={{
+                background: "transparent",
+                color: "#fbbf24",
+                border: "1px solid rgba(251,191,36,0.3)",
+                borderRadius: 10,
+                padding: "0.75rem 1rem",
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                fontFamily: "'Poppins', sans-serif",
+                textAlign: "left",
+                minHeight: 44,
+              }}
+            >
+              🚖 Driver Login
+            </button>
             <button
               type="button"
               onClick={() => go("book")}

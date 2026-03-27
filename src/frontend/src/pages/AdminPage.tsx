@@ -37,6 +37,7 @@ import {
 import {
   pullAllAndMerge,
   pushAll,
+  sendSMS,
   subscribeToChanges,
 } from "../utils/syncService";
 
@@ -3154,16 +3155,42 @@ export default function AdminPage() {
           {/* Registrations */}
           {tab === "registrations" && can("registrations") && (
             <div>
-              <h2
+              <div
                 style={{
-                  color: "#1e293b",
-                  fontWeight: 700,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
                   marginBottom: "1.25rem",
-                  fontSize: "1.1rem",
+                  flexWrap: "wrap",
                 }}
               >
-                Driver Registrations ({regs.length})
-              </h2>
+                <h2
+                  style={{
+                    color: "#1e293b",
+                    fontWeight: 700,
+                    fontSize: "1.1rem",
+                    margin: 0,
+                  }}
+                >
+                  Driver Registrations ({regs.length})
+                </h2>
+                {regs.filter((r) => r.status === "pending").length > 0 && (
+                  <span
+                    style={{
+                      background: "#fffbeb",
+                      color: "#d97706",
+                      border: "1px solid #fde68a",
+                      borderRadius: 20,
+                      padding: "0.25rem 0.85rem",
+                      fontSize: "0.82rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    ⏳ Pending Applications (
+                    {regs.filter((r) => r.status === "pending").length})
+                  </span>
+                )}
+              </div>
               {regDetail && (
                 <div
                   style={{
@@ -3329,6 +3356,10 @@ export default function AdminPage() {
                           updateRegistration(regDetail.id, {
                             status: "approved",
                           });
+                          sendSMS(
+                            regDetail.phone,
+                            "Congratulations! Your DriveEase driver application has been approved. You can now start accepting rides.",
+                          );
                           setRegDetail(null);
                           refresh();
                         }}
@@ -3338,12 +3369,14 @@ export default function AdminPage() {
                           color: "#fff",
                           border: "none",
                           borderRadius: 8,
-                          padding: "0.65rem",
-                          fontWeight: 700,
+                          padding: "0.85rem 1rem",
+                          fontWeight: 800,
                           cursor: "pointer",
+                          fontSize: "0.95rem",
+                          boxShadow: "0 2px 8px rgba(22,163,74,0.3)",
                         }}
                       >
-                        ✅ Approve
+                        ✅ Approve Driver
                       </button>
                       <button
                         type="button"

@@ -133,8 +133,25 @@ export default function DriverRegisterPage() {
       status: "pending",
       submittedAt: new Date().toISOString(),
     };
+
+    // Save full data (including base64 files) to localStorage
     addRegistration(r);
-    await pushItem("registrations", r as unknown as { id: string });
+
+    // Push only metadata to Firestore (no base64 blobs to avoid size limits)
+    const firestoreData = {
+      id: r.id,
+      name: r.name,
+      phone: r.phone,
+      city: r.city,
+      state: r.state,
+      experience: r.experience,
+      vehicleType: r.vehicleType,
+      status: r.status,
+      submittedAt: r.submittedAt,
+      hasLicense: !!r.dlDesc,
+      hasPhoto: !!r.selfieDesc,
+    };
+    await pushItem("registrations", firestoreData as unknown as { id: string });
     await sendSMS(
       form.phone,
       "Welcome to DriveEase! Your driver application is under review.",
@@ -144,9 +161,9 @@ export default function DriverRegisterPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    background: "#111827",
-    border: "1px solid rgba(0,230,118,0.25)",
-    color: "#e2e8f0",
+    background: "#f8fafc",
+    border: "1px solid #e2e8f0",
+    color: "#1e293b",
     borderRadius: 10,
     padding: "0.75rem 1rem",
     fontSize: "1rem",
@@ -167,8 +184,8 @@ export default function DriverRegisterPage() {
       >
         <div
           style={{
-            background: "rgba(0,230,118,0.06)",
-            border: "2px solid rgba(0,230,118,0.3)",
+            background: "#f0fdf4",
+            border: "2px solid #bbf7d0",
             borderRadius: 20,
             padding: "3rem 2rem",
           }}
@@ -176,7 +193,7 @@ export default function DriverRegisterPage() {
           <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>✅</div>
           <h2
             style={{
-              color: "#4ade80",
+              color: "#16a34a",
               fontWeight: 800,
               fontSize: "1.5rem",
               marginBottom: "0.75rem",
@@ -185,7 +202,7 @@ export default function DriverRegisterPage() {
             Application Submitted!
           </h2>
           <p
-            style={{ color: "#94a3b8", lineHeight: 1.7, marginBottom: "2rem" }}
+            style={{ color: "#374151", lineHeight: 1.7, marginBottom: "2rem" }}
           >
             Our team is reviewing your documents. You'll be notified via SMS.
           </p>
@@ -194,7 +211,7 @@ export default function DriverRegisterPage() {
           <div style={{ textAlign: "left" }}>
             <h3
               style={{
-                color: "#e2e8f0",
+                color: "#1e293b",
                 fontSize: "0.95rem",
                 fontWeight: 600,
                 marginBottom: "1rem",
@@ -225,7 +242,7 @@ export default function DriverRegisterPage() {
                       top: 36,
                       width: 2,
                       height: 20,
-                      background: "rgba(255,255,255,0.1)",
+                      background: "#e2e8f0",
                     }}
                   />
                 )}
@@ -234,10 +251,8 @@ export default function DriverRegisterPage() {
                     width: 36,
                     height: 36,
                     borderRadius: "50%",
-                    background: s.done
-                      ? "rgba(0,230,118,0.15)"
-                      : "rgba(255,255,255,0.05)",
-                    border: `2px solid ${s.done ? "#16a34a" : "rgba(255,255,255,0.1)"}`,
+                    background: s.done ? "#dcfce7" : "#f1f5f9",
+                    border: `2px solid ${s.done ? "#16a34a" : "#e2e8f0"}`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -250,7 +265,7 @@ export default function DriverRegisterPage() {
                 <div>
                   <div
                     style={{
-                      color: s.done ? "#4ade80" : "#94a3b8",
+                      color: s.done ? "#16a34a" : "#64748b",
                       fontWeight: s.done ? 600 : 400,
                       fontSize: "0.9rem",
                     }}
@@ -272,11 +287,19 @@ export default function DriverRegisterPage() {
   }
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: "2rem 1rem" }}>
+    <div
+      style={{
+        maxWidth: 600,
+        margin: "0 auto",
+        padding: "2rem 1rem",
+        background: "#fff",
+        minHeight: "100vh",
+      }}
+    >
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <h1
           style={{
-            color: "#fff",
+            color: "#1e293b",
             fontWeight: 800,
             fontSize: "1.75rem",
             marginBottom: "0.5rem",
@@ -284,28 +307,29 @@ export default function DriverRegisterPage() {
         >
           Become a Driver
         </h1>
-        <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+        <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
           Join 1000+ verified drivers on DriveEase
         </p>
       </div>
 
       <div
         style={{
-          background: "#0d1420",
-          border: "1px solid rgba(0,230,118,0.15)",
+          background: "#fff",
+          border: "1px solid #e2e8f0",
           borderRadius: 16,
           padding: "2rem",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
         }}
       >
         {error && (
           <div
             data-ocid="driver_register.error_state"
             style={{
-              background: "rgba(248,113,113,0.08)",
-              border: "1px solid rgba(248,113,113,0.25)",
+              background: "#fef2f2",
+              border: "1px solid #fecaca",
               borderRadius: 10,
               padding: "0.75rem 1rem",
-              color: "#f87171",
+              color: "#dc2626",
               marginBottom: "1.25rem",
               fontSize: "0.875rem",
             }}
@@ -322,8 +346,9 @@ export default function DriverRegisterPage() {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#374151",
                 fontSize: "0.85rem",
+                fontWeight: 500,
                 display: "block",
                 marginBottom: "0.5rem",
               }}
@@ -344,8 +369,9 @@ export default function DriverRegisterPage() {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#374151",
                 fontSize: "0.85rem",
+                fontWeight: 500,
                 display: "block",
                 marginBottom: "0.5rem",
               }}
@@ -369,9 +395,9 @@ export default function DriverRegisterPage() {
                   data-ocid="driver_register.send_otp_button"
                   onClick={sendOtp}
                   style={{
-                    background: "rgba(0,230,118,0.15)",
-                    border: "1px solid rgba(0,230,118,0.4)",
-                    color: "#00e676",
+                    background: "#f0fdf4",
+                    border: "1px solid #86efac",
+                    color: "#16a34a",
                     borderRadius: 10,
                     padding: "0 1rem",
                     cursor: "pointer",
@@ -388,10 +414,11 @@ export default function DriverRegisterPage() {
               {otpVerified && (
                 <span
                   style={{
-                    color: "#4ade80",
+                    color: "#16a34a",
                     fontSize: "0.85rem",
                     alignSelf: "center",
                     whiteSpace: "nowrap",
+                    fontWeight: 600,
                   }}
                 >
                   ✓ Verified
@@ -403,12 +430,22 @@ export default function DriverRegisterPage() {
                 {displayOtp && (
                   <div
                     style={{
-                      fontSize: "0.78rem",
-                      color: "#fbbf24",
+                      fontSize: "0.85rem",
+                      color: "#92400e",
+                      background: "#fef9c3",
+                      border: "1px solid #fde68a",
+                      borderRadius: 8,
+                      padding: "0.5rem 0.75rem",
                       marginBottom: "0.4rem",
+                      fontWeight: 600,
                     }}
                   >
-                    Demo OTP: <strong>{displayOtp}</strong>
+                    Demo OTP:{" "}
+                    <strong
+                      style={{ fontSize: "1.1rem", letterSpacing: "0.15em" }}
+                    >
+                      {displayOtp}
+                    </strong>
                   </div>
                 )}
                 <div style={{ display: "flex", gap: "0.75rem" }}>
@@ -440,7 +477,11 @@ export default function DriverRegisterPage() {
                 {otpError && (
                   <div
                     style={{
-                      color: "#f87171",
+                      color: "#dc2626",
+                      background: "#fef2f2",
+                      border: "1px solid #fecaca",
+                      borderRadius: 8,
+                      padding: "0.4rem 0.75rem",
                       fontSize: "0.8rem",
                       marginTop: "0.4rem",
                     }}
@@ -457,8 +498,9 @@ export default function DriverRegisterPage() {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#374151",
                 fontSize: "0.85rem",
+                fontWeight: 500,
                 display: "block",
                 marginBottom: "0.5rem",
               }}
@@ -478,14 +520,12 @@ export default function DriverRegisterPage() {
               onClick={() => dlRef.current?.click()}
               style={{
                 width: "100%",
-                background: form.dlFile
-                  ? "rgba(0,230,118,0.07)"
-                  : "rgba(255,255,255,0.03)",
-                border: `2px dashed ${form.dlFile ? "#16a34a" : "rgba(255,255,255,0.15)"}`,
+                background: form.dlFile ? "#f0fdf4" : "#f8fafc",
+                border: `2px dashed ${form.dlFile ? "#16a34a" : "#e2e8f0"}`,
                 borderRadius: 10,
                 padding: "1.25rem",
                 cursor: "pointer",
-                color: form.dlFile ? "#4ade80" : "#64748b",
+                color: form.dlFile ? "#16a34a" : "#64748b",
                 fontFamily: "'Poppins', sans-serif",
                 fontSize: "0.875rem",
                 textAlign: "center",
@@ -503,8 +543,9 @@ export default function DriverRegisterPage() {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#374151",
                 fontSize: "0.85rem",
+                fontWeight: 500,
                 display: "block",
                 marginBottom: "0.5rem",
               }}
@@ -534,8 +575,9 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#94a3b8",
+                  color: "#374151",
                   fontSize: "0.85rem",
+                  fontWeight: 500,
                   display: "block",
                   marginBottom: "0.5rem",
                 }}
@@ -554,8 +596,9 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#94a3b8",
+                  color: "#374151",
                   fontSize: "0.85rem",
+                  fontWeight: 500,
                   display: "block",
                   marginBottom: "0.5rem",
                 }}
@@ -582,8 +625,9 @@ export default function DriverRegisterPage() {
             <label
               htmlFor="_"
               style={{
-                color: "#94a3b8",
+                color: "#374151",
                 fontSize: "0.85rem",
+                fontWeight: 500,
                 display: "block",
                 marginBottom: "0.5rem",
               }}
@@ -603,14 +647,12 @@ export default function DriverRegisterPage() {
               onClick={() => photoRef.current?.click()}
               style={{
                 width: "100%",
-                background: form.profilePhoto
-                  ? "rgba(0,230,118,0.07)"
-                  : "rgba(255,255,255,0.03)",
-                border: `2px dashed ${form.profilePhoto ? "#16a34a" : "rgba(255,255,255,0.15)"}`,
+                background: form.profilePhoto ? "#f0fdf4" : "#f8fafc",
+                border: `2px dashed ${form.profilePhoto ? "#16a34a" : "#e2e8f0"}`,
                 borderRadius: 10,
                 padding: "1.25rem",
                 cursor: "pointer",
-                color: form.profilePhoto ? "#4ade80" : "#64748b",
+                color: form.profilePhoto ? "#16a34a" : "#64748b",
                 fontFamily: "'Poppins', sans-serif",
                 fontSize: "0.875rem",
                 textAlign: "center",

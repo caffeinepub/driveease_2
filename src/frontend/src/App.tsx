@@ -1,4 +1,10 @@
-import { type ReactNode, useCallback, useEffect, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ChatBot from "./components/ChatBot";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -31,11 +37,15 @@ export default function App() {
   const [{ path, search }, setRoute] = useState(getPage);
   const [showLogin, setShowLogin] = useState(false);
   const [splashDone, setSplashDone] = useState(false);
+  const pageKeyRef = useRef(0);
 
   const handleSplashDone = useCallback(() => setSplashDone(true), []);
 
   useEffect(() => {
-    const handler = () => setRoute(getPage());
+    const handler = () => {
+      pageKeyRef.current += 1;
+      setRoute(getPage());
+    };
     window.addEventListener("popstate", handler);
     return () => window.removeEventListener("popstate", handler);
   }, []);
@@ -43,6 +53,7 @@ export default function App() {
   const navigate = (p: string) => {
     const url = p === "home" ? "/" : `/${p}`;
     window.history.pushState({}, "", url);
+    pageKeyRef.current += 1;
     setRoute(getPage());
     window.scrollTo(0, 0);
   };
@@ -105,7 +116,7 @@ export default function App() {
         <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🔍</div>
         <h2
           style={{
-            color: "#f8fafc",
+            color: "#1e293b",
             fontSize: "1.5rem",
             marginBottom: "0.5rem",
           }}
@@ -133,13 +144,19 @@ export default function App() {
             minHeight: "100vh",
             display: "flex",
             flexDirection: "column",
-            background: "#121212",
+            background: "#f8fafc",
             opacity: splashDone ? 1 : 0,
             transition: "opacity 0.5s ease",
           }}
         >
           <Header currentPage={cleanPath || "home"} navigate={navigate} />
-          <main style={{ flex: 1 }}>{content}</main>
+          <main
+            key={pageKeyRef.current}
+            className="page-enter"
+            style={{ flex: 1 }}
+          >
+            {content}
+          </main>
           <Footer navigate={navigate} />
           {showLogin && (
             <OTPModal
@@ -150,40 +167,6 @@ export default function App() {
               }}
             />
           )}
-          {/* Driver Portal button */}
-          <div
-            style={{
-              position: "fixed",
-              bottom: "1.5rem",
-              left: "1.5rem",
-              zIndex: 998,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.4rem",
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => navigate("driver-login")}
-                style={{
-                  background: "rgba(22,163,74,0.08)",
-                  border: "1px solid rgba(22,163,74,0.2)",
-                  color: "#4ade80",
-                  borderRadius: 8,
-                  padding: "0.35rem 0.75rem",
-                  cursor: "pointer",
-                  fontSize: "0.78rem",
-                  opacity: 0.7,
-                }}
-              >
-                Driver Portal
-              </button>
-            </div>
-          </div>
           {/* AI ChatBot */}
           <ChatBot />
         </div>

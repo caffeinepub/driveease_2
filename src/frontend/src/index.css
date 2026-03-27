@@ -7,38 +7,38 @@
 @layer base {
   :root {
     --radius: 0.625rem;
-    --background: 0.12 0.03 240;
-    --foreground: 0.95 0.01 240;
-    --card: 0.14 0.04 240;
-    --card-foreground: 0.95 0.01 240;
-    --popover: 0.12 0.03 240;
-    --popover-foreground: 0.95 0.01 240;
-    --primary: 0.84 0.22 152;
-    --primary-foreground: 0.1 0.02 240;
-    --secondary: 0.18 0.04 240;
-    --secondary-foreground: 0.95 0.01 240;
-    --muted: 0.2 0.04 240;
-    --muted-foreground: 0.68 0.04 240;
-    --accent: 0.84 0.22 152;
-    --accent-foreground: 0.1 0.02 240;
+    --background: 0.98 0.002 240;
+    --foreground: 0.15 0.02 240;
+    --card: 1 0 0;
+    --card-foreground: 0.15 0.02 240;
+    --popover: 1 0 0;
+    --popover-foreground: 0.15 0.02 240;
+    --primary: 0.52 0.18 152;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.96 0.01 240;
+    --secondary-foreground: 0.15 0.02 240;
+    --muted: 0.94 0.01 240;
+    --muted-foreground: 0.46 0.04 240;
+    --accent: 0.52 0.18 152;
+    --accent-foreground: 1 0 0;
     --destructive: 0.577 0.245 27.325;
     --destructive-foreground: 1 0 0;
-    --border: 0.22 0.05 240;
-    --input: 0.18 0.04 240;
-    --ring: 0.84 0.22 152;
-    --chart-1: 0.84 0.22 152;
-    --chart-2: 0.72 0.18 186;
-    --chart-3: 0.62 0.15 210;
-    --chart-4: 0.828 0.189 84.429;
-    --chart-5: 0.769 0.188 70.08;
-    --sidebar: 0.1 0.03 240;
-    --sidebar-foreground: 0.95 0.01 240;
-    --sidebar-primary: 0.84 0.22 152;
-    --sidebar-primary-foreground: 0.1 0.02 240;
-    --sidebar-accent: 0.16 0.04 240;
-    --sidebar-accent-foreground: 0.95 0.01 240;
-    --sidebar-border: 0.22 0.05 240;
-    --sidebar-ring: 0.84 0.22 152;
+    --border: 0.88 0.02 240;
+    --input: 0.96 0.01 240;
+    --ring: 0.52 0.18 152;
+    --chart-1: 0.52 0.18 152;
+    --chart-2: 0.62 0.15 186;
+    --chart-3: 0.55 0.12 210;
+    --chart-4: 0.72 0.14 84;
+    --chart-5: 0.65 0.14 70;
+    --sidebar: 0.97 0.005 240;
+    --sidebar-foreground: 0.15 0.02 240;
+    --sidebar-primary: 0.52 0.18 152;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.94 0.01 240;
+    --sidebar-accent-foreground: 0.15 0.02 240;
+    --sidebar-border: 0.88 0.02 240;
+    --sidebar-ring: 0.52 0.18 152;
   }
 
   * {
@@ -46,14 +46,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #0a0f1a;
-    color: #e2e8f0;
+    background-color: #f8fafc;
+    color: #1e293b;
     font-family: "Poppins", system-ui, -apple-system, sans-serif;
-    background-image: linear-gradient(
-        rgba(0, 230, 118, 0.02) 1px,
-        transparent 1px
-      ), linear-gradient(90deg, rgba(0, 230, 118, 0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
   }
   h1,
   h2,
@@ -61,11 +56,11 @@
   h4,
   h5,
   h6 {
-    color: #ffffff;
+    color: #1e293b;
     font-family: "Poppins", system-ui, sans-serif;
   }
   p {
-    color: #cbd5e1;
+    color: #475569;
   }
 }
 
@@ -76,8 +71,8 @@
 
 /* ─── Shared buttons ────────────────────────────────────────── */
 .green-btn {
-  background: linear-gradient(135deg, #00e676 0%, #22c55e 100%);
-  color: #060d16;
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+  color: #ffffff;
   padding: 0.6rem 1.4rem;
   border-radius: 0.5rem;
   font-weight: 700;
@@ -88,28 +83,28 @@
   align-items: center;
   gap: 0.4rem;
   font-family: "Poppins", sans-serif;
-  box-shadow: 0 4px 20px rgba(0, 230, 118, 0.35);
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
 }
 .green-btn:hover {
-  box-shadow: 0 8px 32px rgba(0, 230, 118, 0.5);
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.4);
   transform: translateY(-1px);
 }
 
-/* Dark tech card */
+/* Light card */
 .card-dark {
-  background-color: #0d1420;
-  border: 1px solid rgba(0, 230, 118, 0.2);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 0.75rem;
   padding: 1.25rem;
-  box-shadow: 0 0 20px rgba(0, 230, 118, 0.06);
-  color: #e2e8f0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  color: #1e293b;
 }
 
-/* Dark input */
+/* Light input */
 .input-dark {
-  background-color: #111827;
-  border: 1px solid rgba(0, 230, 118, 0.3);
-  color: #e2e8f0;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
   border-radius: 0.5rem;
   padding: 0.6rem 0.9rem;
   width: 100%;
@@ -118,33 +113,33 @@
   font-family: "Poppins", sans-serif;
 }
 .input-dark:focus {
-  border-color: #00e676;
-  box-shadow: 0 0 0 2px rgba(0, 230, 118, 0.2);
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.15);
 }
 .input-dark::placeholder {
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .badge-green {
-  background: rgba(0, 230, 118, 0.1);
-  color: #00e676;
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(0, 230, 118, 0.3);
+  border: 1px solid rgba(22, 163, 74, 0.25);
 }
 
 .section-heading {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #1e293b;
   text-align: center;
   margin-bottom: 0.5rem;
   font-family: "Poppins", sans-serif;
 }
 .section-sub {
-  color: #94a3b8;
+  color: #64748b;
   text-align: center;
   margin-bottom: 2.5rem;
   font-size: 0.9rem;
@@ -153,7 +148,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #00e676;
+  background-color: #16a34a;
   display: inline-block;
   animation: pulse 1.5s infinite;
 }
@@ -214,12 +209,10 @@
 @keyframes cta-breathe {
   0%,
   100% {
-    box-shadow: 0 6px 28px rgba(0, 230, 118, 0.45), 0 3px 0 #006830, inset 0 1px
-      0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(22, 163, 74, 0.3), 0 2px 0 #15803d;
   }
   50% {
-    box-shadow: 0 8px 40px rgba(0, 230, 118, 0.7), 0 4px 0 #006830, inset 0 1px
-      0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(22, 163, 74, 0.5), 0 4px 0 #15803d;
   }
 }
 .cta-breathe {
@@ -235,7 +228,7 @@
   }
   50% {
     opacity: 0.85;
-    filter: brightness(1.3);
+    filter: brightness(1.2);
   }
 }
 .badge-shimmer {
@@ -257,10 +250,10 @@
 @keyframes driver-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.6);
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(0, 230, 118, 0);
+    box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
   }
 }
 .driver-dot-online {
@@ -287,19 +280,6 @@
   animation: orb-float 22s ease-in-out infinite reverse;
 }
 
-/* ─── Chatbot ring ───────────────────────────────────────────── */
-@keyframes chatbot-ring {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4), 0 4px 20px
-      rgba(0, 230, 118, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(0, 230, 118, 0), 0 4px 20px
-      rgba(0, 230, 118, 0.3);
-  }
-}
-
 /* ─── Slide up for chatbot panel ─────────────────────────────── */
 @keyframes slideUpIn {
   from {
@@ -315,7 +295,7 @@
 /* ─── Brand gradient text ───────────────────────────────────── */
 .orbitron-gradient {
   font-family: "Orbitron", monospace;
-  background: linear-gradient(135deg, #00e676 0%, #22c55e 60%, #00bcd4 100%);
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 60%, #059669 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -526,7 +506,7 @@
   border-radius: 9999px;
   background: radial-gradient(
     ellipse at 30% 30%,
-    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.3) 0%,
     transparent 60%
   );
   pointer-events: none;
@@ -579,74 +559,54 @@
 
 /* ── Green variant ── */
 .sparkle-btn-green {
-  background: linear-gradient(135deg, #00e676 0%, #22c55e 60%, #4ade80 100%);
-  color: #060d16;
-  box-shadow: 0 6px 28px rgba(0, 230, 118, 0.45), 0 3px 0 #006830, inset 0 1px 0
-    rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 60%, #4ade80 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(22, 163, 74, 0.3), 0 2px 0 #15803d;
   animation: cta-breathe 2.5s ease-in-out infinite;
 }
 .sparkle-btn-green:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0, 230, 118, 0.7), 0 5px 0 #006830, inset 0 1px 0
-    rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 32px rgba(22, 163, 74, 0.5), 0 4px 0 #15803d;
   animation: none;
 }
 
-/* ── Teal/secondary variant (Captain Login) ── */
+/* ── Teal/secondary variant ── */
 .sparkle-btn-indigo {
   background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 60%, #67e8f9 100%);
-  color: #060d16;
-  box-shadow: 0 6px 28px rgba(14, 165, 233, 0.4), 0 3px 0 #075985, inset 0 1px 0
-    rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3), 0 2px 0 #075985;
   border: none;
 }
 .sparkle-btn-indigo:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(14, 165, 233, 0.55), 0 5px 0 #075985, inset 0 1px
-    0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 32px rgba(14, 165, 233, 0.45), 0 4px 0 #075985;
 }
 
 /* ─── Tech glow effects ─────────────────────────────── */
 .tech-glow {
-  box-shadow: 0 0 20px rgba(0, 230, 118, 0.15), 0 0 40px rgba(0, 230, 118, 0.05);
+  box-shadow: 0 2px 16px rgba(22, 163, 74, 0.1);
 }
 .tech-border {
-  border: 1px solid rgba(0, 230, 118, 0.2);
+  border: 1px solid rgba(22, 163, 74, 0.2);
 }
 
-/* ─── Tagline glow text ─────────────────────────────── */
+/* ─── Tagline text ─────────────────────────────── */
 @keyframes tagline-glow {
   0%,
   100% {
-    text-shadow: 0 0 12px rgba(74, 222, 128, 0.5), 0 0 24px
-      rgba(74, 222, 128, 0.2);
+    opacity: 1;
   }
   50% {
-    text-shadow: 0 0 20px rgba(74, 222, 128, 0.9), 0 0 40px
-      rgba(74, 222, 128, 0.4);
+    opacity: 0.75;
   }
 }
 .tagline-glow {
   animation: tagline-glow 2s ease-in-out infinite;
 }
 
-/* ─── Neon green text utility ─────────────────────────── */
+/* ─── Green text utility ─────────────────────────── */
 .text-neon-green {
-  color: #00e676;
-}
-
-/* ─── Ensure all Tailwind text on dark bg is visible ─── */
-.text-slate-400 {
-  color: #94a3b8 !important;
-}
-.text-slate-300 {
-  color: #cbd5e1 !important;
-}
-.text-slate-200 {
-  color: #e2e8f0 !important;
-}
-.text-slate-100 {
-  color: #f1f5f9 !important;
+  color: #16a34a;
 }
 
 /* ─── Waveform animation for call recordings ─── */
@@ -657,5 +617,42 @@
   }
   50% {
     transform: scaleY(1.5);
+  }
+}
+
+/* ─── Page transition ────────────────────────── */
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-enter {
+  animation: pageSlideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Splash text animations ────────────────────────── */
+@keyframes splashSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes splashFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-16px);
   }
 }

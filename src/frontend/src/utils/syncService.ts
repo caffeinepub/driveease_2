@@ -1,19 +1,9 @@
 /**
- * DriveEase Firebase Firestore Sync Service
- * Firestore is the PRIMARY data source. localStorage is a fast cache/fallback.
+ * DriveEase Sync Service
+ * Uses Firestore REST API as primary store. localStorage is a fast cache/fallback.
  */
 
-import {
-  type Unsubscribe,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  onSnapshot,
-  setDoc,
-  writeBatch,
-} from "firebase/firestore";
-import { db } from "./firebase";
+import { fsDeleteDoc, fsGetCollection, fsSetDoc } from "./firebase";
 
 const COLLECTIONS = [
   "bookings",
@@ -31,13 +21,12 @@ const COLLECTIONS = [
 type AnyRecord = { id: string; [k: string]: unknown };
 
 /**
- * Write a single item directly to Firestore (primary) + localStorage (cache).
+ * Write a single item to Firestore (primary) + localStorage (cache).
  */
 export async function pushItem(
   listKey: string,
   item: AnyRecord,
 ): Promise<void> {
-  // Update localStorage cache immediately for fast UI
   const lsKey = `de_${listKey}`;
   try {
     const local: AnyRecord[] = JSON.parse(localStorage.getItem(lsKey) || "[]");
@@ -48,66 +37,49 @@ export async function pushItem(
   } catch {
     // ignore
   }
-  // Write to Firestore as primary store
-  try {
-    const ref = doc(db, `de_${listKey}`, item.id);
-    await setDoc(ref, item, { merge: true });
-  } catch {
-    // silently fail – localStorage is the fallback
-  }
+  await fsSetDoc(`de_${listKey}`, item.id, item as Record<string, unknown>);
 }
 
 /**
- * Push a full list to Firestore (batch upsert) + update localStorage.
+ * Push a full list to Firestore + update localStorage.
  */
 export async function pushList(
   listKey: string,
   items: AnyRecord[],
 ): Promise<void> {
   if (!items.length) return;
-  // Update localStorage cache
   const lsKey = `de_${listKey}`;
   try {
     localStorage.setItem(lsKey, JSON.stringify(items));
   } catch {
     // ignore
   }
-  // Write to Firestore
-  try {
-    const batch = writeBatch(db);
-    for (const item of items) {
-      const ref = doc(db, `de_${listKey}`, item.id);
-      batch.set(ref, item, { merge: true });
-    }
-    await batch.commit();
-  } catch {
-    // silently fail
-  }
+  await Promise.all(
+    items.map((item) =>
+      fsSetDoc(`de_${listKey}`, item.id, item as Record<string, unknown>),
+    ),
+  );
 }
 
 /**
  * Pull all documents from Firestore (primary). Falls back to localStorage.
  */
 export async function pullList(listKey: string): Promise<AnyRecord[]> {
-  try {
-    const snap = await getDocs(collection(db, `de_${listKey}`));
-    const remote = snap.docs.map(
-      (d) => ({ id: d.id, ...d.data() }) as AnyRecord,
-    );
-    // Update localStorage cache with fresh Firestore data
-    if (remote.length > 0) {
-      localStorage.setItem(`de_${listKey}`, JSON.stringify(remote));
-    }
-    return remote;
-  } catch {
-    // Fall back to localStorage if Firestore unavailable
+  const remote = await fsGetCollection(`de_${listKey}`);
+  if (remote.length > 0) {
     try {
-      return JSON.parse(
-        localStorage.getItem(`de_${listKey}`) || "[]",
-      ) as AnyRecord[];
+      localStorage.setItem(`de_${listKey}`, JSON.stringify(remote));
     } catch {
-      return [];
+      // ignore
     }
+    return remote as AnyRecord[];
+  }
+  try {
+    return JSON.parse(
+      localStorage.getItem(`de_${listKey}`) || "[]",
+    ) as AnyRecord[];
+  } catch {
+    return [];
   }
 }
 
@@ -121,15 +93,14 @@ export async function pullAllAndMerge(): Promise<boolean> {
     COLLECTIONS.map(async (key) => {
       const lsKey = `de_${key}`;
       try {
-        const snap = await getDocs(collection(db, `de_${key}`));
-        const remote = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const remote = await fsGetCollection(`de_${key}`);
         const existing = JSON.parse(localStorage.getItem(lsKey) || "[]");
         if (remote.length !== existing.length) hasNew = true;
         if (remote.length > 0) {
           localStorage.setItem(lsKey, JSON.stringify(remote));
         }
       } catch {
-        // ignore – Firestore may be unavailable
+        // ignore
       }
     }),
   );
@@ -137,35 +108,46 @@ export async function pullAllAndMerge(): Promise<boolean> {
 }
 
 /**
- * Subscribe to a Firestore collection in real-time.
+ * Subscribe to changes (polls every 15s as real-time sub replacement).
+ * Returns cleanup function.
+ */
+export function subscribeToChanges(callback: () => void): () => void {
+  let cancelled = false;
+  const poll = async () => {
+    if (cancelled) return;
+    const hasNew = await pullAllAndMerge();
+    if (hasNew) callback();
+    if (!cancelled) setTimeout(poll, 15000);
+  };
+  setTimeout(poll, 15000);
+  return () => {
+    cancelled = true;
+  };
+}
+
+/**
+ * Subscribe to a collection (polls on mount + interval).
+ * Returns cleanup function.
  */
 export function subscribeToCollection(
   listKey: string,
   callback: (items: AnyRecord[]) => void,
-): Unsubscribe {
-  const colRef = collection(db, `de_${listKey}`);
-  return onSnapshot(
-    colRef,
-    (snap) => {
-      const items = snap.docs.map(
-        (d) => ({ id: d.id, ...d.data() }) as AnyRecord,
-      );
-      callback(items);
-    },
-    () => {
-      // On error, fall back to localStorage
-      try {
-        const local = JSON.parse(localStorage.getItem(`de_${listKey}`) || "[]");
-        callback(local);
-      } catch {
-        callback([]);
-      }
-    },
-  );
+): () => void {
+  let cancelled = false;
+  const load = async () => {
+    if (cancelled) return;
+    const items = await pullList(listKey);
+    callback(items);
+    if (!cancelled) setTimeout(load, 20000);
+  };
+  load();
+  return () => {
+    cancelled = true;
+  };
 }
 
 /**
- * Delete a document from Firestore and remove from localStorage cache.
+ * Delete a document from Firestore and localStorage cache.
  */
 export async function deleteItem(listKey: string, id: string): Promise<void> {
   const lsKey = `de_${listKey}`;
@@ -178,11 +160,7 @@ export async function deleteItem(listKey: string, id: string): Promise<void> {
   } catch {
     // ignore
   }
-  try {
-    await deleteDoc(doc(db, `de_${listKey}`, id));
-  } catch {
-    // ignore
-  }
+  await fsDeleteDoc(`de_${listKey}`, id);
 }
 
 /**
@@ -196,9 +174,7 @@ export async function pushAll(): Promise<void> {
         const items = JSON.parse(
           localStorage.getItem(lsKey) || "[]",
         ) as AnyRecord[];
-        if (items.length > 0) {
-          await pushList(key, items);
-        }
+        if (items.length > 0) await pushList(key, items);
       } catch {
         // ignore
       }
@@ -207,55 +183,7 @@ export async function pushAll(): Promise<void> {
 }
 
 /**
- * Subscribe to real-time Firestore updates across all tracked collections.
- * Returns a cleanup function to unsubscribe all listeners.
- */
-export function subscribeToChanges(callback: () => void): () => void {
-  const unsubs: Unsubscribe[] = [];
-  for (const key of COLLECTIONS) {
-    const lsKey = `de_${key}`;
-    const colRef = collection(db, `de_${key}`);
-    const unsub = onSnapshot(
-      colRef,
-      (snap) => {
-        const remote = snap.docs.map(
-          (d) => ({ id: d.id, ...d.data() }) as AnyRecord,
-        );
-        if (remote.length === 0) return;
-        let local: AnyRecord[] = [];
-        try {
-          local = JSON.parse(
-            localStorage.getItem(lsKey) || "[]",
-          ) as AnyRecord[];
-        } catch {
-          local = [];
-        }
-        const localMap = new Map(local.map((r) => [r.id, r]));
-        let changed = false;
-        for (const r of remote) {
-          if (!localMap.has(r.id)) changed = true;
-          localMap.set(r.id, { ...localMap.get(r.id), ...r });
-        }
-        localStorage.setItem(
-          lsKey,
-          JSON.stringify(Array.from(localMap.values())),
-        );
-        if (changed) callback();
-      },
-      () => {
-        /* ignore */
-      },
-    );
-    unsubs.push(unsub);
-  }
-  return () => {
-    for (const u of unsubs) u();
-  };
-}
-
-/**
  * Send an SMS notification via Textbelt free tier.
- * Silently fails on error.
  */
 export async function sendSMS(phone: string, message: string): Promise<void> {
   try {
@@ -265,6 +193,6 @@ export async function sendSMS(phone: string, message: string): Promise<void> {
       body: JSON.stringify({ phone, message, key: "textbelt" }),
     });
   } catch {
-    // silent fail – SMS is best-effort
+    // silent fail
   }
 }
