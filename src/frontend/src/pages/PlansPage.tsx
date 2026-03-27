@@ -426,7 +426,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 </div>
                 <div
                   style={{
-                    background: "rgba(0,230,118,0.08)",
+                    background: "rgba(220,20,60,0.08)",
                     border: "1px solid rgba(0,230,118,0.2)",
                     borderRadius: 8,
                     padding: "0.75rem",
@@ -454,7 +454,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                     background:
                       !form.name || !form.phone
                         ? "#94a3b8"
-                        : activePlan?.color || "#16a34a",
+                        : activePlan?.color || "#8B0000",
                     color: "white",
                     border: "none",
                     borderRadius: 8,

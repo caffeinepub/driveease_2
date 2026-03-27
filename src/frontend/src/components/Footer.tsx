@@ -7,7 +7,7 @@ export default function Footer({ navigate }: FooterProps) {
     <footer
       style={{
         background: "#060d16",
-        borderTop: "1px solid rgba(0,230,118,0.2)",
+        borderTop: "1px solid rgba(220,20,60,0.2)",
         padding: "3rem 1.5rem 1.5rem",
         marginTop: "auto",
       }}
@@ -32,14 +32,14 @@ export default function Footer({ navigate }: FooterProps) {
             >
               <div
                 style={{
-                  background: "linear-gradient(135deg,#00e676,#22c55e)",
+                  background: "linear-gradient(135deg,#DC143C,#DC143C)",
                   borderRadius: 8,
                   width: 32,
                   height: 32,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 2px 8px rgba(0,230,118,0.25)",
+                  boxShadow: "0 2px 8px rgba(220,20,60,0.25)",
                 }}
               >
                 <span style={{ fontSize: "1rem" }}>🚗</span>
@@ -63,7 +63,7 @@ export default function Footer({ navigate }: FooterProps) {
             </p>
             <p
               style={{
-                color: "#00e676",
+                color: "#DC143C",
                 marginTop: "0.75rem",
                 fontSize: "0.9rem",
                 fontWeight: 500,
@@ -107,7 +107,7 @@ export default function Footer({ navigate }: FooterProps) {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#00e676";
+                  e.currentTarget.style.color = "#DC143C";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = "#94a3b8";
@@ -140,7 +140,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="tel:+917836887228"
               style={{
-                color: "#00e676",
+                color: "#DC143C",
                 fontSize: "0.9rem",
                 display: "block",
                 marginBottom: "0.5rem",
@@ -250,7 +250,7 @@ export default function Footer({ navigate }: FooterProps) {
               target="_blank"
               rel="noreferrer"
               style={{
-                color: "#00e676",
+                color: "#DC143C",
                 textDecoration: "none",
                 fontWeight: 600,
               }}

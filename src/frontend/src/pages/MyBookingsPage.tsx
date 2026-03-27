@@ -84,7 +84,7 @@ function downloadInvoice(b: Booking) {
     .footer { background: #0d1a2e; padding: 20px 40px; text-align: center; }
     .footer p { color: #475569; font-size: 11px; line-height: 1.7; }
     .footer .brand { color: #00e676; font-weight: 600; font-size: 12px; }
-    .payment-badge { display: inline-block; background: #dcfce7; color: #16a34a; border: 1px solid #86efac; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .payment-badge { display: inline-block; background: #fff5f5; color: #8B0000; border: 1px solid #86efac; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; }
     .stats-row { display: flex; gap: 20px; }
     .stat-box { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; text-align: center; }
     .stat-val { font-size: 18px; font-weight: 700; color: #0d1a2e; }
@@ -218,7 +218,7 @@ function RouteMap({ pickup, drop }: { pickup: string; drop: string }) {
         style={{
           background: showMap
             ? "rgba(248,113,113,0.1)"
-            : "rgba(0,230,118,0.08)",
+            : "rgba(220,20,60,0.08)",
           border: `1px solid ${showMap ? "rgba(248,113,113,0.3)" : "rgba(0,230,118,0.3)"}`,
           color: showMap ? "#f87171" : "#00e676",
           borderRadius: 8,
@@ -417,7 +417,7 @@ function BookingCard({ b, onCancel }: { b: Booking; onCancel?: () => void }) {
               onClick={() => downloadInvoice(b)}
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(0,230,118,0.15), rgba(0,230,118,0.08))",
+                  "linear-gradient(135deg, rgba(0,230,118,0.15), rgba(220,20,60,0.08))",
                 border: "1px solid rgba(0,230,118,0.4)",
                 color: "#00e676",
                 borderRadius: 8,
@@ -615,7 +615,7 @@ export default function MyBookingsPage({ navigate }: Props) {
                 <button
                   type="button"
                   onClick={() => navigate("book")}
-                  className="green-btn"
+                  className="red-btn"
                   style={{ marginTop: "1.25rem" }}
                 >
                   Book a Driver
@@ -834,7 +834,7 @@ export default function MyBookingsPage({ navigate }: Props) {
                     type="button"
                     data-ocid="bookings.profile.save_button"
                     onClick={saveProfile}
-                    className="green-btn"
+                    className="red-btn"
                     style={{ marginTop: "0.5rem", minHeight: 48 }}
                   >
                     Save Changes

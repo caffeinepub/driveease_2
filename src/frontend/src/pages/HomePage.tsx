@@ -263,6 +263,65 @@ export default function HomePage({ navigate }: HomePageProps) {
         .driver-strip{-ms-overflow-style:none;scrollbar-width:none}
       `}</style>
 
+      {/* ANNOUNCEMENT STRIP */}
+      <div
+        style={{
+          background: "linear-gradient(90deg,#8B0000,#DC143C,#8B0000)",
+          overflow: "hidden",
+          padding: "0.55rem 0",
+          position: "relative",
+          zIndex: 5,
+        }}
+      >
+        <div className="marquee-track" style={{ gap: "0 3rem" }}>
+          {["a", "b"].map((k) => (
+            <span
+              key={k}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "2rem",
+                paddingRight: "3rem",
+              }}
+            >
+              {[
+                "🚗 Book Your Driver Today",
+                "🎉 20% Off First Ride",
+                "🛡️ Police Verified Drivers",
+                "📍 GPS Tracked Every Ride",
+                "👨‍👩‍👧 Trusted by 5000+ Families",
+                "📞 24/7 Support Available",
+                "⚡ Book in Under 60 Seconds",
+                "🏆 India's #1 Driver Network",
+              ].map((text) => (
+                <span
+                  key={text}
+                  style={{
+                    color: "#fff",
+                    fontWeight: 600,
+                    fontSize: "0.85rem",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  {text}
+                  <span
+                    style={{
+                      color: "rgba(255,255,255,0.5)",
+                      fontSize: "0.7rem",
+                    }}
+                  >
+                    •
+                  </span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* HERO - Split layout */}
       <section
         className="relative overflow-hidden flex flex-col md:flex-row"
@@ -278,11 +337,11 @@ export default function HomePage({ navigate }: HomePageProps) {
         >
           <div
             data-ocid="hero.live_badge"
-            className="flex items-center gap-2 border border-green-400/40 rounded-full px-4 py-2 w-fit"
-            style={{ background: "rgba(0,230,118,0.08)" }}
+            className="flex items-center gap-2 border border-red-400/40 rounded-full px-4 py-2 w-fit"
+            style={{ background: "rgba(220,20,60,0.08)" }}
           >
-            <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-green-400" />
-            <span className="text-green-300 font-semibold text-sm">
+            <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-red-400" />
+            <span className="text-red-300 font-semibold text-sm">
               {driverCount} drivers nearby right now
             </span>
           </div>
@@ -312,8 +371,8 @@ export default function HomePage({ navigate }: HomePageProps) {
               onClick={() => navigate("book")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "linear-gradient(135deg,#16a34a,#15803d)",
-                boxShadow: "0 4px 24px #16a34a77",
+                background: "linear-gradient(135deg,#8B0000,#15803d)",
+                boxShadow: "0 4px 24px #8B000077",
                 minHeight: 48,
               }}
             >
@@ -323,7 +382,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               type="button"
               data-ocid="hero.become_driver_button"
               onClick={() => navigate("register-driver")}
-              className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 border-green-400 text-green-300 shadow transition-all hover:bg-green-900/30 hover:scale-105 active:scale-95"
+              className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 border-red-400 text-red-300 shadow transition-all hover:bg-red-950/30 hover:scale-105 active:scale-95"
               style={{ background: "rgba(0,0,0,0.2)", minHeight: 48 }}
             >
               🚗 Become a Driver
@@ -340,7 +399,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((b) => (
               <span
                 key={b}
-                className="border border-green-400/30 text-green-200 text-xs font-medium px-3 py-1.5 rounded-full"
+                className="border border-red-400/30 text-red-200 text-xs font-medium px-3 py-1.5 rounded-full"
                 style={{ background: "rgba(0,230,118,0.07)" }}
               >
                 {b}
@@ -407,6 +466,227 @@ export default function HomePage({ navigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* BRANDING BANNER */}
+      <section
+        style={{
+          background:
+            "linear-gradient(135deg,#6b0000 0%,#8B0000 40%,#DC143C 100%)",
+          padding: "3.5rem 1rem",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "radial-gradient(circle at 80% 50%, rgba(255,255,255,0.05) 0%, transparent 60%)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            maxWidth: 1100,
+            margin: "0 auto",
+            textAlign: "center",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <div
+            style={{
+              display: "inline-block",
+              background: "rgba(255,255,255,0.12)",
+              borderRadius: 9999,
+              padding: "0.3rem 1rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <span
+              style={{
+                color: "#ffd6d6",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+              }}
+            >
+              India's Most Trusted Platform
+            </span>
+          </div>
+          <h2
+            style={{
+              color: "#ffffff",
+              fontWeight: 900,
+              fontSize: "clamp(1.8rem,4vw,3rem)",
+              marginBottom: "0.75rem",
+              lineHeight: 1.2,
+              fontFamily: "'Orbitron',monospace",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            India's #1 Personal Driver Network
+          </h2>
+          <p
+            style={{
+              color: "rgba(255,255,255,0.8)",
+              fontSize: "1.1rem",
+              marginBottom: "2.5rem",
+              maxWidth: 600,
+              margin: "0 auto 2.5rem",
+            }}
+          >
+            Connecting 5,000+ Families with Verified, Background-Checked,
+            Trusted Drivers Across 50+ Cities
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "1.5rem",
+              justifyContent: "center",
+            }}
+          >
+            {[
+              { num: "5,000+", label: "Happy Families", icon: "👨‍👩‍👧" },
+              { num: "500+", label: "Verified Drivers", icon: "🛡️" },
+              { num: "50+", label: "Cities Served", icon: "🏙️" },
+              { num: "4.9★", label: "Average Rating", icon: "⭐" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                style={{
+                  background: "rgba(255,255,255,0.12)",
+                  backdropFilter: "blur(8px)",
+                  borderRadius: 16,
+                  padding: "1.5rem 2rem",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  minWidth: 160,
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontSize: "1.8rem", marginBottom: "0.4rem" }}>
+                  {stat.icon}
+                </div>
+                <div
+                  style={{
+                    color: "#ffffff",
+                    fontWeight: 800,
+                    fontSize: "1.8rem",
+                    lineHeight: 1,
+                  }}
+                >
+                  {stat.num}
+                </div>
+                <div
+                  style={{
+                    color: "rgba(255,255,255,0.75)",
+                    fontSize: "0.82rem",
+                    marginTop: "0.3rem",
+                    fontWeight: 500,
+                  }}
+                >
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROMO CARDS */}
+      <section style={{ background: "#111827", padding: "2.5rem 1rem" }}>
+        <div
+          style={{
+            maxWidth: 1100,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+            gap: "1.25rem",
+          }}
+        >
+          {[
+            {
+              icon: "🎯",
+              title: "First Ride Offer",
+              desc: "Get 20% off your very first booking with DriveEase. Premium drivers, unbeatable price.",
+              badge: "LIMITED OFFER",
+            },
+            {
+              icon: "🛡️",
+              title: "100% Police Verified",
+              desc: "Every driver undergoes thorough background checks. Your family's safety is our #1 priority.",
+              badge: "GUARANTEED",
+            },
+            {
+              icon: "⚡",
+              title: "Book in 60 Seconds",
+              desc: "Fastest booking experience — select location, confirm, done. Your driver is on the way.",
+              badge: "INSTANT",
+            },
+          ].map((card) => (
+            <div
+              key={card.title}
+              style={{
+                background: "#1e293b",
+                borderRadius: 16,
+                padding: "1.75rem",
+                borderLeft: "4px solid #DC143C",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.5rem",
+                }}
+              >
+                <span style={{ fontSize: "2rem" }}>{card.icon}</span>
+                <span
+                  style={{
+                    background: "#DC143C",
+                    color: "#fff",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: 9999,
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {card.badge}
+                </span>
+              </div>
+              <h3
+                style={{
+                  color: "#f1f5f9",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  margin: 0,
+                }}
+              >
+                {card.title}
+              </h3>
+              <p
+                style={{
+                  color: "#94a3b8",
+                  fontSize: "0.88rem",
+                  margin: 0,
+                  lineHeight: 1.6,
+                }}
+              >
+                {card.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* TRUST BADGES */}
       <section
         ref={trustFade.ref}
@@ -417,7 +697,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
-                icon: <Shield size={28} className="text-green-600" />,
+                icon: <Shield size={28} className="text-red-600" />,
                 label: "Police Verified Drivers",
                 sub: "Every driver is background-checked",
               },
@@ -489,7 +769,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 key={s.step}
                 className="relative bg-white rounded-2xl shadow-md p-6 border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all"
               >
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-green-600 text-white text-xs font-bold flex items-center justify-center shadow">
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-red-700 text-white text-xs font-bold flex items-center justify-center shadow">
                   {s.step}
                 </div>
                 <div className="text-4xl mb-3">{s.icon}</div>
@@ -569,7 +849,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                   &ldquo;{r.quote}&rdquo;
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-xs">
+                  <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center text-red-700 font-bold text-xs">
                     {r.name
                       .split(" ")
                       .map((x) => x[0])
@@ -622,8 +902,8 @@ export default function HomePage({ navigate }: HomePageProps) {
                 Your family deserves the best.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-              <Calendar size={32} className="text-green-600 mb-3" />
+            <div className="bg-gradient-to-br from-red-50 to-red-50 rounded-2xl p-6 border border-red-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+              <Calendar size={32} className="text-red-600 mb-3" />
               <h3 className="font-bold text-gray-900 mb-2">
                 Subscription Plans
               </h3>
@@ -635,7 +915,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 type="button"
                 data-ocid="features.view_plans_button"
                 onClick={() => navigate("plans")}
-                className="text-green-700 text-sm font-semibold underline underline-offset-2 hover:text-green-900 transition-colors"
+                className="text-red-700 text-sm font-semibold underline underline-offset-2 hover:text-red-900 transition-colors"
               >
                 View Plans →
               </button>
@@ -662,10 +942,10 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((b) => (
               <div
                 key={b.text}
-                className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-sm border border-green-100"
+                className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-sm border border-red-100"
               >
                 <span className="text-lg">{b.icon}</span>
-                <span className="font-semibold text-green-800 text-sm">
+                <span className="font-semibold text-red-800 text-sm">
                   {b.text}
                 </span>
               </div>
@@ -684,8 +964,8 @@ export default function HomePage({ navigate }: HomePageProps) {
             onClick={() => navigate("book")}
             className="font-bold px-10 py-4 rounded-full text-white text-lg shadow-xl transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "linear-gradient(135deg,#16a34a,#15803d)",
-              boxShadow: "0 6px 32px #16a34a66",
+              background: "linear-gradient(135deg,#8B0000,#15803d)",
+              boxShadow: "0 6px 32px #8B000066",
             }}
           >
             🚗 Book Your First Ride
@@ -718,11 +998,11 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((c) => (
               <div
                 key={c.city}
-                className="flex items-center gap-2 bg-white border-2 border-green-200 rounded-full px-6 py-2.5 shadow-sm hover:bg-green-50 hover:border-green-400 transition-all"
+                className="flex items-center gap-2 bg-white border-2 border-red-200 rounded-full px-6 py-2.5 shadow-sm hover:bg-red-50 hover:border-red-400 transition-all"
               >
                 <span className="text-lg">{c.emoji}</span>
-                <span className="font-semibold text-green-800">{c.city}</span>
-                <CheckCircle size={14} className="text-green-500" />
+                <span className="font-semibold text-red-800">{c.city}</span>
+                <CheckCircle size={14} className="text-red-500" />
               </div>
             ))}
           </div>
@@ -781,7 +1061,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                   <span
                     className={`absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white ${
                       d.status === "available"
-                        ? "bg-green-500 blink"
+                        ? "bg-red-500 blink"
                         : d.status === "on-trip"
                           ? "bg-orange-500"
                           : "bg-gray-400"
@@ -1006,7 +1286,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                       width: 40,
                       height: 40,
                       borderRadius: "50%",
-                      background: "linear-gradient(135deg,#00e676,#16a34a)",
+                      background: "linear-gradient(135deg,#00e676,#8B0000)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1142,11 +1422,9 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((s) => (
               <div
                 key={s.label}
-                className="bg-white border border-green-100 rounded-2xl px-8 py-4 shadow-sm text-center"
+                className="bg-white border border-red-100 rounded-2xl px-8 py-4 shadow-sm text-center"
               >
-                <div className="font-bold text-2xl text-green-700">
-                  {s.stat}
-                </div>
+                <div className="font-bold text-2xl text-red-700">{s.stat}</div>
                 <div className="text-gray-500 text-xs mt-0.5">{s.label}</div>
               </div>
             ))}
@@ -1169,7 +1447,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-green-600 hover:underline"
+            className="text-red-600 hover:underline"
           >
             caffeine.ai
           </a>
@@ -1178,7 +1456,7 @@ export default function HomePage({ navigate }: HomePageProps) {
 
       {/* MOBILE STICKY BAR */}
       <div
-        className="fixed bottom-0 left-0 right-0 md:hidden z-30 flex border-t border-green-100"
+        className="fixed bottom-0 left-0 right-0 md:hidden z-30 flex border-t border-red-100"
         style={{ background: "#f8fafc", padding: "0.75rem 1rem" }}
       >
         <button
@@ -1186,7 +1464,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           data-ocid="mobile.book_now_button"
           onClick={() => navigate("book")}
           className="flex-1 font-bold py-3 rounded-full text-white mr-2 text-sm"
-          style={{ background: "linear-gradient(135deg,#16a34a,#15803d)" }}
+          style={{ background: "linear-gradient(135deg,#8B0000,#15803d)" }}
         >
           🚗 Book Now
         </button>
@@ -1194,7 +1472,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           type="button"
           data-ocid="mobile.find_drivers_button"
           onClick={() => navigate("drivers")}
-          className="flex-1 font-bold py-3 rounded-full text-green-700 border-2 border-green-500 text-sm"
+          className="flex-1 font-bold py-3 rounded-full text-red-700 border-2 border-red-600 text-sm"
         >
           📍 Find Drivers
         </button>
@@ -1214,10 +1492,10 @@ function DriverCard({
 }) {
   const statusConfig = {
     available: {
-      dot: "bg-green-500",
+      dot: "bg-red-500",
       label: "Available Now",
-      text: "text-green-700",
-      bg: "bg-green-50 border-green-200",
+      text: "text-red-700",
+      bg: "bg-red-50 border-red-200",
       blink: true,
     },
     "on-trip": {
@@ -1299,7 +1577,7 @@ function DriverCard({
           onClick={() => navigate("book")}
           className="flex-1 text-xs font-semibold py-2 rounded-lg text-white transition-all hover:opacity-90"
           style={{
-            background: driver.status === "offline" ? "#94a3b8" : "#16a34a",
+            background: driver.status === "offline" ? "#94a3b8" : "#8B0000",
           }}
           disabled={driver.status === "offline"}
         >
@@ -1308,7 +1586,7 @@ function DriverCard({
         <a
           href="tel:+917836887228"
           data-ocid={`drivers.call_button.${index}`}
-          className="flex-1 text-xs font-semibold py-2 rounded-lg text-green-700 border border-green-400 text-center hover:bg-green-50 transition-all"
+          className="flex-1 text-xs font-semibold py-2 rounded-lg text-red-700 border border-red-400 text-center hover:bg-red-50 transition-all"
         >
           Call Driver
         </a>

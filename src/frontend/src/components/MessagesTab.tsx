@@ -94,8 +94,8 @@ function TemplateCard({ name, text }: { name: string; text: string }) {
         </span>
         <span
           style={{
-            background: "#16a34a22",
-            border: "1px solid #16a34a55",
+            background: "#8B000022",
+            border: "1px solid #8B000055",
             color: "#4ade80",
             fontSize: "0.7rem",
             borderRadius: 4,
@@ -137,7 +137,7 @@ function TemplateCard({ name, text }: { name: string; text: string }) {
         <button
           type="button"
           onClick={handleCopy}
-          className="green-btn"
+          className="red-btn"
           style={{ fontSize: "0.78rem", padding: "0.3rem 0.7rem" }}
           data-ocid="messages.copy_button"
         >
@@ -278,7 +278,7 @@ export function MessagesTab() {
       <div
         style={{
           background: "#1a1a1a",
-          border: "1px solid #16a34a44",
+          border: "1px solid #8B000044",
           borderRadius: 12,
           padding: "1.25rem",
           marginBottom: "2rem",
@@ -367,7 +367,7 @@ export function MessagesTab() {
         <button
           type="button"
           onClick={handleGenerate}
-          className="green-btn"
+          className="red-btn"
           disabled={aiState === "loading" || !aiPrompt.trim()}
           style={{
             opacity: aiState === "loading" || !aiPrompt.trim() ? 0.6 : 1,
@@ -391,8 +391,8 @@ export function MessagesTab() {
               style={{
                 width: 16,
                 height: 16,
-                border: "2px solid #16a34a44",
-                borderTop: "2px solid #16a34a",
+                border: "2px solid #8B000044",
+                borderTop: "2px solid #8B0000",
                 borderRadius: "50%",
                 animation: "spin 0.8s linear infinite",
               }}
@@ -408,7 +408,7 @@ export function MessagesTab() {
             style={{
               marginTop: "1rem",
               background: "#111",
-              border: "1px solid #16a34a55",
+              border: "1px solid #8B000055",
               borderRadius: 8,
               padding: "0.85rem",
             }}
@@ -433,8 +433,8 @@ export function MessagesTab() {
               </span>
               <span
                 style={{
-                  background: "#16a34a22",
-                  border: "1px solid #16a34a55",
+                  background: "#8B000022",
+                  border: "1px solid #8B000055",
                   color: "#4ade80",
                   fontSize: "0.68rem",
                   borderRadius: 4,
@@ -463,7 +463,7 @@ export function MessagesTab() {
                   setAiCopied(true);
                   setTimeout(() => setAiCopied(false), 1500);
                 }}
-                className="green-btn"
+                className="red-btn"
                 style={{ fontSize: "0.78rem", padding: "0.3rem 0.7rem" }}
                 data-ocid="messages.copy_button"
               >
@@ -532,7 +532,7 @@ export function MessagesTab() {
         <button
           type="button"
           onClick={handleSave}
-          className="green-btn"
+          className="red-btn"
           disabled={!customName.trim() || !customText.trim()}
           style={{
             opacity: !customName.trim() || !customText.trim() ? 0.6 : 1,
@@ -623,7 +623,7 @@ export function MessagesTab() {
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(t.text)}
-                    className="green-btn"
+                    className="red-btn"
                     style={{ fontSize: "0.75rem", padding: "0.25rem 0.6rem" }}
                     data-ocid={`messages.copy_button.${i + 1}`}
                   >

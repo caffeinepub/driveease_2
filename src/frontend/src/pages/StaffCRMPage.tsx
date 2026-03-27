@@ -77,7 +77,7 @@ const TAG_COLORS: Record<string, string> = {
   "follow-up": "#f59e0b",
   "hot-lead": "#ef4444",
   complaint: "#8b5cf6",
-  vip: "#22c55e",
+  vip: "#DC143C",
   "": "#64748b",
 };
 
@@ -105,7 +105,7 @@ const S = {
     marginBottom: "0.75rem",
   } as React.CSSProperties,
   logoText: {
-    color: "#22c55e",
+    color: "#DC143C",
     fontWeight: 800,
     fontSize: "1rem",
     letterSpacing: "0.02em",
@@ -124,13 +124,13 @@ const S = {
       padding: "0.65rem 1.25rem",
       background: active ? "rgba(34,197,94,0.12)" : "transparent",
       border: "none",
-      color: active ? "#22c55e" : "#94a3b8",
+      color: active ? "#DC143C" : "#94a3b8",
       fontWeight: active ? 700 : 400,
       fontSize: "0.88rem",
       cursor: "pointer",
       width: "100%",
       textAlign: "left" as const,
-      borderLeft: active ? "3px solid #22c55e" : "3px solid transparent",
+      borderLeft: active ? "3px solid #DC143C" : "3px solid transparent",
       transition: "all 0.15s",
     }) as React.CSSProperties,
   content: {
@@ -190,7 +190,7 @@ const S = {
     boxSizing: "border-box" as const,
   } as React.CSSProperties,
   btnGreen: {
-    background: "#16a34a",
+    background: "#8B0000",
     color: "#fff",
     border: "none",
     borderRadius: 7,
@@ -213,7 +213,7 @@ const S = {
       padding: "0.4rem 0.9rem",
       borderRadius: 20,
       border: "none",
-      background: active ? "#22c55e" : "#334155",
+      background: active ? "#DC143C" : "#334155",
       color: active ? "#000" : "#94a3b8",
       fontWeight: active ? 700 : 400,
       fontSize: "0.82rem",
@@ -267,7 +267,7 @@ function LoginScreen({ onLogin }: { onLogin: (exec: Executive) => void }) {
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div
             style={{
-              color: "#22c55e",
+              color: "#DC143C",
               fontSize: "2rem",
               fontWeight: 800,
               marginBottom: "0.25rem",
@@ -487,7 +487,7 @@ function CallModal({
             style={{
               fontSize: "2rem",
               fontWeight: 700,
-              color: callActive ? "#22c55e" : "#475569",
+              color: callActive ? "#DC143C" : "#475569",
               fontVariantNumeric: "tabular-nums",
             }}
           >
@@ -833,7 +833,7 @@ export default function StaffCRMPage() {
             <span
               style={{
                 background: "rgba(34,197,94,0.12)",
-                color: "#22c55e",
+                color: "#DC143C",
                 borderRadius: 20,
                 padding: "0.2rem 0.6rem",
                 fontSize: "0.75rem",
@@ -881,8 +881,8 @@ export default function StaffCRMPage() {
                       height: 8,
                       borderRadius: "50%",
                       background:
-                        staffStatus === "available" ? "#22c55e" : "#f59e0b",
-                      boxShadow: `0 0 8px ${staffStatus === "available" ? "#22c55e" : "#f59e0b"}`,
+                        staffStatus === "available" ? "#DC143C" : "#f59e0b",
+                      boxShadow: `0 0 8px ${staffStatus === "available" ? "#DC143C" : "#f59e0b"}`,
                     }}
                   />
                   <span
@@ -917,7 +917,7 @@ export default function StaffCRMPage() {
                       staffStatus === "available"
                         ? "rgba(34,197,94,0.2)"
                         : "rgba(245,158,11,0.2)",
-                    color: staffStatus === "available" ? "#22c55e" : "#f59e0b",
+                    color: staffStatus === "available" ? "#DC143C" : "#f59e0b",
                   }}
                 >
                   {staffStatus === "available" ? "● Available" : "⚡ On Call"}
@@ -950,7 +950,7 @@ export default function StaffCRMPage() {
                     todayLogsCount.map((l) => l.customerPhone),
                   ).size;
                   return [
-                    ["📞", "Calls Today", todayLogsCount.length, "#22c55e"],
+                    ["📞", "Calls Today", todayLogsCount.length, "#DC143C"],
                     [
                       "⏱️",
                       "Avg Duration",
@@ -1068,7 +1068,7 @@ export default function StaffCRMPage() {
                               </td>
                               <td
                                 style={{
-                                  color: "#22c55e",
+                                  color: "#DC143C",
                                   padding: "0.5rem 0.75rem",
                                 }}
                               >
@@ -1087,7 +1087,7 @@ export default function StaffCRMPage() {
                                 <span
                                   style={{
                                     background: "rgba(34,197,94,0.15)",
-                                    color: "#22c55e",
+                                    color: "#DC143C",
                                     borderRadius: 20,
                                     padding: "0.15rem 0.5rem",
                                     fontSize: "0.75rem",
@@ -1191,7 +1191,7 @@ export default function StaffCRMPage() {
                             height: 44,
                             borderRadius: "50%",
                             background:
-                              "linear-gradient(135deg, #16a34a, #0284c7)",
+                              "linear-gradient(135deg, #8B0000, #0284c7)",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -1213,7 +1213,7 @@ export default function StaffCRMPage() {
                             {customer.name}
                           </div>
                           <div
-                            style={{ color: "#22c55e", fontSize: "0.85rem" }}
+                            style={{ color: "#DC143C", fontSize: "0.85rem" }}
                           >
                             {customer.phone}
                           </div>
@@ -1445,7 +1445,7 @@ export default function StaffCRMPage() {
                                   background: "#0f172a",
                                   borderRadius: 8,
                                   padding: "0.75rem",
-                                  borderLeft: "3px solid #22c55e",
+                                  borderLeft: "3px solid #DC143C",
                                 }}
                               >
                                 <div
@@ -1458,7 +1458,7 @@ export default function StaffCRMPage() {
                                 >
                                   <span
                                     style={{
-                                      color: "#22c55e",
+                                      color: "#DC143C",
                                       fontSize: "0.8rem",
                                       fontWeight: 700,
                                     }}
@@ -1568,7 +1568,7 @@ export default function StaffCRMPage() {
                                           : "rgba(59,130,246,0.2)",
                                     color:
                                       b.status === "completed"
-                                        ? "#22c55e"
+                                        ? "#DC143C"
                                         : b.status === "cancelled"
                                           ? "#ef4444"
                                           : "#60a5fa",
@@ -1881,7 +1881,7 @@ export default function StaffCRMPage() {
                       </p>
                       <p
                         style={{
-                          color: "#22c55e",
+                          color: "#DC143C",
                           fontSize: "0.85rem",
                           margin: "0.2rem 0",
                         }}

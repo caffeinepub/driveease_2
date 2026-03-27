@@ -280,7 +280,7 @@ export default function InsurancePage({ navigate }: Props) {
             type="button"
             onClick={() => navigate("drivers")}
             data-ocid="insurance.book_driver_button"
-            className="green-btn"
+            className="red-btn"
             style={{ fontSize: "1rem", padding: "0.8rem 2rem" }}
           >
             Book a Driver with Insurance

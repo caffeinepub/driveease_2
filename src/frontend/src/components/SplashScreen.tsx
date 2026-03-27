@@ -170,7 +170,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #15803d 0%, #16a34a 60%, #059669 100%)",
+                  "linear-gradient(135deg, #15803d 0%, #8B0000 60%, #8B0000 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -193,7 +193,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             width: 88,
             height: 88,
             borderRadius: "50%",
-            background: "linear-gradient(135deg, #16a34a, #059669)",
+            background: "linear-gradient(135deg, #8B0000, #8B0000)",
             boxShadow:
               "0 8px 32px rgba(22,163,74,0.3), 0 2px 8px rgba(22,163,74,0.15)",
             marginBottom: "1.2rem",
@@ -208,7 +208,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             fontFamily: "'Orbitron', sans-serif",
             fontSize: "clamp(2rem, 6vw, 2.8rem)",
             fontWeight: 800,
-            background: "linear-gradient(135deg, #15803d, #16a34a, #059669)",
+            background: "linear-gradient(135deg, #15803d, #8B0000, #8B0000)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -275,7 +275,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           style={{
             height: "100%",
             width: `${progress}%`,
-            background: "linear-gradient(90deg, #16a34a, #22c55e, #4ade80)",
+            background: "linear-gradient(90deg, #8B0000, #DC143C, #f87171)",
             borderRadius: 99,
             transition: "width 0.03s linear",
           }}

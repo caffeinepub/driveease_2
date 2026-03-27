@@ -62,7 +62,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
         background: scrolled ? "rgba(10,15,26,0.97)" : "rgba(10,15,26,0.95)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(0,230,118,0.15)",
+        borderBottom: "1px solid rgba(220,20,60,0.15)",
         boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.4)" : "none",
         transition: "background 0.3s, box-shadow 0.3s",
       }}
@@ -98,7 +98,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             style={{
               width: 36,
               height: 36,
-              background: "linear-gradient(135deg,#00e676,#16a34a)",
+              background: "linear-gradient(135deg,#8B0000,#DC143C)",
               borderRadius: 10,
               display: "flex",
               alignItems: "center",
@@ -113,7 +113,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               fontFamily: "'Orbitron', monospace",
               fontWeight: 700,
               fontSize: "1.2rem",
-              background: "linear-gradient(135deg,#00e676,#4ade80)",
+              background: "linear-gradient(135deg,#DC143C,#f87171)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "0.04em",
@@ -142,11 +142,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go(item.page)}
               style={{
                 background: isActive(item.page)
-                  ? "rgba(0,230,118,0.15)"
+                  ? "rgba(220,20,60,0.15)"
                   : "transparent",
-                color: isActive(item.page) ? "#00e676" : "#cbd5e1",
+                color: isActive(item.page) ? "#DC143C" : "#cbd5e1",
                 border: isActive(item.page)
-                  ? "1px solid rgba(0,230,118,0.3)"
+                  ? "1px solid rgba(220,20,60,0.3)"
                   : "1px solid transparent",
                 borderRadius: 9999,
                 padding: "0.45rem 1rem",
@@ -159,8 +159,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               }}
               onMouseEnter={(e) => {
                 if (!isActive(item.page)) {
-                  e.currentTarget.style.color = "#00e676";
-                  e.currentTarget.style.background = "rgba(0,230,118,0.07)";
+                  e.currentTarget.style.color = "#DC143C";
+                  e.currentTarget.style.background = "rgba(220,20,60,0.07)";
                 }
               }}
               onMouseLeave={(e) => {
@@ -194,7 +194,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   width: 34,
                   height: 34,
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg,#00e676,#16a34a)",
+                  background: "linear-gradient(135deg,#8B0000,#DC143C)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -202,7 +202,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   fontSize: "0.85rem",
                   color: "#0a0f1a",
                   cursor: "pointer",
-                  border: "2px solid rgba(0,230,118,0.4)",
+                  border: "2px solid rgba(220,20,60,0.4)",
                 }}
               >
                 {(customer?.name || customer?.phone || "U")[0].toUpperCase()}
@@ -232,8 +232,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go("login")}
               style={{
                 background: "none",
-                border: "1px solid rgba(0,230,118,0.3)",
-                color: "#00e676",
+                border: "1px solid rgba(220,20,60,0.3)",
+                color: "#DC143C",
                 borderRadius: 8,
                 padding: "0.45rem 1rem",
                 cursor: "pointer",
@@ -279,7 +279,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             type="button"
             data-ocid="nav.book_now_button"
             onClick={() => go("book")}
-            className="green-btn"
+            className="red-btn"
             style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}
           >
             Book Now
@@ -308,7 +308,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "#00e676" : "#e2e8f0",
+              background: mobileOpen ? "#DC143C" : "#e2e8f0",
               borderRadius: 2,
               transition: "all 0.2s",
               transform: mobileOpen ? "translateY(7px) rotate(45deg)" : "none",
@@ -329,7 +329,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "#00e676" : "#e2e8f0",
+              background: mobileOpen ? "#DC143C" : "#e2e8f0",
               borderRadius: 2,
               transition: "all 0.2s",
               transform: mobileOpen
@@ -346,7 +346,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
           ref={menuRef}
           style={{
             background: "rgba(10,15,26,0.98)",
-            borderTop: "1px solid rgba(0,230,118,0.15)",
+            borderTop: "1px solid rgba(220,20,60,0.15)",
             padding: "1rem 1.5rem 1.5rem",
           }}
         >
@@ -361,11 +361,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={() => go(item.page)}
                 style={{
                   background: isActive(item.page)
-                    ? "rgba(0,230,118,0.15)"
+                    ? "rgba(220,20,60,0.15)"
                     : "transparent",
-                  color: isActive(item.page) ? "#00e676" : "#cbd5e1",
+                  color: isActive(item.page) ? "#DC143C" : "#cbd5e1",
                   border: isActive(item.page)
-                    ? "1px solid rgba(0,230,118,0.25)"
+                    ? "1px solid rgba(220,20,60,0.25)"
                     : "1px solid transparent",
                   borderRadius: 10,
                   padding: "0.75rem 1rem",
@@ -383,7 +383,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             <div
               style={{
                 height: 1,
-                background: "rgba(0,230,118,0.1)",
+                background: "rgba(220,20,60,0.1)",
                 margin: "0.5rem 0",
               }}
             />
@@ -412,8 +412,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={() => go("login")}
                 style={{
                   background: "transparent",
-                  color: "#00e676",
-                  border: "1px solid rgba(0,230,118,0.25)",
+                  color: "#DC143C",
+                  border: "1px solid rgba(220,20,60,0.25)",
                   borderRadius: 10,
                   padding: "0.75rem 1rem",
                   cursor: "pointer",
@@ -449,7 +449,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             <button
               type="button"
               onClick={() => go("book")}
-              className="green-btn"
+              className="red-btn"
               style={{
                 marginTop: "0.5rem",
                 width: "100%",

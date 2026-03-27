@@ -296,7 +296,7 @@ export default function LiveDriversPage({ navigate }: Props) {
               type="checkbox"
               checked={showAll}
               onChange={(e) => setShowAll(e.target.checked)}
-              style={{ accentColor: "#16a34a" }}
+              style={{ accentColor: "#8B0000" }}
             />
             Show all approved
           </label>
@@ -449,7 +449,7 @@ export default function LiveDriversPage({ navigate }: Props) {
             <button
               type="button"
               onClick={() => navigate(`book?driverId=${selected.id}`)}
-              className="green-btn"
+              className="red-btn"
               style={{ fontSize: "0.85rem" }}
             >
               Book Now
@@ -522,7 +522,7 @@ export default function LiveDriversPage({ navigate }: Props) {
               type="checkbox"
               checked={showAll}
               onChange={(e) => setShowAll(e.target.checked)}
-              style={{ accentColor: "#16a34a" }}
+              style={{ accentColor: "#8B0000" }}
             />
             Show all approved captains
           </label>
@@ -637,7 +637,7 @@ export default function LiveDriversPage({ navigate }: Props) {
                 type="button"
                 data-ocid="livedrivers.primary_button"
                 onClick={() => navigate(`book?driverId=${d.id}`)}
-                className="green-btn"
+                className="red-btn"
                 style={{
                   width: "100%",
                   justifyContent: "center",

@@ -22,7 +22,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         <button
           type="button"
           onClick={() => navigate("drivers")}
-          className="green-btn"
+          className="red-btn"
           style={{ marginTop: "1rem" }}
         >
           Back to Drivers
@@ -66,7 +66,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
               width: 90,
               height: 90,
               borderRadius: "50%",
-              border: "3px solid #16a34a",
+              border: "3px solid #8B0000",
             }}
           />
           <div style={{ flex: 1 }}>
@@ -236,7 +236,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
           {driver.trustBadges.map((b) => (
             <div
               key={b}
-              className="badge-green"
+              className="badge-red"
               style={{ display: "inline-block", margin: "0.2rem" }}
             >
               {b}
@@ -364,7 +364,7 @@ export default function DriverProfilePage({ navigate, driverId }: Props) {
         <button
           type="button"
           onClick={() => navigate(`book?driverId=${driver.id}`)}
-          className="green-btn"
+          className="red-btn"
           style={{ fontSize: "1rem", padding: "0.75rem 2rem" }}
         >
           Book {driver.name.split(" ")[0]} Now →

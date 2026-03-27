@@ -223,7 +223,7 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
               style={{
                 width: 40,
                 height: 40,
-                background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                background: "linear-gradient(135deg,#DC143C,#8B0000)",
                 borderRadius: 10,
                 display: "flex",
                 alignItems: "center",
@@ -273,7 +273,7 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
                 borderRadius: 8,
                 border: "none",
                 cursor: "pointer",
-                background: mode === m ? "#22c55e" : "transparent",
+                background: mode === m ? "#DC143C" : "transparent",
                 color: mode === m ? "#fff" : "#64748b",
                 fontWeight: mode === m ? 700 : 400,
                 fontSize: "0.88rem",
@@ -409,7 +409,7 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
             onClick={mode === "founder" ? loginFounder : loginExec}
             style={{
               width: "100%",
-              background: "linear-gradient(135deg,#22c55e,#16a34a)",
+              background: "linear-gradient(135deg,#DC143C,#8B0000)",
               color: "#fff",
               border: "none",
               borderRadius: 8,
@@ -562,7 +562,7 @@ function StaffTab() {
           type="button"
           onClick={openAdd}
           style={{
-            background: "linear-gradient(135deg,#22c55e,#16a34a)",
+            background: "linear-gradient(135deg,#DC143C,#8B0000)",
             color: "#fff",
             border: "none",
             borderRadius: 8,
@@ -659,7 +659,7 @@ function StaffTab() {
                           width: 32,
                           height: 32,
                           borderRadius: "50%",
-                          background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                          background: "linear-gradient(135deg,#DC143C,#8B0000)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -713,7 +713,7 @@ function StaffTab() {
                             key={p.key}
                             style={{
                               background: "#f0fdf4",
-                              color: "#16a34a",
+                              color: "#8B0000",
                               borderRadius: 4,
                               padding: "1px 6px",
                               fontSize: "0.72rem",
@@ -922,7 +922,7 @@ function StaffTab() {
                       cursor: "pointer",
                       padding: "0.5rem 0.75rem",
                       borderRadius: 8,
-                      border: `1.5px solid ${form.permissions[p.key] ? "#22c55e" : "#e2e8f0"}`,
+                      border: `1.5px solid ${form.permissions[p.key] ? "#DC143C" : "#e2e8f0"}`,
                       background: form.permissions[p.key]
                         ? "#f0fdf4"
                         : "#f8fafc",
@@ -933,11 +933,11 @@ function StaffTab() {
                       type="checkbox"
                       checked={form.permissions[p.key]}
                       onChange={() => togglePerm(p.key)}
-                      style={{ accentColor: "#22c55e" }}
+                      style={{ accentColor: "#DC143C" }}
                     />
                     <span
                       style={{
-                        color: form.permissions[p.key] ? "#16a34a" : "#64748b",
+                        color: form.permissions[p.key] ? "#8B0000" : "#64748b",
                         fontSize: "0.82rem",
                         fontWeight: 600,
                       }}
@@ -971,7 +971,7 @@ function StaffTab() {
                 onClick={saveForm}
                 style={{
                   flex: 2,
-                  background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                  background: "linear-gradient(135deg,#DC143C,#8B0000)",
                   color: "#fff",
                   border: "none",
                   borderRadius: 8,
@@ -1048,7 +1048,7 @@ function StaffActivityTab() {
       >
         {[
           ["Total Calls Today", todayLogs.length, "#3b82f6"],
-          ["Staff Active Today", allStaffActivity.length, "#22c55e"],
+          ["Staff Active Today", allStaffActivity.length, "#DC143C"],
           ["Customers Contacted", uniqueCxToday, "#8b5cf6"],
           [
             "Total Talk Time",
@@ -1346,7 +1346,7 @@ function StaffActivityTab() {
                       <span
                         style={{
                           background: "#f0fdf4",
-                          color: "#16a34a",
+                          color: "#8B0000",
                           borderRadius: 20,
                           padding: "0.15rem 0.5rem",
                           fontSize: "0.75rem",
@@ -1760,7 +1760,7 @@ export default function AdminPage() {
     {
       l: "Active Drivers",
       v: drivers.filter((d) => d.isOnline).length,
-      c: "#22c55e",
+      c: "#DC143C",
       bg: "#f0fdf4",
       icon: "🚗",
     },
@@ -1922,7 +1922,7 @@ export default function AdminPage() {
                 onClick={() => startCall(callModal.phone)}
                 style={{
                   width: "100%",
-                  background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                  background: "linear-gradient(135deg,#DC143C,#8B0000)",
                   color: "#fff",
                   border: "none",
                   borderRadius: 12,
@@ -2084,7 +2084,8 @@ export default function AdminPage() {
       <aside
         style={{
           width: sidebarOpen ? 240 : 64,
-          background: "#0f172a",
+          background: "#ffffff",
+          borderRight: "1px solid #e2e8f0",
           display: "flex",
           flexDirection: "column",
           flexShrink: 0,
@@ -2100,7 +2101,7 @@ export default function AdminPage() {
         <div
           style={{
             padding: "1.25rem",
-            borderBottom: "1px solid #1e293b",
+            borderBottom: "1px solid #e2e8f0",
             display: "flex",
             alignItems: "center",
             gap: "0.75rem",
@@ -2111,7 +2112,7 @@ export default function AdminPage() {
             style={{
               width: 36,
               height: 36,
-              background: "linear-gradient(135deg,#22c55e,#16a34a)",
+              background: "linear-gradient(135deg,#DC143C,#8B0000)",
               borderRadius: 9,
               display: "flex",
               alignItems: "center",
@@ -2125,10 +2126,11 @@ export default function AdminPage() {
           {sidebarOpen && (
             <span
               style={{
-                color: "#f1f5f9",
+                color: "#DC143C",
                 fontWeight: 800,
                 fontSize: "1.05rem",
                 whiteSpace: "nowrap",
+                fontFamily: "'Orbitron', monospace",
               }}
             >
               DriveEase
@@ -2154,11 +2156,11 @@ export default function AdminPage() {
                   justifyContent: sidebarOpen ? "flex-start" : "center",
                   border: "none",
                   cursor: "pointer",
-                  background: active ? "rgba(34,197,94,0.15)" : "transparent",
+                  background: active ? "rgba(220,20,60,0.08)" : "transparent",
                   borderLeft: active
-                    ? "3px solid #22c55e"
+                    ? "3px solid #DC143C"
                     : "3px solid transparent",
-                  color: active ? "#22c55e" : "#94a3b8",
+                  color: active ? "#DC143C" : "#64748b",
                   fontWeight: active ? 700 : 400,
                   fontSize: "0.88rem",
                   transition: "all 0.15s",
@@ -2299,8 +2301,8 @@ export default function AdminPage() {
               disabled={syncLoading}
               style={{
                 background: syncLoading ? "#e2e8f0" : "#f0fdf4",
-                border: "1px solid #bbf7d0",
-                color: syncLoading ? "#94a3b8" : "#16a34a",
+                border: "1px solid #fecaca",
+                color: syncLoading ? "#94a3b8" : "#8B0000",
                 borderRadius: 8,
                 padding: "0.4rem 0.9rem",
                 cursor: syncLoading ? "default" : "pointer",
@@ -2318,7 +2320,7 @@ export default function AdminPage() {
             {syncDone && (
               <span
                 style={{
-                  background: "#dcfce7",
+                  background: "#fff5f5",
                   color: "#15803d",
                   border: "1px solid #86efac",
                   borderRadius: 8,
@@ -2352,7 +2354,7 @@ export default function AdminPage() {
                   width: 28,
                   height: 28,
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                  background: "linear-gradient(135deg,#DC143C,#8B0000)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -2520,7 +2522,7 @@ export default function AdminPage() {
                                   : "#fffbeb",
                             color:
                               b.status === "confirmed"
-                                ? "#16a34a"
+                                ? "#8B0000"
                                 : b.status === "cancelled"
                                   ? "#ef4444"
                                   : "#d97706",
@@ -2597,7 +2599,7 @@ export default function AdminPage() {
                                   : "#fffbeb",
                             color:
                               r.status === "approved"
-                                ? "#16a34a"
+                                ? "#8B0000"
                                 : r.status === "rejected"
                                   ? "#ef4444"
                                   : "#d97706",
@@ -2800,7 +2802,7 @@ export default function AdminPage() {
                             </td>
                             <td
                               style={{
-                                color: "#16a34a",
+                                color: "#8B0000",
                                 padding: "0.75rem",
                                 fontWeight: 700,
                               }}
@@ -2847,7 +2849,7 @@ export default function AdminPage() {
                                         : "#fffbeb",
                                   color:
                                     b.status === "confirmed"
-                                      ? "#16a34a"
+                                      ? "#8B0000"
                                       : b.status === "cancelled"
                                         ? "#ef4444"
                                         : "#d97706",
@@ -2873,7 +2875,7 @@ export default function AdminPage() {
                                     }}
                                     style={{
                                       background: "#f0fdf4",
-                                      color: "#16a34a",
+                                      color: "#8B0000",
                                       border: "none",
                                       borderRadius: 5,
                                       padding: "3px 7px",
@@ -2940,8 +2942,8 @@ export default function AdminPage() {
                                   }
                                   style={{
                                     background: "#f0fdf4",
-                                    color: "#16a34a",
-                                    border: "1px solid #bbf7d0",
+                                    color: "#8B0000",
+                                    border: "1px solid #fecaca",
                                     borderRadius: 5,
                                     padding: "3px 7px",
                                     cursor: "pointer",
@@ -3007,7 +3009,7 @@ export default function AdminPage() {
                         padding: "1.25rem",
                         boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                         border: d.isOnline
-                          ? "1.5px solid #bbf7d0"
+                          ? "1.5px solid #fecaca"
                           : "1.5px solid #e2e8f0",
                       }}
                     >
@@ -3062,7 +3064,7 @@ export default function AdminPage() {
                             width: 10,
                             height: 10,
                             borderRadius: "50%",
-                            background: d.isOnline ? "#22c55e" : "#cbd5e1",
+                            background: d.isOnline ? "#DC143C" : "#cbd5e1",
                             display: "inline-block",
                             marginTop: 6,
                           }}
@@ -3085,7 +3087,7 @@ export default function AdminPage() {
                         </span>
                         <span style={{ color: "#64748b" }}>
                           Earnings:{" "}
-                          <strong style={{ color: "#16a34a" }}>
+                          <strong style={{ color: "#8B0000" }}>
                             ₹{d.totalEarnings.toLocaleString("en-IN")}
                           </strong>
                         </span>
@@ -3117,8 +3119,8 @@ export default function AdminPage() {
                           style={{
                             flex: 1,
                             background: d.isOnline ? "#f0fdf4" : "#f8fafc",
-                            border: `1px solid ${d.isOnline ? "#bbf7d0" : "#e2e8f0"}`,
-                            color: d.isOnline ? "#16a34a" : "#64748b",
+                            border: `1px solid ${d.isOnline ? "#fecaca" : "#e2e8f0"}`,
+                            color: d.isOnline ? "#8B0000" : "#64748b",
                             borderRadius: 6,
                             padding: "0.4rem",
                             cursor: "pointer",
@@ -3343,7 +3345,7 @@ export default function AdminPage() {
                             style={{
                               maxWidth: "100%",
                               borderRadius: 8,
-                              border: "2px solid #bbf7d0",
+                              border: "2px solid #fecaca",
                             }}
                           />
                         </a>
@@ -3365,7 +3367,7 @@ export default function AdminPage() {
                         }}
                         style={{
                           flex: 1,
-                          background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                          background: "linear-gradient(135deg,#DC143C,#8B0000)",
                           color: "#fff",
                           border: "none",
                           borderRadius: 8,
@@ -3477,7 +3479,7 @@ export default function AdminPage() {
                             height: 52,
                             objectFit: "cover",
                             borderRadius: 6,
-                            border: "2px solid #bbf7d0",
+                            border: "2px solid #fecaca",
                           }}
                         />
                       </a>
@@ -3499,7 +3501,7 @@ export default function AdminPage() {
                                 : "#fffbeb",
                           color:
                             reg.status === "approved"
-                              ? "#16a34a"
+                              ? "#8B0000"
                               : reg.status === "rejected"
                                 ? "#ef4444"
                                 : "#d97706",
@@ -3540,7 +3542,7 @@ export default function AdminPage() {
                             style={{
                               background: "#f0fdf4",
                               border: "none",
-                              color: "#16a34a",
+                              color: "#8B0000",
                               borderRadius: 6,
                               padding: "0.35rem 0.75rem",
                               cursor: "pointer",
@@ -3719,8 +3721,8 @@ export default function AdminPage() {
                                     }
                                     style={{
                                       background: "#f0fdf4",
-                                      color: "#16a34a",
-                                      border: "1px solid #bbf7d0",
+                                      color: "#8B0000",
+                                      border: "1px solid #fecaca",
                                       borderRadius: 5,
                                       padding: "3px 8px",
                                       cursor: "pointer",
@@ -3810,7 +3812,7 @@ export default function AdminPage() {
                         style={{
                           background:
                             e.status === "closed" ? "#f0fdf4" : "#fffbeb",
-                          color: e.status === "closed" ? "#16a34a" : "#d97706",
+                          color: e.status === "closed" ? "#8B0000" : "#d97706",
                           borderRadius: 999,
                           padding: "2px 10px",
                           fontSize: "0.8rem",
@@ -3827,7 +3829,7 @@ export default function AdminPage() {
                     {e.adminReply && (
                       <p
                         style={{
-                          color: "#16a34a",
+                          color: "#8B0000",
                           fontSize: "0.85rem",
                           background: "#f0fdf4",
                           borderRadius: 6,
@@ -3869,7 +3871,7 @@ export default function AdminPage() {
                           onClick={() => sendReply(e.id)}
                           style={{
                             background:
-                              "linear-gradient(135deg,#22c55e,#16a34a)",
+                              "linear-gradient(135deg,#DC143C,#8B0000)",
                             color: "#fff",
                             border: "none",
                             borderRadius: 8,
@@ -3916,8 +3918,8 @@ export default function AdminPage() {
                         onClick={() => openCallModal(e.name, e.phone)}
                         style={{
                           background: "#f0fdf4",
-                          color: "#16a34a",
-                          border: "1px solid #bbf7d0",
+                          color: "#8B0000",
+                          border: "1px solid #fecaca",
                           borderRadius: 6,
                           padding: "4px 10px",
                           cursor: "pointer",
@@ -4031,7 +4033,7 @@ export default function AdminPage() {
                               <span
                                 style={{
                                   background: "#f0fdf4",
-                                  color: "#16a34a",
+                                  color: "#8B0000",
                                   borderRadius: 6,
                                   padding: "2px 8px",
                                   fontSize: "0.8rem",
@@ -4092,7 +4094,7 @@ export default function AdminPage() {
                         padding: "1.25rem",
                         boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                         border: d.isOnline
-                          ? "1.5px solid #bbf7d0"
+                          ? "1.5px solid #fecaca"
                           : "1.5px solid #e2e8f0",
                       }}
                     >
@@ -4138,14 +4140,14 @@ export default function AdminPage() {
                             width: 10,
                             height: 10,
                             borderRadius: "50%",
-                            background: d.isOnline ? "#22c55e" : "#cbd5e1",
+                            background: d.isOnline ? "#DC143C" : "#cbd5e1",
                             display: "inline-block",
                           }}
                         />
                       </div>
                       <p
                         style={{
-                          color: d.isOnline ? "#16a34a" : "#94a3b8",
+                          color: d.isOnline ? "#8B0000" : "#94a3b8",
                           fontSize: "0.82rem",
                           fontWeight: 600,
                           marginTop: "0.75rem",
@@ -4188,7 +4190,7 @@ export default function AdminPage() {
                       .filter((b) => b.status === "completed")
                       .reduce((s, b) => s + b.amount, 0)
                       .toLocaleString("en-IN")}`,
-                    c: "#16a34a",
+                    c: "#8B0000",
                     bg: "#f0fdf4",
                   },
                   {
@@ -4323,7 +4325,7 @@ export default function AdminPage() {
                             </td>
                             <td
                               style={{
-                                color: "#16a34a",
+                                color: "#8B0000",
                                 padding: "0.75rem 1rem",
                                 fontWeight: 700,
                               }}
@@ -4357,7 +4359,7 @@ export default function AdminPage() {
                                       : "#fffbeb",
                                   color:
                                     b.status === "completed"
-                                      ? "#16a34a"
+                                      ? "#8B0000"
                                       : "#d97706",
                                   borderRadius: 6,
                                   padding: "2px 8px",
@@ -4470,7 +4472,7 @@ export default function AdminPage() {
                     window.alert("Pricing saved!");
                   }}
                   style={{
-                    background: "linear-gradient(135deg,#22c55e,#16a34a)",
+                    background: "linear-gradient(135deg,#DC143C,#8B0000)",
                     color: "#fff",
                     border: "none",
                     borderRadius: 8,
@@ -4660,8 +4662,8 @@ export default function AdminPage() {
                                 }
                                 style={{
                                   background: "#f0fdf4",
-                                  border: "1px solid #bbf7d0",
-                                  color: "#16a34a",
+                                  border: "1px solid #fecaca",
+                                  color: "#8B0000",
                                   borderRadius: 6,
                                   padding: "0.3rem 0.75rem",
                                   cursor: "pointer",
@@ -4687,7 +4689,7 @@ export default function AdminPage() {
                                           key={b}
                                           style={{
                                             width: 3,
-                                            background: "#16a34a",
+                                            background: "#8B0000",
                                             borderRadius: 2,
                                             height: [8, 12, 6, 10][b - 1],
                                             animation:
@@ -4868,7 +4870,7 @@ Notes: ${r.notes}`;
                           style={{
                             background:
                               cb.status === "done" ? "#f0fdf4" : "#fffbeb",
-                            color: cb.status === "done" ? "#16a34a" : "#d97706",
+                            color: cb.status === "done" ? "#8B0000" : "#d97706",
                             borderRadius: 999,
                             padding: "3px 10px",
                             fontSize: "0.8rem",
@@ -4887,8 +4889,8 @@ Notes: ${r.notes}`;
                               }
                               style={{
                                 background: "#f0fdf4",
-                                color: "#16a34a",
-                                border: "1px solid #bbf7d0",
+                                color: "#8B0000",
+                                border: "1px solid #fecaca",
                                 borderRadius: 6,
                                 padding: "4px 10px",
                                 cursor: "pointer",

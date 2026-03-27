@@ -289,7 +289,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
               type="checkbox"
               checked={onlineOnly}
               onChange={(e) => setOnlineOnly(e.target.checked)}
-              style={{ accentColor: "#16a34a", width: 16, height: 16 }}
+              style={{ accentColor: "#8B0000", width: 16, height: 16 }}
             />
             Online Only
           </label>
@@ -371,7 +371,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
               style={{ transition: "all 0.2s", cursor: "pointer" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.borderColor = "#16a34a";
+                e.currentTarget.style.borderColor = "#8B0000";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
@@ -488,7 +488,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                 {d.trustBadges.slice(0, 2).map((b) => (
                   <span
                     key={b}
-                    className="badge-green"
+                    className="badge-red"
                     style={{ fontSize: "0.7rem" }}
                   >
                     {b}
@@ -523,7 +523,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                   style={{
                     flex: 1,
                     background: "#1a2e1a",
-                    border: "1px solid #16a34a",
+                    border: "1px solid #8B0000",
                     color: "#4ade80",
                     borderRadius: 6,
                     padding: "0.45rem",
@@ -537,7 +537,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
                   type="button"
                   data-ocid="drivers.primary_button"
                   onClick={() => navigate(`book?driverId=${d.id}`)}
-                  className="green-btn"
+                  className="red-btn"
                   style={{
                     flex: 1,
                     justifyContent: "center",

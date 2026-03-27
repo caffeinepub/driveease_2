@@ -185,7 +185,7 @@ export default function DriverRegisterPage() {
         <div
           style={{
             background: "#f0fdf4",
-            border: "2px solid #bbf7d0",
+            border: "2px solid #fecaca",
             borderRadius: 20,
             padding: "3rem 2rem",
           }}
@@ -193,7 +193,7 @@ export default function DriverRegisterPage() {
           <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>✅</div>
           <h2
             style={{
-              color: "#16a34a",
+              color: "#8B0000",
               fontWeight: 800,
               fontSize: "1.5rem",
               marginBottom: "0.75rem",
@@ -251,8 +251,8 @@ export default function DriverRegisterPage() {
                     width: 36,
                     height: 36,
                     borderRadius: "50%",
-                    background: s.done ? "#dcfce7" : "#f1f5f9",
-                    border: `2px solid ${s.done ? "#16a34a" : "#e2e8f0"}`,
+                    background: s.done ? "#fff5f5" : "#f1f5f9",
+                    border: `2px solid ${s.done ? "#8B0000" : "#e2e8f0"}`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -265,7 +265,7 @@ export default function DriverRegisterPage() {
                 <div>
                   <div
                     style={{
-                      color: s.done ? "#16a34a" : "#64748b",
+                      color: s.done ? "#8B0000" : "#64748b",
                       fontWeight: s.done ? 600 : 400,
                       fontSize: "0.9rem",
                     }}
@@ -273,7 +273,7 @@ export default function DriverRegisterPage() {
                     {s.label}
                   </div>
                   {s.done && (
-                    <div style={{ color: "#16a34a", fontSize: "0.75rem" }}>
+                    <div style={{ color: "#8B0000", fontSize: "0.75rem" }}>
                       Pending Approval
                     </div>
                   )}
@@ -397,7 +397,7 @@ export default function DriverRegisterPage() {
                   style={{
                     background: "#f0fdf4",
                     border: "1px solid #86efac",
-                    color: "#16a34a",
+                    color: "#8B0000",
                     borderRadius: 10,
                     padding: "0 1rem",
                     cursor: "pointer",
@@ -414,7 +414,7 @@ export default function DriverRegisterPage() {
               {otpVerified && (
                 <span
                   style={{
-                    color: "#16a34a",
+                    color: "#8B0000",
                     fontSize: "0.85rem",
                     alignSelf: "center",
                     whiteSpace: "nowrap",
@@ -468,7 +468,7 @@ export default function DriverRegisterPage() {
                     type="button"
                     data-ocid="driver_register.verify_otp_button"
                     onClick={verifyOtp}
-                    className="green-btn"
+                    className="red-btn"
                     style={{ minHeight: 48 }}
                   >
                     Verify
@@ -521,11 +521,11 @@ export default function DriverRegisterPage() {
               style={{
                 width: "100%",
                 background: form.dlFile ? "#f0fdf4" : "#f8fafc",
-                border: `2px dashed ${form.dlFile ? "#16a34a" : "#e2e8f0"}`,
+                border: `2px dashed ${form.dlFile ? "#8B0000" : "#e2e8f0"}`,
                 borderRadius: 10,
                 padding: "1.25rem",
                 cursor: "pointer",
-                color: form.dlFile ? "#16a34a" : "#64748b",
+                color: form.dlFile ? "#8B0000" : "#64748b",
                 fontFamily: "'Poppins', sans-serif",
                 fontSize: "0.875rem",
                 textAlign: "center",
@@ -648,11 +648,11 @@ export default function DriverRegisterPage() {
               style={{
                 width: "100%",
                 background: form.profilePhoto ? "#f0fdf4" : "#f8fafc",
-                border: `2px dashed ${form.profilePhoto ? "#16a34a" : "#e2e8f0"}`,
+                border: `2px dashed ${form.profilePhoto ? "#8B0000" : "#e2e8f0"}`,
                 borderRadius: 10,
                 padding: "1.25rem",
                 cursor: "pointer",
-                color: form.profilePhoto ? "#16a34a" : "#64748b",
+                color: form.profilePhoto ? "#8B0000" : "#64748b",
                 fontFamily: "'Poppins', sans-serif",
                 fontSize: "0.875rem",
                 textAlign: "center",
@@ -669,7 +669,7 @@ export default function DriverRegisterPage() {
             type="button"
             data-ocid="driver_register.submit_button"
             onClick={submit}
-            className="green-btn"
+            className="red-btn"
             style={{
               width: "100%",
               justifyContent: "center",

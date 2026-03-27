@@ -88,7 +88,7 @@ export default function PaymentPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              border: "4px solid #16a34a",
+              border: "4px solid #8B0000",
               padding: "1rem",
             }}
           >

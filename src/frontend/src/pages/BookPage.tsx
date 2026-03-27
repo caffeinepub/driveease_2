@@ -197,7 +197,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
       if (!map || !L) return;
       const greenIcon = L.divIcon({
         className: "",
-        html: '<div style="background:#16a34a;width:14px;height:14px;border-radius:50%;border:2px solid white"></div>',
+        html: '<div style="background:#8B0000;width:14px;height:14px;border-radius:50%;border:2px solid white"></div>',
         iconSize: [14, 14],
       });
       const redIcon = L.divIcon({
@@ -427,7 +427,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🎉</div>
           <h2
             style={{
-              color: "#16a34a",
+              color: "#8B0000",
               fontWeight: 800,
               fontSize: "1.5rem",
               marginBottom: "0.5rem",
@@ -509,19 +509,19 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                     height: 36,
                     borderRadius: "50%",
                     background: done
-                      ? "#16a34a"
+                      ? "#8B0000"
                       : active
                         ? "rgba(22,163,74,0.12)"
                         : "#f1f5f9",
                     border: active
-                      ? "2px solid #16a34a"
+                      ? "2px solid #8B0000"
                       : done
-                        ? "2px solid #16a34a"
+                        ? "2px solid #8B0000"
                         : "2px solid #e2e8f0",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: done ? "#fff" : active ? "#16a34a" : "#94a3b8",
+                    color: done ? "#fff" : active ? "#8B0000" : "#94a3b8",
                     fontWeight: 700,
                     fontSize: "0.9rem",
                     transition: "all 0.3s",
@@ -532,7 +532,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                 <span
                   style={{
                     fontSize: "0.72rem",
-                    color: active ? "#16a34a" : done ? "#22c55e" : "#94a3b8",
+                    color: active ? "#8B0000" : done ? "#DC143C" : "#94a3b8",
                     textAlign: "center",
                     lineHeight: 1.3,
                   }}
@@ -554,7 +554,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           <div
             style={{
               height: "100%",
-              background: "linear-gradient(90deg,#16a34a,#22c55e)",
+              background: "linear-gradient(90deg,#8B0000,#DC143C)",
               width: `${((step - 1) / 3) * 100}%`,
               transition: "width 0.4s ease",
               borderRadius: 99,
@@ -710,7 +710,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             <div
               style={{
                 background: "#f0fdf4",
-                border: "1px solid #bbf7d0",
+                border: "1px solid #fecaca",
                 borderRadius: 8,
                 padding: "0.6rem 0.9rem",
                 marginBottom: "1rem",
@@ -763,7 +763,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                   background:
                     selectedDriver?.id === d.id ? "#f0fdf4" : "#ffffff",
                   border: `2px solid ${
-                    selectedDriver?.id === d.id ? "#16a34a" : "#e2e8f0"
+                    selectedDriver?.id === d.id ? "#8B0000" : "#e2e8f0"
                   }`,
                   borderRadius: 12,
                   padding: "1rem 1.25rem",
@@ -823,7 +823,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                     {selectedDriver?.id === d.id && (
                       <div
                         style={{
-                          color: "#16a34a",
+                          color: "#8B0000",
                           fontSize: "0.8rem",
                           marginTop: 4,
                           fontWeight: 600,
@@ -930,10 +930,10 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
                       padding: "0.6rem 1.25rem",
                       borderRadius: 9999,
                       border: `2px solid ${
-                        bookingType === t ? "#16a34a" : "#e2e8f0"
+                        bookingType === t ? "#8B0000" : "#e2e8f0"
                       }`,
                       background: bookingType === t ? "#f0fdf4" : "#ffffff",
-                      color: bookingType === t ? "#16a34a" : "#64748b",
+                      color: bookingType === t ? "#8B0000" : "#64748b",
                       cursor: "pointer",
                       fontWeight: bookingType === t ? 600 : 400,
                       fontSize: "0.875rem",
@@ -1014,7 +1014,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           <div
             style={{
               background: "#f0fdf4",
-              border: "1px solid #bbf7d0",
+              border: "1px solid #fecaca",
               borderRadius: 10,
               padding: "0.75rem 1rem",
               marginBottom: "1.5rem",
@@ -1029,7 +1029,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             data-ocid="book.confirm_button"
             onClick={confirmBooking}
             disabled={confirming}
-            className="green-btn"
+            className="red-btn"
             style={{
               width: "100%",
               justifyContent: "center",
@@ -1079,7 +1079,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
             type="button"
             data-ocid="book.next_button"
             onClick={nextStep}
-            className="green-btn"
+            className="red-btn"
             style={{
               minHeight: 48,
               padding: "0.75rem 2rem",

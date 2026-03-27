@@ -169,7 +169,7 @@ export default function OTPModal({ onClose, onSuccess }: OTPModalProps) {
               type="button"
               onClick={sendOTP}
               disabled={loading}
-              className="green-btn"
+              className="red-btn"
               style={{
                 width: "100%",
                 justifyContent: "center",
@@ -247,7 +247,7 @@ export default function OTPModal({ onClose, onSuccess }: OTPModalProps) {
               type="button"
               onClick={verifyOTP}
               disabled={loading}
-              className="green-btn"
+              className="red-btn"
               style={{
                 width: "100%",
                 justifyContent: "center",

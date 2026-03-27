@@ -101,14 +101,14 @@ export default function ChatBot() {
           width: 56,
           height: 56,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #00e676, #0d9488)",
+          background: "linear-gradient(135deg, #DC143C, #0d9488)",
           border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.5rem",
-          boxShadow: "0 4px 20px rgba(0,230,118,0.5)",
+          boxShadow: "0 4px 20px rgba(220,20,60,0.5)",
           animation: "chatbot-ring 2s ease-in-out infinite",
         }}
       >
@@ -146,7 +146,7 @@ export default function ChatBot() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              background: "rgba(0,230,118,0.08)",
+              background: "rgba(220,20,60,0.08)",
             }}
           >
             <div
@@ -157,8 +157,8 @@ export default function ChatBot() {
                   width: 10,
                   height: 10,
                   borderRadius: "50%",
-                  background: "#4ade80",
-                  boxShadow: "0 0 8px #4ade80",
+                  background: "#f87171",
+                  boxShadow: "0 0 8px #f87171",
                   animation: "glow-pulse 1.5s ease-in-out infinite",
                 }}
               />
@@ -225,7 +225,7 @@ export default function ChatBot() {
                         : "16px 16px 16px 4px",
                     background:
                       msg.role === "user"
-                        ? "linear-gradient(135deg, #00e676, #15803d)"
+                        ? "linear-gradient(135deg, #DC143C, #15803d)"
                         : "rgba(40,40,40,0.9)",
                     border:
                       msg.role === "user"
@@ -285,7 +285,7 @@ export default function ChatBot() {
               data-ocid="chatbot.submit_button"
               onClick={send}
               style={{
-                background: "#00e676",
+                background: "#DC143C",
                 border: "none",
                 borderRadius: 10,
                 color: "white",
