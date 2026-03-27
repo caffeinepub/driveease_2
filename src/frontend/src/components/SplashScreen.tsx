@@ -56,19 +56,13 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
     return () => clearInterval(interval);
   }, []);
 
-  // Cycle progress bar color through the 4 palette colors
-  const progressColors = ["#FF6B6B", "#42A5F5", "#FFCA28", "#66BB6A"];
-  const colorIndex = Math.floor((progress / 25) % 4);
-  const progressColor = progressColors[colorIndex];
-
   return (
     <div
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background:
-          "linear-gradient(135deg, #fff5f5 0%, #eff6ff 35%, #fffbeb 65%, #f0fdf4 100%)",
+        background: "#111111",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -79,56 +73,18 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
         overflow: "hidden",
       }}
     >
-      {/* Background soft blobs */}
+      {/* Background subtle glow orb */}
       <div
         style={{
           position: "absolute",
-          width: 500,
-          height: 500,
+          width: 600,
+          height: 600,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(255,107,107,0.08) 0%, transparent 70%)",
-          top: "-5%",
-          left: "-10%",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: 400,
-          height: 400,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(66,165,245,0.08) 0%, transparent 70%)",
-          top: "5%",
-          right: "-8%",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: 320,
-          height: 320,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,202,40,0.09) 0%, transparent 70%)",
-          bottom: "5%",
-          left: "10%",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: 280,
-          height: 280,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(102,187,106,0.08) 0%, transparent 70%)",
-          bottom: "8%",
-          right: "8%",
+            "radial-gradient(circle, rgba(255,98,0,0.06) 0%, transparent 70%)",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
           pointerEvents: "none",
         }}
       />
@@ -150,10 +106,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
               fontWeight: 700,
-              background: "linear-gradient(135deg, #FF6B6B, #42A5F5)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              color: "#FF6200",
               animation: "splashSlideUp 0.6s cubic-bezier(0.22,1,0.36,1) both",
               textAlign: "center",
             }}
@@ -167,10 +120,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
               fontWeight: 700,
-              background: "linear-gradient(135deg, #FF6B6B, #42A5F5)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              color: "#FF6200",
               animation: "splashFadeOut 0.35s ease forwards",
               textAlign: "center",
             }}
@@ -184,7 +134,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.4rem, 4.5vw, 2rem)",
               fontWeight: 700,
-              color: "#1e293b",
+              color: "#ffffff",
               animation: "splashSlideUp 0.55s cubic-bezier(0.22,1,0.36,1) both",
               textAlign: "center",
             }}
@@ -192,11 +142,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             Welcome To{" "}
             <span
               style={{
-                background:
-                  "linear-gradient(135deg, #FF6B6B 0%, #42A5F5 40%, #FFCA28 70%, #66BB6A 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+                color: "#FF6200",
                 fontFamily: "'Orbitron', monospace",
               }}
             >
@@ -216,12 +162,11 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             width: 88,
             height: 88,
             borderRadius: "50%",
-            background:
-              "linear-gradient(135deg, #FF6B6B, #42A5F5, #FFCA28, #66BB6A)",
+            background: "#FF6200",
             boxShadow:
-              "0 8px 32px rgba(66,165,245,0.3), 0 2px 8px rgba(102,187,106,0.15)",
+              "0 8px 40px rgba(255,98,0,0.4), 0 2px 8px rgba(255,98,0,0.2)",
             marginBottom: "1.2rem",
-            animation: "pulse-glow-light 2s ease-in-out infinite",
+            animation: "pulse-glow-orange 2s ease-in-out infinite",
           }}
         >
           <span style={{ fontSize: "2.4rem" }}>🚗</span>
@@ -232,11 +177,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             fontFamily: "'Orbitron', sans-serif",
             fontSize: "clamp(2rem, 6vw, 2.8rem)",
             fontWeight: 800,
-            background:
-              "linear-gradient(135deg, #FF6B6B 0%, #42A5F5 35%, #FFCA28 65%, #66BB6A 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            color: "#FF6200",
             letterSpacing: "0.05em",
             lineHeight: 1.1,
           }}
@@ -246,7 +187,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
 
         <div
           style={{
-            color: "#64748b",
+            color: "#888888",
             fontSize: "0.82rem",
             letterSpacing: "0.24em",
             textTransform: "uppercase",
@@ -271,7 +212,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       >
         <div
           style={{
-            color: taglineFade ? "#1e293b" : "transparent",
+            color: taglineFade ? "#aaaaaa" : "transparent",
             fontSize: "clamp(0.9rem, 3vw, 1.05rem)",
             fontFamily: "'Poppins', sans-serif",
             fontWeight: 600,
@@ -289,8 +230,8 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       <div
         style={{
           width: "min(300px, 75vw)",
-          height: 5,
-          background: "rgba(0,0,0,0.06)",
+          height: 4,
+          background: "rgba(255,255,255,0.08)",
           borderRadius: 99,
           overflow: "hidden",
           marginBottom: "1rem",
@@ -300,16 +241,17 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           style={{
             height: "100%",
             width: `${progress}%`,
-            background: `linear-gradient(90deg, #FF6B6B, #42A5F5, ${progressColor})`,
+            background: "#FF6200",
             borderRadius: 99,
             transition: "width 0.03s linear",
+            boxShadow: "0 0 12px rgba(255,98,0,0.6)",
           }}
         />
       </div>
 
       <div
         style={{
-          color: "#94a3b8",
+          color: "#555555",
           fontSize: "0.75rem",
           fontFamily: "'Poppins', sans-serif",
           letterSpacing: "0.1em",
@@ -319,13 +261,13 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       </div>
 
       <style>{`
-        @keyframes pulse-glow-light {
+        @keyframes pulse-glow-orange {
           0%, 100% {
-            box-shadow: 0 8px 32px rgba(66,165,245,0.3), 0 2px 8px rgba(102,187,106,0.15);
+            box-shadow: 0 8px 40px rgba(255,98,0,0.4), 0 2px 8px rgba(255,98,0,0.2);
             transform: scale(1);
           }
           50% {
-            box-shadow: 0 12px 48px rgba(255,107,107,0.4), 0 4px 16px rgba(255,202,40,0.2);
+            box-shadow: 0 12px 60px rgba(255,98,0,0.6), 0 4px 16px rgba(255,98,0,0.3);
             transform: scale(1.04);
           }
         }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import RideQuoteTicker from "../components/RideQuoteTicker";
 import { type Registration, addRegistration, uid } from "../utils/store";
 import { pushItem, sendSMS } from "../utils/syncService";
 
@@ -71,88 +72,6 @@ async function fileToBase64(file: File): Promise<string> {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
-}
-
-// Star particle type
-type Star = {
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  speed: number;
-  color: string;
-};
-
-function StarField() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<Star[]>([]);
-  const animRef = useRef<number>(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const colors = ["#FF6B6B", "#42A5F5", "#FFCA28", "#66BB6A", "#fff"];
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    starsRef.current = Array.from({ length: 60 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      size: Math.random() * 2.5 + 0.5,
-      opacity: Math.random() * 0.7 + 0.2,
-      speed: Math.random() * 0.4 + 0.1,
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (const s of starsRef.current) {
-        ctx.save();
-        ctx.globalAlpha = s.opacity;
-        ctx.fillStyle = s.color;
-        ctx.shadowColor = s.color;
-        ctx.shadowBlur = 6;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-        s.y -= s.speed;
-        s.opacity += Math.sin(Date.now() / 800 + s.x) * 0.005;
-        s.opacity = Math.max(0.1, Math.min(0.9, s.opacity));
-        if (s.y < -10) {
-          s.y = canvas.height + 10;
-          s.x = Math.random() * canvas.width;
-        }
-      }
-      animRef.current = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animRef.current);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-        zIndex: 0,
-      }}
-    />
-  );
 }
 
 export default function DriverRegisterPage() {
@@ -266,9 +185,9 @@ export default function DriverRegisterPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    background: "rgba(255,255,255,0.85)",
+    background: "rgba(30,30,30,0.9)",
     border: "1.5px solid rgba(255,255,255,0.6)",
-    color: "#1e293b",
+    color: "#ffffff",
     borderRadius: 12,
     padding: "0.75rem 1rem",
     fontSize: "1rem",
@@ -293,7 +212,6 @@ export default function DriverRegisterPage() {
           padding: "2rem 1rem",
         }}
       >
-        <StarField />
         <div
           style={{
             position: "relative",
@@ -309,7 +227,7 @@ export default function DriverRegisterPage() {
               backdropFilter: "blur(16px)",
               borderRadius: 24,
               padding: "3rem 2rem",
-              border: "1.5px solid rgba(255,255,255,0.8)",
+              border: "1.5px solid #333333",
               boxShadow: "0 20px 60px rgba(0,0,0,0.1)",
             }}
           >
@@ -319,7 +237,7 @@ export default function DriverRegisterPage() {
                 height: 80,
                 borderRadius: "50%",
                 margin: "0 auto 1.5rem",
-                background: "linear-gradient(135deg, #66BB6A, #42A5F5)",
+                background: "#FF7A1F",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -332,8 +250,7 @@ export default function DriverRegisterPage() {
             <h2
               style={{
                 fontFamily: "'Orbitron', monospace",
-                background:
-                  "linear-gradient(135deg, #FF6B6B 0%, #42A5F5 40%, #FFCA28 70%, #66BB6A 100%)",
+                background: "#FF6200",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -346,7 +263,7 @@ export default function DriverRegisterPage() {
             </h2>
             <p
               style={{
-                color: "#475569",
+                color: "#888888",
                 lineHeight: 1.7,
                 marginBottom: "2rem",
               }}
@@ -378,7 +295,7 @@ export default function DriverRegisterPage() {
                         top: 40,
                         width: 2,
                         height: 24,
-                        background: "linear-gradient(#42A5F5,#66BB6A)",
+                        background: "#FF7A1F",
                       }}
                     />
                   )}
@@ -387,10 +304,8 @@ export default function DriverRegisterPage() {
                       width: 36,
                       height: 36,
                       borderRadius: "50%",
-                      background: s.done
-                        ? "linear-gradient(135deg,#FF6B6B,#FFCA28)"
-                        : "#f1f5f9",
-                      border: `2px solid ${s.done ? "#FF6B6B" : "#e2e8f0"}`,
+                      background: s.done ? "#FF6200" : "#f1f5f9",
+                      border: `2px solid ${s.done ? "#FF6200" : "#e2e8f0"}`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -428,7 +343,7 @@ export default function DriverRegisterPage() {
           "linear-gradient(135deg, #fff5f5 0%, #eff6ff 35%, #fffbeb 65%, #f0fdf4 100%)",
       }}
     >
-      <StarField />
+      <RideQuoteTicker />
 
       {/* Soft color blobs */}
       <div
@@ -507,12 +422,12 @@ export default function DriverRegisterPage() {
               display: "inline-flex",
               flexDirection: "column",
               alignItems: "center",
-              background: "rgba(255,255,255,0.85)",
+              background: "rgba(30,30,30,0.9)",
               backdropFilter: "blur(16px)",
               borderRadius: 24,
               padding: "1.5rem 2.5rem",
-              border: "1.5px solid rgba(255,255,255,0.8)",
-              boxShadow: "0 16px 48px rgba(0,0,0,0.08)",
+              border: "1.5px solid #333333",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.4)",
               marginBottom: "1.5rem",
             }}
           >
@@ -522,8 +437,7 @@ export default function DriverRegisterPage() {
                 height: 72,
                 borderRadius: "50%",
                 marginBottom: "0.75rem",
-                background:
-                  "linear-gradient(135deg, #FF6B6B, #42A5F5, #FFCA28, #66BB6A)",
+                background: "#FF6200",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -539,8 +453,7 @@ export default function DriverRegisterPage() {
                 fontFamily: "'Orbitron', monospace",
                 fontSize: "clamp(1.6rem,5vw,2.2rem)",
                 fontWeight: 800,
-                background:
-                  "linear-gradient(135deg, #FF6B6B 0%, #42A5F5 35%, #FFCA28 65%, #66BB6A 100%)",
+                background: "#FF6200",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -552,7 +465,7 @@ export default function DriverRegisterPage() {
             </div>
             <div
               style={{
-                color: "#64748b",
+                color: "#888888",
                 fontSize: "0.75rem",
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
@@ -570,7 +483,7 @@ export default function DriverRegisterPage() {
               fontFamily: "'Poppins', sans-serif",
               fontWeight: 800,
               fontSize: "clamp(1.6rem,5vw,2.2rem)",
-              color: "#1e293b",
+              color: "#ffffff",
               marginBottom: "0.5rem",
               lineHeight: 1.2,
             }}
@@ -578,7 +491,7 @@ export default function DriverRegisterPage() {
             Become a Driver &amp;{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #FF6B6B, #FFCA28)",
+                background: "#FF6200",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -589,7 +502,7 @@ export default function DriverRegisterPage() {
           </h1>
           <p
             style={{
-              color: "#64748b",
+              color: "#888888",
               fontSize: "1rem",
               fontFamily: "'Poppins',sans-serif",
             }}
@@ -609,22 +522,22 @@ export default function DriverRegisterPage() {
         >
           {EARN_STATS.map((s, i) => {
             const gradients = [
-              "linear-gradient(135deg,#FF6B6B,#FF8E53)",
-              "linear-gradient(135deg,#FFCA28,#FFB300)",
-              "linear-gradient(135deg,#42A5F5,#1976D2)",
-              "linear-gradient(135deg,#66BB6A,#388E3C)",
+              "#FF6200",
+              "rgba(255,98,0,0.7)",
+              "rgba(255,98,0,0.5)",
+              "rgba(255,98,0,0.4)",
             ];
             return (
               <div
                 key={s.label}
                 style={{
-                  background: "rgba(255,255,255,0.85)",
+                  background: "rgba(30,30,30,0.9)",
                   backdropFilter: "blur(12px)",
                   borderRadius: 16,
                   padding: "1rem 0.75rem",
                   textAlign: "center",
-                  border: "1.5px solid rgba(255,255,255,0.8)",
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                  border: "1.5px solid #333333",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                 }}
               >
                 <div
@@ -646,7 +559,7 @@ export default function DriverRegisterPage() {
                   style={{
                     fontWeight: 800,
                     fontSize: "1.1rem",
-                    color: "#1e293b",
+                    color: "#ffffff",
                     fontFamily: "'Poppins',sans-serif",
                   }}
                 >
@@ -654,7 +567,7 @@ export default function DriverRegisterPage() {
                 </div>
                 <div
                   style={{
-                    color: "#64748b",
+                    color: "#888888",
                     fontSize: "0.72rem",
                     fontFamily: "'Poppins',sans-serif",
                   }}
@@ -676,17 +589,17 @@ export default function DriverRegisterPage() {
           }}
         >
           {BENEFITS.map((b, i) => {
-            const colors = ["#FF6B6B", "#42A5F5", "#FFCA28", "#66BB6A"];
+            const colors = ["#FF6200", "#FF7A1F", "#FF6200", "#22c55e"];
             return (
               <div
                 key={b.title}
                 style={{
-                  background: "rgba(255,255,255,0.8)",
+                  background: "rgba(30,30,30,0.85)",
                   backdropFilter: "blur(12px)",
                   borderRadius: 16,
                   padding: "1rem 1.25rem",
                   border: `1.5px solid ${colors[i]}33`,
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   display: "flex",
                   alignItems: "flex-start",
                   gap: "0.75rem",
@@ -712,7 +625,7 @@ export default function DriverRegisterPage() {
                   <div
                     style={{
                       fontWeight: 700,
-                      color: "#1e293b",
+                      color: "#ffffff",
                       fontSize: "0.9rem",
                       fontFamily: "'Poppins',sans-serif",
                     }}
@@ -721,7 +634,7 @@ export default function DriverRegisterPage() {
                   </div>
                   <div
                     style={{
-                      color: "#64748b",
+                      color: "#888888",
                       fontSize: "0.78rem",
                       marginTop: "0.2rem",
                       fontFamily: "'Poppins',sans-serif",
@@ -738,12 +651,12 @@ export default function DriverRegisterPage() {
         {/* Registration form */}
         <div
           style={{
-            background: "rgba(255,255,255,0.88)",
+            background: "rgba(30,30,30,0.95)",
             backdropFilter: "blur(16px)",
             borderRadius: 24,
             padding: "2rem",
-            border: "1.5px solid rgba(255,255,255,0.8)",
-            boxShadow: "0 16px 48px rgba(0,0,0,0.08)",
+            border: "1.5px solid #333333",
+            boxShadow: "0 16px 48px rgba(0,0,0,0.4)",
           }}
         >
           <div
@@ -759,8 +672,7 @@ export default function DriverRegisterPage() {
                 width: 40,
                 height: 40,
                 borderRadius: "50%",
-                background:
-                  "linear-gradient(135deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
+                background: "#FF6200",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -773,7 +685,7 @@ export default function DriverRegisterPage() {
               <div
                 style={{
                   fontWeight: 700,
-                  color: "#1e293b",
+                  color: "#ffffff",
                   fontFamily: "'Poppins',sans-serif",
                   fontSize: "1.1rem",
                 }}
@@ -782,7 +694,7 @@ export default function DriverRegisterPage() {
               </div>
               <div
                 style={{
-                  color: "#64748b",
+                  color: "#888888",
                   fontSize: "0.8rem",
                   fontFamily: "'Poppins',sans-serif",
                 }}
@@ -817,7 +729,7 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#374151",
+                  color: "#cccccc",
                   fontSize: "0.85rem",
                   fontWeight: 600,
                   display: "block",
@@ -840,7 +752,7 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#374151",
+                  color: "#cccccc",
                   fontSize: "0.85rem",
                   fontWeight: 600,
                   display: "block",
@@ -866,7 +778,7 @@ export default function DriverRegisterPage() {
                     data-ocid="driver_register.send_otp_button"
                     onClick={sendOtp}
                     style={{
-                      background: "linear-gradient(135deg,#42A5F5,#1976D2)",
+                      background: "rgba(255,98,0,0.5)",
                       border: "none",
                       color: "#fff",
                       borderRadius: 12,
@@ -886,7 +798,7 @@ export default function DriverRegisterPage() {
                 {otpVerified && (
                   <span
                     style={{
-                      color: "#66BB6A",
+                      color: "#22c55e",
                       fontSize: "0.85rem",
                       alignSelf: "center",
                       whiteSpace: "nowrap",
@@ -941,7 +853,7 @@ export default function DriverRegisterPage() {
                       data-ocid="driver_register.verify_otp_button"
                       onClick={verifyOtp}
                       style={{
-                        background: "linear-gradient(135deg,#66BB6A,#388E3C)",
+                        background: "rgba(255,98,0,0.4)",
                         border: "none",
                         color: "#fff",
                         borderRadius: 12,
@@ -981,7 +893,7 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#374151",
+                  color: "#cccccc",
                   fontSize: "0.85rem",
                   fontWeight: 600,
                   display: "block",
@@ -1006,7 +918,7 @@ export default function DriverRegisterPage() {
                   background: form.dlFile
                     ? "rgba(102,187,106,0.1)"
                     : "rgba(255,255,255,0.7)",
-                  border: `2px dashed ${form.dlFile ? "#66BB6A" : "#cbd5e1"}`,
+                  border: `2px dashed ${form.dlFile ? "#22c55e" : "#cbd5e1"}`,
                   borderRadius: 12,
                   padding: "1.25rem",
                   cursor: "pointer",
@@ -1030,7 +942,7 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#374151",
+                  color: "#cccccc",
                   fontSize: "0.85rem",
                   fontWeight: 600,
                   display: "block",
@@ -1062,7 +974,7 @@ export default function DriverRegisterPage() {
                 <label
                   htmlFor="_"
                   style={{
-                    color: "#374151",
+                    color: "#cccccc",
                     fontSize: "0.85rem",
                     fontWeight: 600,
                     display: "block",
@@ -1083,7 +995,7 @@ export default function DriverRegisterPage() {
                 <label
                   htmlFor="_"
                   style={{
-                    color: "#374151",
+                    color: "#cccccc",
                     fontSize: "0.85rem",
                     fontWeight: 600,
                     display: "block",
@@ -1112,7 +1024,7 @@ export default function DriverRegisterPage() {
               <label
                 htmlFor="_"
                 style={{
-                  color: "#374151",
+                  color: "#cccccc",
                   fontSize: "0.85rem",
                   fontWeight: 600,
                   display: "block",
@@ -1139,11 +1051,11 @@ export default function DriverRegisterPage() {
                   background: form.profilePhoto
                     ? "rgba(66,165,245,0.1)"
                     : "rgba(255,255,255,0.7)",
-                  border: `2px dashed ${form.profilePhoto ? "#42A5F5" : "#cbd5e1"}`,
+                  border: `2px dashed ${form.profilePhoto ? "#FF7A1F" : "#cbd5e1"}`,
                   borderRadius: 12,
                   padding: "1.25rem",
                   cursor: "pointer",
-                  color: form.profilePhoto ? "#1976D2" : "#64748b",
+                  color: form.profilePhoto ? "#FF6200" : "#64748b",
                   fontFamily: "'Poppins',sans-serif",
                   fontSize: "0.875rem",
                   textAlign: "center",
@@ -1170,8 +1082,7 @@ export default function DriverRegisterPage() {
                 fontWeight: 700,
                 fontFamily: "'Poppins',sans-serif",
                 cursor: "pointer",
-                background:
-                  "linear-gradient(135deg, #FF6B6B 0%, #42A5F5 40%, #FFCA28 70%, #66BB6A 100%)",
+                background: "#FF6200",
                 border: "none",
                 borderRadius: 16,
                 color: "#fff",

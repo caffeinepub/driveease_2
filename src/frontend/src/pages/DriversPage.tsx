@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import RideQuoteTicker from "../components/RideQuoteTicker";
 import { CITY_PINCODES } from "../data/drivers";
 import type { Driver } from "../data/drivers";
 import { getBookings, getDrivers } from "../utils/store";
@@ -160,6 +161,7 @@ export default function DriversPage({ navigate }: DriversPageProps) {
         minHeight: "100vh",
       }}
     >
+      <RideQuoteTicker />
       <div style={{ marginBottom: "2rem" }}>
         <h1
           style={{

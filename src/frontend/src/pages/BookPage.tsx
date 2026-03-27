@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import OTPModal from "../components/OTPModal";
+import RideQuoteTicker from "../components/RideQuoteTicker";
 import type { Driver } from "../data/drivers";
 import {
   type Booking,
@@ -456,6 +457,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
         minHeight: "80vh",
       }}
     >
+      <RideQuoteTicker />
       <h1
         style={{
           color: "#1e293b",
@@ -554,8 +556,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           <div
             style={{
               height: "100%",
-              background:
-                "linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
+              background: "#FF6200",
               width: `${((step - 1) / 3) * 100}%`,
               transition: "width 0.4s ease",
               borderRadius: 99,

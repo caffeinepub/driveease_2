@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import OTPModal from "../components/OTPModal";
+import RideQuoteTicker from "../components/RideQuoteTicker";
 import {
   Tabs,
   TabsContent,
@@ -555,6 +556,7 @@ export default function MyBookingsPage({ navigate }: Props) {
       }}
     >
       <div style={{ maxWidth: 600, margin: "0 auto" }}>
+        <RideQuoteTicker />
         <div style={{ marginBottom: "1.5rem" }}>
           <h1
             style={{

@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import RideQuoteTicker from "../components/RideQuoteTicker";
 
 interface HomePageProps {
   navigate: (p: string) => void;
@@ -243,8 +244,8 @@ export default function HomePage({ navigate }: HomePageProps) {
 
   return (
     <div
-      className="min-h-screen bg-white"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+      className="min-h-screen"
+      style={{ background: "#111111", fontFamily: "'Poppins', sans-serif" }}
     >
       <style>{`
         @keyframes blinkDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.7)}}
@@ -266,8 +267,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* ANNOUNCEMENT STRIP */}
       <div
         style={{
-          background:
-            "linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
+          background: "#FF6200",
           overflow: "hidden",
           padding: "0.55rem 0",
           position: "relative",
@@ -323,6 +323,7 @@ export default function HomePage({ navigate }: HomePageProps) {
         </div>
       </div>
 
+      <RideQuoteTicker />
       {/* HERO - Split layout */}
       <section
         className="relative overflow-hidden flex flex-col md:flex-row"
@@ -334,6 +335,8 @@ export default function HomePage({ navigate }: HomePageProps) {
           style={{
             background: "linear-gradient(135deg,#eff6ff 0%,#f0fdf4 100%)",
             zIndex: 2,
+            position: "relative",
+            overflow: "hidden",
           }}
         >
           <div
@@ -368,7 +371,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               onClick={() => navigate("book")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+                background: "#FF6200",
                 boxShadow: "0 4px 24px #1565C077",
                 minHeight: 48,
               }}
@@ -403,6 +406,32 @@ export default function HomePage({ navigate }: HomePageProps) {
               </span>
             ))}
           </div>
+          {/* Indian car decorations */}
+          <img
+            src="/assets/generated/indian-car-small-transparent.dim_200x120.png"
+            alt="Indian car"
+            style={{
+              position: "absolute",
+              bottom: 16,
+              right: 16,
+              width: 150,
+              opacity: 0.4,
+              pointerEvents: "none",
+            }}
+          />
+          <img
+            src="/assets/generated/indian-car-small-transparent.dim_200x120.png"
+            alt="Indian car"
+            style={{
+              position: "absolute",
+              bottom: 16,
+              left: 16,
+              width: 100,
+              opacity: 0.25,
+              pointerEvents: "none",
+              transform: "scaleX(-1)",
+            }}
+          />
         </div>
 
         {/* RIGHT: Auto-play photo slideshow */}
@@ -466,8 +495,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* BRANDING BANNER */}
       <section
         style={{
-          background:
-            "linear-gradient(135deg,#FF6B6B 0%,#42A5F5 35%,#FFCA28 65%,#66BB6A 100%)",
+          background: "#FF6200",
           padding: "3.5rem 1rem",
           position: "relative",
           overflow: "hidden",
@@ -968,7 +996,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             onClick={() => navigate("book")}
             className="font-bold px-10 py-4 rounded-full text-white text-lg shadow-xl transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+              background: "#FF6200",
               boxShadow: "0 6px 32px #1565C066",
             }}
           >
@@ -1291,8 +1319,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                       width: 40,
                       height: 40,
                       borderRadius: "50%",
-                      background:
-                        "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+                      background: "#FF6200",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1471,7 +1498,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           onClick={() => navigate("book")}
           className="flex-1 font-bold py-3 rounded-full text-white mr-2 text-sm"
           style={{
-            background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+            background: "#FF6200",
           }}
         >
           🚗 Book Now

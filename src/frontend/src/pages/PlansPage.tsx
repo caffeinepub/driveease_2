@@ -1,4 +1,5 @@
 import { useState } from "react";
+import RideQuoteTicker from "../components/RideQuoteTicker";
 import { type SubEnquiry, addSubEnquiry, uid } from "../utils/store";
 import { pushItem } from "../utils/syncService";
 
@@ -10,7 +11,7 @@ const PLANS = [
     period: "day",
     monthly: "₹24,000/month",
     badge: "Most Popular",
-    color: "#FF6B6B",
+    color: "#FF6200",
     desc: "8 hours/day flexible scheduling between 7 AM – 9 PM. Same verified driver every day.",
     features: [
       "8 hrs/day coverage",
@@ -61,7 +62,7 @@ const PLANS = [
     period: "",
     monthly: "",
     badge: "Enterprise",
-    color: "#FFCA28",
+    color: "#FF6200",
     desc: "Custom pricing for corporates. Executive trained drivers, multiple vehicles, invoice billing.",
     features: [
       "Multiple drivers",
@@ -105,6 +106,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
 
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "2rem 1.5rem" }}>
+      <RideQuoteTicker />
       <div style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1
           style={{

@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import RideQuoteTicker from "../components/RideQuoteTicker";
+
 import type { Driver } from "../data/drivers";
 import { toIST } from "../utils/dateUtils";
 import {
@@ -1371,49 +1373,78 @@ td:last-child{text-align:right;font-weight:600;}
       style={{
         minHeight: "100vh",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg,#0a0a0a,#0f1f0f)",
+        background:
+          "linear-gradient(135deg,#1a0a2e 0%,#0d1b3e 30%,#1a2a0a 60%,#2a1a0a 100%)",
         padding: "1rem",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div style={{ width: "100%", maxWidth: 400 }}>
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+      <style>{`
+        @keyframes loginGlow{0%,100%{box-shadow:0 0 18px 4px #FF620055,0 0 32px 8px #42A5F533}33%{box-shadow:0 0 18px 4px #42A5F555,0 0 32px 8px #FF620033}66%{box-shadow:0 0 18px 4px #66BB6A55,0 0 32px 8px #FF620033}}
+        @keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+      `}</style>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 420,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <RideQuoteTicker />
+        <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
           <div
             style={{
-              width: 64,
-              height: 64,
+              width: 72,
+              height: 72,
               borderRadius: "50%",
-              background: "#00e676",
+              background: "#FF6200",
               margin: "0 auto 1rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "1.75rem",
+              fontSize: "2rem",
+              animation:
+                "loginGlow 3s ease-in-out infinite, logoPulse 2.5s ease-in-out infinite",
             }}
           >
             🚗
           </div>
           <h1
             style={{
-              color: "#e2e8f0",
               fontWeight: 800,
-              fontSize: "1.5rem",
+              fontSize: "1.6rem",
               marginBottom: "0.25rem",
+              background: "#FF6200",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
             Captain Portal
           </h1>
-          <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+          <p style={{ color: "#cbd5e1", fontSize: "0.9rem" }}>
             Login to access your Captain dashboard
           </p>
         </div>
 
         {step === "login" && (
-          <div className="card-dark">
+          <div
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              backdropFilter: "blur(14px)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 16,
+              padding: "1.5rem",
+              position: "relative",
+            }}
+          >
             <p
               style={{
-                color: "#94a3b8",
+                color: "#e2e8f0",
                 fontSize: "0.85rem",
                 display: "block",
                 marginBottom: "0.4rem",
@@ -1445,10 +1476,19 @@ td:last-child{text-align:right;font-weight:600;}
         )}
 
         {step === "otp" && (
-          <div className="card-dark">
+          <div
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              backdropFilter: "blur(14px)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 16,
+              padding: "1.5rem",
+              position: "relative",
+            }}
+          >
             <p
               style={{
-                color: "#94a3b8",
+                color: "#e2e8f0",
                 fontSize: "0.85rem",
                 marginBottom: "1rem",
               }}
@@ -1517,6 +1557,23 @@ td:last-child{text-align:right;font-weight:600;}
             </button>
           </div>
         )}
+        <div style={{ position: "relative" }}>
+          {step === "login" || step === "otp" ? (
+            <img
+              src="/assets/generated/indian-car-small-transparent.dim_200x120.png"
+              alt="Indian car"
+              style={{
+                position: "absolute",
+                bottom: -10,
+                right: -10,
+                width: 120,
+                opacity: 0.5,
+                pointerEvents: "none",
+                zIndex: 0,
+              }}
+            />
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -42,12 +42,10 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
   };
 
   const navItems = [
-    { label: "Home", page: "home", color: "#FF6B6B" },
-    { label: "Book Driver", page: "book", color: "#42A5F5" },
-    { label: "Become a Driver", page: "register-driver", color: "#66BB6A" },
-    ...(isLoggedIn
-      ? [{ label: "My Bookings", page: "my-bookings", color: "#FFCA28" }]
-      : []),
+    { label: "Home", page: "home" },
+    { label: "Book Driver", page: "book" },
+    { label: "Become a Driver", page: "register-driver" },
+    ...(isLoggedIn ? [{ label: "My Bookings", page: "my-bookings" }] : []),
   ];
 
   const isActive = (page: string) =>
@@ -61,20 +59,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        background: scrolled
-          ? "rgba(255,255,255,0.98)"
-          : "rgba(255,255,255,0.96)",
+        background: scrolled ? "rgba(17,17,17,0.98)" : "rgba(17,17,17,0.96)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        borderBottom: scrolled
-          ? "2px solid transparent"
-          : "1px solid rgba(0,0,0,0.08)",
-        backgroundImage: scrolled
-          ? "linear-gradient(white,white), linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)"
-          : "none",
-        backgroundOrigin: "border-box",
-        backgroundClip: scrolled ? "padding-box, border-box" : "initial",
-        boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,0.1)" : "none",
+        borderBottom: "1px solid #222222",
+        boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,0.5)" : "none",
         transition: "background 0.3s, box-shadow 0.3s",
       }}
     >
@@ -109,7 +98,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             style={{
               width: 36,
               height: 36,
-              background: "linear-gradient(135deg,#FF6B6B,#42A5F5)",
+              background: "#FF6200",
               borderRadius: 10,
               display: "flex",
               alignItems: "center",
@@ -124,9 +113,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               fontFamily: "'Orbitron', monospace",
               fontWeight: 700,
               fontSize: "1.2rem",
-              background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#FF6200",
               letterSpacing: "0.04em",
             }}
           >
@@ -153,11 +140,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go(item.page)}
               style={{
                 background: isActive(item.page)
-                  ? `${item.color}18`
+                  ? "rgba(255,98,0,0.12)"
                   : "transparent",
-                color: isActive(item.page) ? item.color : "#334155",
+                color: isActive(item.page) ? "#FF6200" : "#cccccc",
                 border: isActive(item.page)
-                  ? `1px solid ${item.color}44`
+                  ? "1px solid rgba(255,98,0,0.35)"
                   : "1px solid transparent",
                 borderRadius: 9999,
                 padding: "0.45rem 1rem",
@@ -170,13 +157,13 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               }}
               onMouseEnter={(e) => {
                 if (!isActive(item.page)) {
-                  e.currentTarget.style.color = item.color;
-                  e.currentTarget.style.background = `${item.color}12`;
+                  e.currentTarget.style.color = "#FF6200";
+                  e.currentTarget.style.background = "rgba(255,98,0,0.08)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive(item.page)) {
-                  e.currentTarget.style.color = "#334155";
+                  e.currentTarget.style.color = "#cccccc";
                   e.currentTarget.style.background = "transparent";
                 }
               }}
@@ -205,7 +192,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   width: 34,
                   height: 34,
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg,#42A5F5,#66BB6A)",
+                  background: "#FF6200",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -213,7 +200,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                   fontSize: "0.85rem",
                   color: "#ffffff",
                   cursor: "pointer",
-                  border: "2px solid rgba(66,165,245,0.3)",
+                  border: "2px solid rgba(255,98,0,0.5)",
                 }}
               >
                 {(customer?.name || customer?.phone || "U")[0].toUpperCase()}
@@ -224,8 +211,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={handleLogout}
                 style={{
                   background: "none",
-                  border: "1px solid rgba(255,107,107,0.4)",
-                  color: "#e53935",
+                  border: "1px solid #333333",
+                  color: "#aaaaaa",
                   borderRadius: 8,
                   padding: "0.35rem 0.75rem",
                   cursor: "pointer",
@@ -243,8 +230,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go("login")}
               style={{
                 background: "none",
-                border: "1px solid rgba(66,165,245,0.4)",
-                color: "#1976D2",
+                border: "1px solid #333333",
+                color: "#cccccc",
                 borderRadius: 8,
                 padding: "0.45rem 1rem",
                 cursor: "pointer",
@@ -264,8 +251,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             onClick={() => go("driver-login")}
             style={{
               background: "none",
-              border: "1px solid rgba(255,202,40,0.5)",
-              color: "#F57F17",
+              border: "1px solid rgba(255,98,0,0.4)",
+              color: "#FF6200",
               borderRadius: 8,
               padding: "0.45rem 1rem",
               cursor: "pointer",
@@ -276,12 +263,12 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               transition: "all 0.18s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,202,40,0.1)";
-              e.currentTarget.style.borderColor = "rgba(255,202,40,0.7)";
+              e.currentTarget.style.background = "rgba(255,98,0,0.1)";
+              e.currentTarget.style.borderColor = "rgba(255,98,0,0.7)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "none";
-              e.currentTarget.style.borderColor = "rgba(255,202,40,0.5)";
+              e.currentTarget.style.borderColor = "rgba(255,98,0,0.4)";
             }}
           >
             🚖 Driver Login
@@ -319,7 +306,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "#42A5F5" : "#334155",
+              background: mobileOpen ? "#FF6200" : "#cccccc",
               borderRadius: 2,
               transition: "all 0.2s",
               transform: mobileOpen ? "translateY(7px) rotate(45deg)" : "none",
@@ -330,7 +317,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "transparent" : "#334155",
+              background: mobileOpen ? "transparent" : "#cccccc",
               borderRadius: 2,
               transition: "all 0.2s",
             }}
@@ -340,7 +327,7 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               display: "block",
               width: 24,
               height: 2,
-              background: mobileOpen ? "#42A5F5" : "#334155",
+              background: mobileOpen ? "#FF6200" : "#cccccc",
               borderRadius: 2,
               transition: "all 0.2s",
               transform: mobileOpen
@@ -356,12 +343,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
         <div
           ref={menuRef}
           style={{
-            background: "rgba(255,255,255,0.98)",
-            borderTop: "2px solid transparent",
-            backgroundImage:
-              "linear-gradient(white,white), linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
-            backgroundOrigin: "border-box",
-            backgroundClip: "padding-box, border-box",
+            background: "rgba(17,17,17,0.99)",
+            borderTop: "1px solid #222222",
             padding: "1rem 1.5rem 1.5rem",
           }}
         >
@@ -376,11 +359,11 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={() => go(item.page)}
                 style={{
                   background: isActive(item.page)
-                    ? `${item.color}15`
+                    ? "rgba(255,98,0,0.12)"
                     : "transparent",
-                  color: isActive(item.page) ? item.color : "#334155",
+                  color: isActive(item.page) ? "#FF6200" : "#cccccc",
                   border: isActive(item.page)
-                    ? `1px solid ${item.color}40`
+                    ? "1px solid rgba(255,98,0,0.35)"
                     : "1px solid transparent",
                   borderRadius: 10,
                   padding: "0.75rem 1rem",
@@ -398,10 +381,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             <div
               style={{
                 height: 1,
-                background:
-                  "linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
+                background: "#222222",
                 margin: "0.5rem 0",
-                opacity: 0.3,
               }}
             />
             {isLoggedIn ? (
@@ -410,8 +391,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={handleLogout}
                 style={{
                   background: "transparent",
-                  color: "#e53935",
-                  border: "1px solid rgba(255,107,107,0.3)",
+                  color: "#aaaaaa",
+                  border: "1px solid #333333",
                   borderRadius: 10,
                   padding: "0.75rem 1rem",
                   cursor: "pointer",
@@ -429,8 +410,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
                 onClick={() => go("login")}
                 style={{
                   background: "transparent",
-                  color: "#1976D2",
-                  border: "1px solid rgba(66,165,245,0.3)",
+                  color: "#cccccc",
+                  border: "1px solid #333333",
                   borderRadius: 10,
                   padding: "0.75rem 1rem",
                   cursor: "pointer",
@@ -450,8 +431,8 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
               onClick={() => go("driver-login")}
               style={{
                 background: "transparent",
-                color: "#F57F17",
-                border: "1px solid rgba(255,202,40,0.35)",
+                color: "#FF6200",
+                border: "1px solid rgba(255,98,0,0.4)",
                 borderRadius: 10,
                 padding: "0.75rem 1rem",
                 cursor: "pointer",
