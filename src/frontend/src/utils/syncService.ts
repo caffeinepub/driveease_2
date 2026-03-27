@@ -119,28 +119,17 @@ export async function pullAllAndMerge(): Promise<boolean> {
   let hasNew = false;
   await Promise.all(
     COLLECTIONS.map(async (key) => {
-      const remote = await pullList(key);
-      if (remote.length === 0) return;
       const lsKey = `de_${key}`;
-      let local: AnyRecord[] = [];
       try {
-        local = JSON.parse(localStorage.getItem(lsKey) || "[]") as AnyRecord[];
+        const snap = await getDocs(collection(db, `de_${key}`));
+        const remote = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const existing = JSON.parse(localStorage.getItem(lsKey) || "[]");
+        if (remote.length !== existing.length) hasNew = true;
+        if (remote.length > 0) {
+          localStorage.setItem(lsKey, JSON.stringify(remote));
+        }
       } catch {
-        local = [];
-      }
-      const localIds = new Set(local.map((r) => r.id));
-      const newItems = remote.filter((r) => !localIds.has(r.id));
-      if (newItems.length > 0) {
-        hasNew = true;
-      }
-      // Firestore wins for existing items (status updates etc.)
-      const localMap = new Map(local.map((r) => [r.id, r]));
-      for (const r of remote)
-        localMap.set(r.id, { ...localMap.get(r.id), ...r });
-      const merged = Array.from(localMap.values());
-      localStorage.setItem(lsKey, JSON.stringify(merged));
-      if (newItems.length > 0) {
-        window.dispatchEvent(new StorageEvent("storage", { key: lsKey }));
+        // ignore – Firestore may be unavailable
       }
     }),
   );
@@ -148,7 +137,56 @@ export async function pullAllAndMerge(): Promise<boolean> {
 }
 
 /**
- * Push all localStorage data to Firestore (initial seed / recovery).
+ * Subscribe to a Firestore collection in real-time.
+ */
+export function subscribeToCollection(
+  listKey: string,
+  callback: (items: AnyRecord[]) => void,
+): Unsubscribe {
+  const colRef = collection(db, `de_${listKey}`);
+  return onSnapshot(
+    colRef,
+    (snap) => {
+      const items = snap.docs.map(
+        (d) => ({ id: d.id, ...d.data() }) as AnyRecord,
+      );
+      callback(items);
+    },
+    () => {
+      // On error, fall back to localStorage
+      try {
+        const local = JSON.parse(localStorage.getItem(`de_${listKey}`) || "[]");
+        callback(local);
+      } catch {
+        callback([]);
+      }
+    },
+  );
+}
+
+/**
+ * Delete a document from Firestore and remove from localStorage cache.
+ */
+export async function deleteItem(listKey: string, id: string): Promise<void> {
+  const lsKey = `de_${listKey}`;
+  try {
+    const local: AnyRecord[] = JSON.parse(localStorage.getItem(lsKey) || "[]");
+    localStorage.setItem(
+      lsKey,
+      JSON.stringify(local.filter((r) => r.id !== id)),
+    );
+  } catch {
+    // ignore
+  }
+  try {
+    await deleteDoc(doc(db, `de_${listKey}`, id));
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Push all localStorage collections to Firestore.
  */
 export async function pushAll(): Promise<void> {
   await Promise.all(
@@ -169,38 +207,11 @@ export async function pushAll(): Promise<void> {
 }
 
 /**
- * Delete an item from Firestore and remove from localStorage cache.
- */
-export async function deleteItem(
-  listKey: string,
-  itemId: string,
-): Promise<void> {
-  const lsKey = `de_${listKey}`;
-  try {
-    const local: AnyRecord[] = JSON.parse(localStorage.getItem(lsKey) || "[]");
-    localStorage.setItem(
-      lsKey,
-      JSON.stringify(local.filter((r) => r.id !== itemId)),
-    );
-  } catch {
-    // ignore
-  }
-  try {
-    await deleteDoc(doc(db, `de_${listKey}`, itemId));
-  } catch {
-    // ignore
-  }
-}
-
-/**
  * Subscribe to real-time Firestore updates across all tracked collections.
- * Firestore snapshots are the source of truth -- updates localStorage cache
- * and calls the callback when new data arrives.
  * Returns a cleanup function to unsubscribe all listeners.
  */
 export function subscribeToChanges(callback: () => void): () => void {
   const unsubs: Unsubscribe[] = [];
-
   for (const key of COLLECTIONS) {
     const lsKey = `de_${key}`;
     const colRef = collection(db, `de_${key}`);
@@ -211,7 +222,6 @@ export function subscribeToChanges(callback: () => void): () => void {
           (d) => ({ id: d.id, ...d.data() }) as AnyRecord,
         );
         if (remote.length === 0) return;
-        // Firestore is truth – overwrite localStorage cache
         let local: AnyRecord[] = [];
         try {
           local = JSON.parse(
@@ -223,22 +233,38 @@ export function subscribeToChanges(callback: () => void): () => void {
         const localMap = new Map(local.map((r) => [r.id, r]));
         let changed = false;
         for (const r of remote) {
-          const existing = localMap.get(r.id);
-          if (!existing) changed = true;
-          localMap.set(r.id, { ...existing, ...r });
+          if (!localMap.has(r.id)) changed = true;
+          localMap.set(r.id, { ...localMap.get(r.id), ...r });
         }
-        const merged = Array.from(localMap.values());
-        localStorage.setItem(lsKey, JSON.stringify(merged));
+        localStorage.setItem(
+          lsKey,
+          JSON.stringify(Array.from(localMap.values())),
+        );
         if (changed) callback();
       },
       () => {
-        // ignore snapshot errors silently
+        /* ignore */
       },
     );
     unsubs.push(unsub);
   }
-
   return () => {
     for (const u of unsubs) u();
   };
+}
+
+/**
+ * Send an SMS notification via Textbelt free tier.
+ * Silently fails on error.
+ */
+export async function sendSMS(phone: string, message: string): Promise<void> {
+  try {
+    await fetch("https://textbelt.com/text", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone, message, key: "textbelt" }),
+    });
+  } catch {
+    // silent fail – SMS is best-effort
+  }
 }

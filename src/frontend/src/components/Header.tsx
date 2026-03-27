@@ -8,97 +8,82 @@ interface HeaderProps {
 
 export default function Header({ currentPage, navigate }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
-  const promptRef = useRef<Event | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const customer = getCurrentCustomer();
+  const isLoggedIn = !!customer;
 
   useEffect(() => {
-    const handler = (e: Event) => {
-      e.preventDefault();
-      promptRef.current = e;
-      setInstallPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const installApp = async () => {
-    if (!promptRef.current) return;
-    const evt = promptRef.current as BeforeInstallPromptEvent;
-    await evt.prompt();
-    setInstallPrompt(null);
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMobileOpen(false);
+      }
+    };
+    if (mobileOpen) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [mobileOpen]);
+
+  const go = (page: string) => {
+    navigate(page);
+    setMobileOpen(false);
   };
 
-  const navLink = (label: string, page: string) => {
-    const isActive = currentPage === page;
-    return (
-      <button
-        type="button"
-        key={page}
-        data-ocid={`nav.${page.replace("-", "_")}_link`}
-        onClick={() => {
-          navigate(page);
-          setMobileOpen(false);
-        }}
-        style={{
-          background: isActive ? "#16a34a" : "transparent",
-          color: isActive ? "#0d1420" : "#e2e8f0",
-          border: "none",
-          cursor: "pointer",
-          fontWeight: isActive ? 600 : 500,
-          padding: "0.3rem 0.9rem",
-          borderRadius: 9999,
-          fontSize: "0.875rem",
-          transition: "all 0.18s",
-          fontFamily: "'Poppins', sans-serif",
-        }}
-        onMouseEnter={(e) => {
-          if (!isActive) {
-            e.currentTarget.style.background = "#0f1a2e";
-            e.currentTarget.style.color = "#00e676";
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (!isActive) {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#94a3b8";
-          }
-        }}
-      >
-        {label}
-      </button>
-    );
+  const handleLogout = () => {
+    logoutCustomer();
+    setMobileOpen(false);
+    navigate("home");
+    window.location.reload();
   };
+
+  const navItems = [
+    { label: "Home", page: "home" },
+    { label: "Book Driver", page: "book" },
+    { label: "Become a Driver", page: "register-driver" },
+    ...(isLoggedIn ? [{ label: "My Bookings", page: "my-bookings" }] : []),
+  ];
+
+  const isActive = (page: string) =>
+    page === "home"
+      ? currentPage === "home" || currentPage === ""
+      : currentPage === page;
 
   return (
     <header
       style={{
-        background: "#0d1420",
-        borderBottom: "1px solid rgba(0,230,118,0.2)",
-        boxShadow: "0 2px 12px rgba(0,230,118,0.08)",
         position: "sticky",
         top: 0,
         zIndex: 100,
+        background: scrolled ? "rgba(10,15,26,0.97)" : "rgba(10,15,26,0.95)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        borderBottom: "1px solid rgba(0,230,118,0.15)",
+        boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.4)" : "none",
+        transition: "background 0.3s, box-shadow 0.3s",
       }}
     >
       <div
         style={{
-          maxWidth: 1200,
+          maxWidth: 1280,
           margin: "0 auto",
           padding: "0 1.5rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: 64,
+          height: 68,
+          gap: "1rem",
         }}
       >
         {/* Logo */}
         <button
           type="button"
-          onClick={() => navigate("home")}
           data-ocid="nav.home_link"
-          aria-label="DriveEase Home"
+          onClick={() => go("home")}
           style={{
             background: "none",
             border: "none",
@@ -106,239 +91,135 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
             display: "flex",
             alignItems: "center",
             gap: "0.5rem",
+            flexShrink: 0,
           }}
         >
           <div
             style={{
-              background: "linear-gradient(135deg,#00e676,#22c55e)",
-              borderRadius: 10,
               width: 36,
               height: 36,
+              background: "linear-gradient(135deg,#00e676,#16a34a)",
+              borderRadius: 10,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 3px 10px rgba(0,230,118,0.3)",
+              fontSize: "1.1rem",
             }}
           >
-            <span style={{ fontSize: "1.2rem" }}>🚗</span>
+            🚗
           </div>
           <span
             style={{
-              color: "#00e676",
-              fontWeight: 800,
-              fontSize: "1.25rem",
               fontFamily: "'Orbitron', monospace",
-              letterSpacing: "-0.02em",
+              fontWeight: 700,
+              fontSize: "1.2rem",
+              background: "linear-gradient(135deg,#00e676,#4ade80)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              letterSpacing: "0.04em",
             }}
           >
             DriveEase
           </span>
-          <span
-            style={{
-              color: "#00e676",
-              fontSize: "0.6rem",
-              fontWeight: 700,
-              background: "#1a2e1a20",
-              padding: "2px 6px",
-              borderRadius: 4,
-              border: "1px solid rgba(0,230,118,0.2)",
-              letterSpacing: "0.05em",
-            }}
-          >
-            INDIA
-          </span>
         </button>
 
-        {/* Desktop Nav — pill-tab bar */}
+        {/* Desktop nav */}
         <nav
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.15rem",
-            background: "#0f1a2e",
-            borderRadius: 9999,
-            padding: "0.3rem 0.4rem",
-            border: "1px solid rgba(0,230,118,0.2)",
+            gap: "0.25rem",
+            flex: 1,
+            justifyContent: "center",
           }}
-          className="hidden md:flex"
+          className="hidden-mobile"
         >
-          {navLink("Home", "home")}
-          {navLink("Drivers", "drivers")}
-          {navLink("Live", "live")}
-          {navLink("Plans", "plans")}
-          {navLink("Insurance", "insurance")}
-          <button
-            type="button"
-            data-ocid="header.driver_login_button"
-            onClick={() => navigate("driver-login")}
-            style={{
-              background:
-                currentPage === "driver-login" ? "#0ea5e9" : "transparent",
-              color: currentPage === "driver-login" ? "#0d1420" : "#0369a1",
-              border: "none",
-              borderRadius: 9999,
-              padding: "0.3rem 0.9rem",
-              cursor: "pointer",
-              fontWeight: 500,
-              fontSize: "0.875rem",
-              transition: "all 0.18s",
-              fontFamily: "'Poppins', sans-serif",
-            }}
-            onMouseEnter={(e) => {
-              if (currentPage !== "driver-login") {
-                e.currentTarget.style.background = "#e0f2fe";
-                e.currentTarget.style.color = "#0369a1";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (currentPage !== "driver-login") {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#0369a1";
-              }
-            }}
-          >
-            🧑‍✈️ Captain Login
-          </button>
-          <div style={{ position: "relative" }}>
+          {navItems.map((item) => (
             <button
               type="button"
-              onClick={() => setServicesOpen(!servicesOpen)}
-              aria-haspopup="true"
-              aria-expanded={servicesOpen}
+              key={item.page}
+              data-ocid={`nav.${item.page.replace("-", "_")}_link`}
+              onClick={() => go(item.page)}
               style={{
-                background: "transparent",
-                color: "#e2e8f0",
-                border: "none",
-                cursor: "pointer",
-                padding: "0.3rem 0.9rem",
+                background: isActive(item.page)
+                  ? "rgba(0,230,118,0.15)"
+                  : "transparent",
+                color: isActive(item.page) ? "#00e676" : "#cbd5e1",
+                border: isActive(item.page)
+                  ? "1px solid rgba(0,230,118,0.3)"
+                  : "1px solid transparent",
                 borderRadius: 9999,
+                padding: "0.45rem 1rem",
+                cursor: "pointer",
                 fontSize: "0.875rem",
+                fontWeight: isActive(item.page) ? 600 : 500,
                 fontFamily: "'Poppins', sans-serif",
-                fontWeight: 500,
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
                 transition: "all 0.18s",
+                whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#0f1a2e";
+                if (!isActive(item.page)) {
+                  e.currentTarget.style.color = "#00e676";
+                  e.currentTarget.style.background = "rgba(0,230,118,0.07)";
+                }
               }}
               onMouseLeave={(e) => {
-                if (!servicesOpen)
+                if (!isActive(item.page)) {
+                  e.currentTarget.style.color = "#cbd5e1";
                   e.currentTarget.style.background = "transparent";
+                }
               }}
             >
-              More ▾
+              {item.label}
             </button>
-            {servicesOpen && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "calc(100% + 8px)",
-                  left: 0,
-                  background: "#0d1420",
-                  border: "1px solid rgba(0,230,118,0.25)",
-                  borderRadius: 12,
-                  minWidth: 160,
-                  zIndex: 200,
-                  overflow: "hidden",
-                  boxShadow: "0 8px 24px rgba(0,230,118,0.12)",
-                }}
-                onMouseLeave={() => setServicesOpen(false)}
-              >
-                {[
-                  ["My Bookings", "my-bookings"],
-                  ["Payment", "payment"],
-                  ["Register Driver", "register-driver"],
-                ].map(([l, p]) => (
-                  <button
-                    type="button"
-                    key={p}
-                    onClick={() => {
-                      navigate(p);
-                      setServicesOpen(false);
-                    }}
-                    style={{
-                      display: "block",
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "0.65rem 1rem",
-                      background: "none",
-                      border: "none",
-                      color: "#e2e8f0",
-                      cursor: "pointer",
-                      fontSize: "0.88rem",
-                      fontFamily: "'Poppins', sans-serif",
-                      transition: "all 0.15s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#0f1a2e";
-                      e.currentTarget.style.color = "#00e676";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "none";
-                      e.currentTarget.style.color = "#94a3b8";
-                    }}
-                  >
-                    {l}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          ))}
         </nav>
 
-        {/* Right actions */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-          {installPrompt && (
-            <button
-              type="button"
-              onClick={installApp}
-              data-ocid="header.install_button"
-              style={{
-                background: "#1a2e1a20",
-                border: "1px solid rgba(0,230,118,0.2)",
-                color: "#00e676",
-                borderRadius: 8,
-                padding: "0.35rem 0.75rem",
-                cursor: "pointer",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                gap: "0.35rem",
-              }}
-            >
-              📲 Install
-            </button>
-          )}
-          {customer ? (
+        {/* Right side: auth + Book Now */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            flexShrink: 0,
+          }}
+          className="hidden-mobile"
+        >
+          {isLoggedIn ? (
             <div
               style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
             >
-              <span
+              <div
                 style={{
-                  color: "#00e676",
+                  width: 34,
+                  height: 34,
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg,#00e676,#16a34a)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 700,
                   fontSize: "0.85rem",
-                  fontWeight: 500,
+                  color: "#0a0f1a",
+                  cursor: "pointer",
+                  border: "2px solid rgba(0,230,118,0.4)",
                 }}
               >
-                👤 {customer.phone}
-              </span>
+                {(customer?.name || customer?.phone || "U")[0].toUpperCase()}
+              </div>
               <button
                 type="button"
-                onClick={() => {
-                  logoutCustomer();
-                  window.location.reload();
-                }}
+                data-ocid="nav.logout_button"
+                onClick={handleLogout}
                 style={{
-                  color: "#94a3b8",
                   background: "none",
-                  border: "1px solid #d1d5db",
-                  borderRadius: 6,
-                  padding: "4px 10px",
+                  border: "1px solid rgba(248,113,113,0.3)",
+                  color: "#f87171",
+                  borderRadius: 8,
+                  padding: "0.35rem 0.75rem",
                   cursor: "pointer",
                   fontSize: "0.8rem",
+                  fontFamily: "'Poppins', sans-serif",
                 }}
               >
                 Logout
@@ -347,137 +228,201 @@ export default function Header({ currentPage, navigate }: HeaderProps) {
           ) : (
             <button
               type="button"
-              onClick={() => navigate("login")}
+              data-ocid="nav.login_link"
+              onClick={() => go("login")}
               style={{
-                color: "#94a3b8",
-                background: "#111827",
-                border: "1px solid rgba(0,230,118,0.2)",
+                background: "none",
+                border: "1px solid rgba(0,230,118,0.3)",
+                color: "#00e676",
                 borderRadius: 8,
-                padding: "0.4rem 0.9rem",
+                padding: "0.45rem 1rem",
                 cursor: "pointer",
                 fontSize: "0.875rem",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 500,
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#1a2e1a20";
-                e.currentTarget.style.borderColor = "rgba(0,230,118,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#0f1a2e";
-                e.currentTarget.style.borderColor = "#bbf7d0";
               }}
             >
-              Login
+              Login / Signup
             </button>
           )}
           <button
             type="button"
-            onClick={() => navigate("book")}
-            data-ocid="header.book_driver_button"
-            style={{
-              background: "linear-gradient(135deg,#00e676,#22c55e)",
-              color: "white",
-              border: "none",
-              borderRadius: 9999,
-              padding: "0.45rem 1.1rem",
-              cursor: "pointer",
-              fontWeight: 700,
-              fontSize: "0.875rem",
-              fontFamily: "'Poppins', sans-serif",
-              boxShadow: "0 3px 12px rgba(0,230,118,0.35)",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-1px)";
-              e.currentTarget.style.boxShadow =
-                "0 6px 20px rgba(0,230,118,0.45)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow =
-                "0 3px 12px rgba(0,230,118,0.35)";
-            }}
+            data-ocid="nav.book_now_button"
+            onClick={() => go("book")}
+            className="green-btn"
+            style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}
           >
-            🚗 Book Now
-          </button>
-          <button
-            type="button"
-            aria-label="Toggle menu"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            style={{
-              background: "none",
-              border: "1px solid rgba(0,230,118,0.2)",
-              color: "#e2e8f0",
-              cursor: "pointer",
-              fontSize: "1.2rem",
-              borderRadius: 8,
-              padding: "0.3rem 0.5rem",
-              lineHeight: 1,
-            }}
-            className="block md:hidden"
-          >
-            ☰
+            Book Now
           </button>
         </div>
+
+        {/* Hamburger */}
+        <button
+          type="button"
+          data-ocid="nav.hamburger_button"
+          onClick={() => setMobileOpen((v) => !v)}
+          className="show-mobile"
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            display: "none",
+            flexDirection: "column",
+            gap: 5,
+            padding: "0.5rem",
+          }}
+          aria-label="Toggle menu"
+        >
+          <span
+            style={{
+              display: "block",
+              width: 24,
+              height: 2,
+              background: mobileOpen ? "#00e676" : "#e2e8f0",
+              borderRadius: 2,
+              transition: "all 0.2s",
+              transform: mobileOpen ? "translateY(7px) rotate(45deg)" : "none",
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: 24,
+              height: 2,
+              background: mobileOpen ? "transparent" : "#e2e8f0",
+              borderRadius: 2,
+              transition: "all 0.2s",
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: 24,
+              height: 2,
+              background: mobileOpen ? "#00e676" : "#e2e8f0",
+              borderRadius: 2,
+              transition: "all 0.2s",
+              transform: mobileOpen
+                ? "translateY(-7px) rotate(-45deg)"
+                : "none",
+            }}
+          />
+        </button>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
         <div
+          ref={menuRef}
           style={{
-            background: "#0d1420",
-            borderTop: "1px solid #1a2e1a20",
-            padding: "1rem 1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.25rem",
+            background: "rgba(10,15,26,0.98)",
+            borderTop: "1px solid rgba(0,230,118,0.15)",
+            padding: "1rem 1.5rem 1.5rem",
           }}
         >
-          {[
-            ["🏠 Home", "home"],
-            ["🧑‍🚗 Drivers", "drivers"],
-            ["📍 Live Drivers", "live"],
-            ["📋 Plans", "plans"],
-            ["🛡️ Insurance", "insurance"],
-            ["💳 Payment", "payment"],
-            ["📅 My Bookings", "my-bookings"],
-            ["✍️ Register Driver", "register-driver"],
-            ["🔐 Captain Login", "driver-login"],
-          ].map(([l, p]) => (
+          <nav
+            style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+          >
+            {navItems.map((item) => (
+              <button
+                type="button"
+                key={item.page}
+                data-ocid={`nav.mobile_${item.page.replace("-", "_")}_link`}
+                onClick={() => go(item.page)}
+                style={{
+                  background: isActive(item.page)
+                    ? "rgba(0,230,118,0.15)"
+                    : "transparent",
+                  color: isActive(item.page) ? "#00e676" : "#cbd5e1",
+                  border: isActive(item.page)
+                    ? "1px solid rgba(0,230,118,0.25)"
+                    : "1px solid transparent",
+                  borderRadius: 10,
+                  padding: "0.75rem 1rem",
+                  cursor: "pointer",
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                  fontFamily: "'Poppins', sans-serif",
+                  textAlign: "left",
+                  minHeight: 44,
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+            <div
+              style={{
+                height: 1,
+                background: "rgba(0,230,118,0.1)",
+                margin: "0.5rem 0",
+              }}
+            />
+            {isLoggedIn ? (
+              <button
+                type="button"
+                onClick={handleLogout}
+                style={{
+                  background: "transparent",
+                  color: "#f87171",
+                  border: "1px solid rgba(248,113,113,0.25)",
+                  borderRadius: 10,
+                  padding: "0.75rem 1rem",
+                  cursor: "pointer",
+                  fontSize: "0.95rem",
+                  fontFamily: "'Poppins', sans-serif",
+                  textAlign: "left",
+                  minHeight: 44,
+                }}
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => go("login")}
+                style={{
+                  background: "transparent",
+                  color: "#00e676",
+                  border: "1px solid rgba(0,230,118,0.25)",
+                  borderRadius: 10,
+                  padding: "0.75rem 1rem",
+                  cursor: "pointer",
+                  fontSize: "0.95rem",
+                  fontFamily: "'Poppins', sans-serif",
+                  textAlign: "left",
+                  minHeight: 44,
+                }}
+              >
+                Login / Signup
+              </button>
+            )}
             <button
               type="button"
-              key={p}
-              onClick={() => {
-                navigate(p);
-                setMobileOpen(false);
-              }}
+              onClick={() => go("book")}
+              className="green-btn"
               style={{
-                color: currentPage === p ? "#16a34a" : "#e2e8f0",
-                background: currentPage === p ? "#0f1a2e" : "none",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
-                padding: "0.6rem 0.75rem",
-                fontSize: "0.95rem",
-                borderRadius: 8,
-                fontWeight: currentPage === p ? 600 : 400,
-                fontFamily: "'Poppins', sans-serif",
+                marginTop: "0.5rem",
+                width: "100%",
+                justifyContent: "center",
+                minHeight: 48,
               }}
             >
-              {l}
+              Book Now
             </button>
-          ))}
+          </nav>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .hidden-mobile { display: none !important; }
+          .show-mobile { display: flex !important; }
+        }
+        @media (min-width: 769px) {
+          .show-mobile { display: none !important; }
+          .hidden-mobile { display: flex !important; }
+        }
+      `}</style>
     </header>
   );
-}
-
-declare global {
-  interface BeforeInstallPromptEvent extends Event {
-    prompt(): Promise<void>;
-    userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
-  }
 }

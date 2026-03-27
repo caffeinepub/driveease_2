@@ -1,11 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  type Registration,
-  addRegistration,
-  getRegistrations,
-  uid,
-} from "../utils/store";
-import { pushItem } from "../utils/syncService";
+import { useRef, useState } from "react";
+import { type Registration, addRegistration, uid } from "../utils/store";
+import { pushItem, sendSMS } from "../utils/syncService";
 
 const STATES = [
   "Andhra Pradesh",
@@ -39,15 +34,6 @@ const STATES = [
   "West Bengal",
 ];
 
-const VEHICLE_TYPES = [
-  "Sedan",
-  "SUV",
-  "Hatchback",
-  "Tempo Traveller",
-  "Mini Bus",
-  "MUV",
-];
-
 async function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -58,73 +44,36 @@ async function fileToBase64(file: File): Promise<string> {
 }
 
 export default function DriverRegisterPage() {
-  const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     name: "",
     phone: "",
     city: "",
     state: "Delhi",
     experience: 1,
-    vehicleType: "Sedan",
-    languages: "Hindi",
-    aadharDesc: "",
-    dlDesc: "",
-    selfieDesc: "",
-    paymentRef: "",
-    paymentScreenshot: "",
+    dlFile: "",
+    profilePhoto: "",
   });
-  const [phoneOtp, setPhoneOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [enteredOtp, setEnteredOtp] = useState("");
-  const [otpVerified, setOtpVerified] = useState(false);
+  const [displayOtp, setDisplayOtp] = useState("");
   const [otpError, setOtpError] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [countdown, setCountdown] = useState(1800);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const dlRef = useRef<HTMLInputElement>(null);
+  const photoRef = useRef<HTMLInputElement>(null);
 
-  // Check if phone already registered and pending
-  useEffect(() => {
-    if (submitted) {
-      timerRef.current = setInterval(() => {
-        setCountdown((c) => (c > 0 ? c - 1 : 0));
-      }, 1000);
-      return () => {
-        if (timerRef.current) clearInterval(timerRef.current);
-      };
-    }
-  }, [submitted]);
-
-  useEffect(() => {
-    // Check if returning user with pending registration
-    const savedPhone = localStorage.getItem("de_reg_phone");
-    if (savedPhone) {
-      const regs = getRegistrations();
-      const existing = regs.find(
-        (r) => r.phone === savedPhone && r.status === "pending",
-      );
-      if (existing) {
-        setSubmitted(true);
-        const elapsed = Math.floor(
-          (Date.now() - new Date(existing.submittedAt).getTime()) / 1000,
-        );
-        setCountdown(Math.max(0, 1800 - elapsed));
-      }
-    }
-  }, []);
-
-  const upd = (k: string, v: string | number) =>
-    setForm((p) => ({ ...p, [k]: v }));
+  const upd = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
   const sendOtp = () => {
-    if (form.phone.length !== 10) {
-      setOtpError("Enter valid 10-digit mobile number");
+    if (!form.phone || form.phone.length < 10) {
+      setOtpError("Enter a valid 10-digit phone number");
       return;
     }
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     setGeneratedOtp(otp);
-    setPhoneOtp(otp); // Show inline for simulation
+    setDisplayOtp(otp);
     setOtpSent(true);
     setOtpError("");
   };
@@ -134,58 +83,39 @@ export default function DriverRegisterPage() {
       setOtpVerified(true);
       setOtpError("");
     } else {
-      setOtpError("Invalid OTP. Please try again.");
+      setOtpError("Invalid OTP. Try again.");
     }
   };
 
-  const handleFileUpload = async (key: string, file: File | undefined) => {
+  const handleFile = async (key: string, file: File | undefined) => {
     if (!file) return;
     try {
-      const base64 = await fileToBase64(file);
-      upd(key, base64);
+      const b64 = await fileToBase64(file);
+      upd(key, b64);
     } catch {
-      setError("File upload failed. Try again.");
+      setError("File upload failed. Try a smaller file.");
     }
   };
 
-  const nextStep = () => {
+  const submit = async () => {
     setError("");
-    if (step === 1) {
-      if (!form.name.trim()) {
-        setError("Enter full name");
-        return;
-      }
-      if (!otpVerified) {
-        setError("Please verify your phone with OTP");
-        return;
-      }
-      if (!form.city.trim()) {
-        setError("Enter city");
-        return;
-      }
-    }
-    if (step === 2) {
-      if (!form.dlDesc) {
-        setError("Upload Driving License");
-        return;
-      }
-      if (!form.aadharDesc) {
-        setError("Upload Aadhaar Card");
-        return;
-      }
-      if (!form.selfieDesc) {
-        setError("Upload Live Selfie");
-        return;
-      }
-    }
-    setStep((s) => s + 1);
-  };
-
-  const submit = () => {
-    if (!form.paymentScreenshot) {
-      setError("Upload payment screenshot");
+    if (!form.name.trim()) {
+      setError("Enter your full name");
       return;
     }
+    if (!otpVerified) {
+      setError("Please verify your phone number with OTP");
+      return;
+    }
+    if (!form.city.trim()) {
+      setError("Enter your city");
+      return;
+    }
+    if (!form.dlFile) {
+      setError("Please upload your Driving License");
+      return;
+    }
+
     const r: Registration = {
       id: uid(),
       name: form.name,
@@ -193,41 +123,52 @@ export default function DriverRegisterPage() {
       city: form.city,
       state: form.state,
       experience: Number(form.experience),
-      vehicleType: form.vehicleType,
-      languages: form.languages,
-      aadharDesc: form.aadharDesc,
-      dlDesc: form.dlDesc,
-      selfieDesc: form.selfieDesc,
-      paymentRef: form.paymentRef,
-      paymentScreenshot: form.paymentScreenshot,
+      vehicleType: "Sedan",
+      languages: "",
+      aadharDesc: "",
+      dlDesc: form.dlFile,
+      selfieDesc: form.profilePhoto,
+      paymentRef: "",
+      paymentScreenshot: "",
       status: "pending",
       submittedAt: new Date().toISOString(),
     };
     addRegistration(r);
-    pushItem("registrations", r as unknown as { id: string });
-    localStorage.setItem("de_reg_phone", form.phone);
+    await pushItem("registrations", r as unknown as { id: string });
+    await sendSMS(
+      form.phone,
+      "Welcome to DriveEase! Your driver application is under review.",
+    );
     setSubmitted(true);
   };
 
-  const formatTimer = (s: number) =>
-    `${Math.floor(s / 60)
-      .toString()
-      .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "#111827",
+    border: "1px solid rgba(0,230,118,0.25)",
+    color: "#e2e8f0",
+    borderRadius: 10,
+    padding: "0.75rem 1rem",
+    fontSize: "1rem",
+    fontFamily: "'Poppins', sans-serif",
+    outline: "none",
+    boxSizing: "border-box",
+  };
 
-  if (submitted)
+  if (submitted) {
     return (
       <div
         style={{
-          maxWidth: 560,
+          maxWidth: 520,
           margin: "0 auto",
-          padding: "3rem 1.5rem",
+          padding: "3rem 1rem",
           textAlign: "center",
         }}
       >
         <div
           style={{
-            background: "rgba(0,230,118,0.08)",
-            border: "2px solid rgba(0,230,118,0.4)",
+            background: "rgba(0,230,118,0.06)",
+            border: "2px solid rgba(0,230,118,0.3)",
             borderRadius: 20,
             padding: "3rem 2rem",
           }}
@@ -237,663 +178,466 @@ export default function DriverRegisterPage() {
             style={{
               color: "#4ade80",
               fontWeight: 800,
-              fontSize: "1.6rem",
+              fontSize: "1.5rem",
               marginBottom: "0.75rem",
             }}
           >
-            Registration Submitted!
+            Application Submitted!
           </h2>
           <p
-            style={{ color: "#94a3b8", marginBottom: "2rem", lineHeight: 1.7 }}
+            style={{ color: "#94a3b8", lineHeight: 1.7, marginBottom: "2rem" }}
           >
-            Verification in Progress. Our team is reviewing your documents and
-            payment.
+            Our team is reviewing your documents. You'll be notified via SMS.
           </p>
-          <div
-            style={{
-              background: "#1a1a1a",
-              borderRadius: 16,
-              padding: "1.5rem",
-              marginBottom: "2rem",
-              border: "1px solid #2d2d2d",
-            }}
-          >
-            <p
+
+          {/* Timeline */}
+          <div style={{ textAlign: "left" }}>
+            <h3
               style={{
-                color: "#64748b",
-                fontSize: "0.8rem",
-                marginBottom: "0.5rem",
+                color: "#e2e8f0",
+                fontSize: "0.95rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
               }}
             >
-              ESTIMATED WAIT TIME
-            </p>
-            <div
-              style={{
-                fontSize: "3.5rem",
-                fontWeight: 900,
-                color: countdown > 0 ? "#fbbf24" : "#4ade80",
-                letterSpacing: "0.05em",
-                fontFamily: "monospace",
-              }}
-            >
-              {formatTimer(countdown)}
-            </div>
-            <p
-              style={{
-                color: "#64748b",
-                fontSize: "0.82rem",
-                marginTop: "0.5rem",
-              }}
-            >
-              {countdown > 0 ? "Minutes remaining" : "Review in progress..."}
-            </p>
-          </div>
-          <p
-            style={{
-              color: "#94a3b8",
-              fontSize: "0.88rem",
-              marginBottom: "1.5rem",
-              lineHeight: 1.6,
-            }}
-          >
-            You will receive a notification once approved. You can then login as
-            a driver.
-          </p>
-          <a
-            href="https://wa.me/917836887228?text=Hi%2C%20I%20just%20registered%20as%20a%20DriveEase%20driver%20and%20need%20help"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: "inline-block",
-              background: "#25D366",
-              color: "white",
-              padding: "0.65rem 1.5rem",
-              borderRadius: 8,
-              fontWeight: 600,
-              textDecoration: "none",
-              fontSize: "0.95rem",
-            }}
-          >
-            💬 Contact Support on WhatsApp
-          </a>
-        </div>
-      </div>
-    );
-
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    background: "#1e1e1e",
-    border: "1px solid #2d2d2d",
-    borderRadius: 8,
-    padding: "0.65rem 0.9rem",
-    color: "#e2e8f0",
-    fontSize: "0.95rem",
-    outline: "none",
-    boxSizing: "border-box",
-  };
-  const labelStyle: React.CSSProperties = {
-    color: "#94a3b8",
-    fontSize: "0.85rem",
-    display: "block",
-    marginBottom: "0.35rem",
-    fontWeight: 500,
-  };
-
-  return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: "2rem 1.5rem" }}>
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-        <h1
-          style={{
-            color: "#e2e8f0",
-            fontWeight: 800,
-            fontSize: "1.75rem",
-            marginBottom: "0.25rem",
-          }}
-        >
-          Register as Driver
-        </h1>
-        <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
-          Complete verification to start earning with DriveEase
-        </p>
-      </div>
-
-      {/* Step indicator */}
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem" }}>
-        {[1, 2, 3].map((s) => (
-          <div
-            key={s}
-            style={{
-              flex: 1,
-              height: 4,
-              borderRadius: 9999,
-              background: step >= s ? "#16a34a" : "#2d2d2d",
-              transition: "background 0.3s",
-            }}
-          />
-        ))}
-      </div>
-      <p
-        style={{
-          color: "#64748b",
-          fontSize: "0.82rem",
-          marginBottom: "1.5rem",
-        }}
-      >
-        Step {step} of 3 —{" "}
-        {step === 1 ? "Personal Info" : step === 2 ? "Documents" : "Payment"}
-      </p>
-
-      <div
-        style={{
-          background: "#1a1a1a",
-          border: "1px solid #2d2d2d",
-          borderRadius: 16,
-          padding: "2rem",
-        }}
-      >
-        {/* STEP 1 */}
-        {step === 1 && (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
-          >
-            <div>
-              <p style={labelStyle}>Full Name *</p>
-              <input
-                style={inputStyle}
-                placeholder="Your full legal name"
-                value={form.name}
-                onChange={(e) => upd("name", e.target.value)}
-              />
-            </div>
-
-            <div>
-              <p style={labelStyle}>Phone Number *</p>
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <input
-                  style={{ ...inputStyle, flex: 1 }}
-                  placeholder="10-digit mobile"
-                  value={form.phone}
-                  onChange={(e) => {
-                    upd(
-                      "phone",
-                      e.target.value.replace(/\D/g, "").slice(0, 10),
-                    );
-                    setOtpSent(false);
-                    setOtpVerified(false);
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={sendOtp}
-                  disabled={otpVerified}
-                  style={{
-                    background: otpVerified ? "#e2e8f0" : "#16a34a",
-                    color: "white",
-                    border: "none",
-                    borderRadius: 8,
-                    padding: "0 1rem",
-                    cursor: otpVerified ? "default" : "pointer",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {otpVerified ? "✓ Verified" : "Send OTP"}
-                </button>
-              </div>
-              {otpSent && !otpVerified && (
-                <div
-                  style={{
-                    marginTop: "0.75rem",
-                    background: "rgba(0,230,118,0.08)",
-                    border: "1px solid rgba(0,230,118,0.2)",
-                    borderRadius: 8,
-                    padding: "0.75rem",
-                  }}
-                >
-                  <p
-                    style={{
-                      color: "#4ade80",
-                      fontSize: "0.82rem",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    📱 OTP sent! Your OTP:{" "}
-                    <strong style={{ letterSpacing: "0.15em" }}>
-                      {phoneOtp}
-                    </strong>
-                  </p>
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
-                    <input
-                      style={{
-                        ...inputStyle,
-                        flex: 1,
-                        letterSpacing: "0.3em",
-                        textAlign: "center",
-                      }}
-                      placeholder="Enter OTP"
-                      value={enteredOtp}
-                      maxLength={6}
-                      onChange={(e) =>
-                        setEnteredOtp(
-                          e.target.value.replace(/\D/g, "").slice(0, 6),
-                        )
-                      }
-                    />
-                    <button
-                      type="button"
-                      onClick={verifyOtp}
-                      style={{
-                        background: "#00e676",
-                        color: "white",
-                        border: "none",
-                        borderRadius: 8,
-                        padding: "0 1rem",
-                        cursor: "pointer",
-                        fontWeight: 600,
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      Verify
-                    </button>
-                  </div>
-                </div>
-              )}
-              {otpError && (
-                <p
-                  style={{
-                    color: "#f87171",
-                    fontSize: "0.82rem",
-                    marginTop: "0.4rem",
-                  }}
-                >
-                  {otpError}
-                </p>
-              )}
-            </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "1rem",
-              }}
-            >
-              <div>
-                <p style={labelStyle}>City *</p>
-                <input
-                  style={inputStyle}
-                  placeholder="e.g. Kanpur"
-                  value={form.city}
-                  onChange={(e) => upd("city", e.target.value)}
-                />
-              </div>
-              <div>
-                <p style={labelStyle}>State *</p>
-                <select
-                  style={inputStyle}
-                  value={form.state}
-                  onChange={(e) => upd("state", e.target.value)}
-                >
-                  {STATES.map((s) => (
-                    <option key={s}>{s}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "1rem",
-              }}
-            >
-              <div>
-                <p style={labelStyle}>Experience (Years)</p>
-                <input
-                  type="number"
-                  style={inputStyle}
-                  min={0}
-                  max={50}
-                  value={form.experience}
-                  onChange={(e) => upd("experience", Number(e.target.value))}
-                />
-              </div>
-              <div>
-                <p style={labelStyle}>Vehicle Type</p>
-                <select
-                  style={inputStyle}
-                  value={form.vehicleType}
-                  onChange={(e) => upd("vehicleType", e.target.value)}
-                >
-                  {VEHICLE_TYPES.map((v) => (
-                    <option key={v}>{v}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <p style={labelStyle}>Languages Known (comma separated)</p>
-              <input
-                style={inputStyle}
-                placeholder="Hindi, English, Punjabi"
-                value={form.languages}
-                onChange={(e) => upd("languages", e.target.value)}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* STEP 2 */}
-        {step === 2 && (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
-          >
-            <p
-              style={{
-                color: "#94a3b8",
-                fontSize: "0.88rem",
-                background: "rgba(0,230,118,0.08)",
-                border: "1px solid rgba(0,230,118,0.2)",
-                borderRadius: 8,
-                padding: "0.75rem",
-              }}
-            >
-              📋 Upload clear, readable photos of your documents. Max 5MB each.
-            </p>
-
+              Application Status
+            </h3>
             {[
-              { key: "dlDesc", label: "Driving License *", icon: "🪪" },
-              { key: "aadharDesc", label: "Aadhaar Card *", icon: "📄" },
-              { key: "selfieDesc", label: "Live Selfie *", icon: "🤳" },
-            ].map(({ key, label, icon }) => (
-              <div key={key}>
-                <p style={labelStyle}>
-                  {icon} {label}
-                </p>
-                <div
-                  style={{
-                    border: `2px dashed ${form[key as keyof typeof form] ? "#16a34a" : "#3a3a3a"}`,
-                    borderRadius: 12,
-                    padding: "1.25rem",
-                    textAlign: "center",
-                    cursor: "pointer",
-                    transition: "border-color 0.2s",
-                    position: "relative",
-                  }}
-                >
-                  {form[key as keyof typeof form] ? (
-                    <div>
-                      <img
-                        src={form[key as keyof typeof form] as string}
-                        alt="uploaded"
-                        style={{
-                          maxHeight: 120,
-                          borderRadius: 8,
-                          maxWidth: "100%",
-                        }}
-                      />
-                      <p
-                        style={{
-                          color: "#4ade80",
-                          fontSize: "0.82rem",
-                          marginTop: "0.5rem",
-                        }}
-                      >
-                        ✓ Uploaded
-                      </p>
-                    </div>
-                  ) : (
-                    <>
-                      <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
-                        📁
-                      </div>
-                      <p style={{ color: "#64748b", fontSize: "0.85rem" }}>
-                        Click to upload or drag & drop
-                      </p>
-                    </>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleFileUpload(key, e.target.files?.[0])}
+              { label: "Submitted", done: true, icon: "✅" },
+              { label: "Under Review", done: false, icon: "🔍" },
+              { label: "Approved / Rejected", done: false, icon: "📋" },
+            ].map((s, i) => (
+              <div
+                key={s.label}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  paddingBottom: i < 2 ? "0.75rem" : 0,
+                  position: "relative",
+                }}
+              >
+                {i < 2 && (
+                  <div
                     style={{
                       position: "absolute",
-                      inset: 0,
-                      opacity: 0,
-                      cursor: "pointer",
+                      left: 17,
+                      top: 36,
+                      width: 2,
+                      height: 20,
+                      background: "rgba(255,255,255,0.1)",
                     }}
                   />
+                )}
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    background: s.done
+                      ? "rgba(0,230,118,0.15)"
+                      : "rgba(255,255,255,0.05)",
+                    border: `2px solid ${s.done ? "#16a34a" : "rgba(255,255,255,0.1)"}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "1rem",
+                    flexShrink: 0,
+                  }}
+                >
+                  {s.icon}
+                </div>
+                <div>
+                  <div
+                    style={{
+                      color: s.done ? "#4ade80" : "#94a3b8",
+                      fontWeight: s.done ? 600 : 400,
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                  {s.done && (
+                    <div style={{ color: "#16a34a", fontSize: "0.75rem" }}>
+                      Pending Approval
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
-        )}
+        </div>
+      </div>
+    );
+  }
 
-        {/* STEP 3 */}
-        {step === 3 && (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
-          >
-            <div
-              style={{
-                background: "rgba(0,230,118,0.08)",
-                border: "1px solid rgba(0,230,118,0.3)",
-                borderRadius: 12,
-                padding: "1.25rem",
-              }}
-            >
-              <h3
-                style={{
-                  color: "#4ade80",
-                  fontWeight: 700,
-                  marginBottom: "1rem",
-                  fontSize: "1rem",
-                }}
-              >
-                💳 Pay ₹150 Verification Fee
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                }}
-              >
-                {[
-                  ["Bank", "Axis Bank"],
-                  ["A/C No.", "922010062230782"],
-                  ["IFSC", "UTIB0004620"],
-                  ["Name", "KRISHNA KANT PANDEY"],
-                  ["UPI", "7836887228 (PhonePe)"],
-                ].map(([k, v]) => (
-                  <div
-                    key={k}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "0.35rem 0",
-                      borderBottom: "1px solid #2a2a2a",
-                    }}
-                  >
-                    <span style={{ color: "#64748b", fontSize: "0.85rem" }}>
-                      {k}
-                    </span>
-                    <span
-                      style={{
-                        color: "#e2e8f0",
-                        fontSize: "0.85rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {v}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+  return (
+    <div style={{ maxWidth: 600, margin: "0 auto", padding: "2rem 1rem" }}>
+      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <h1
+          style={{
+            color: "#fff",
+            fontWeight: 800,
+            fontSize: "1.75rem",
+            marginBottom: "0.5rem",
+          }}
+        >
+          Become a Driver
+        </h1>
+        <p style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+          Join 1000+ verified drivers on DriveEase
+        </p>
+      </div>
 
-            <div>
-              <p style={labelStyle}>📸 Upload Payment Screenshot *</p>
-              <div
-                style={{
-                  border: `2px dashed ${form.paymentScreenshot ? "#16a34a" : "#3a3a3a"}`,
-                  borderRadius: 12,
-                  padding: "1.25rem",
-                  textAlign: "center",
-                  cursor: "pointer",
-                  position: "relative",
-                }}
-              >
-                {form.paymentScreenshot ? (
-                  <div>
-                    <img
-                      src={form.paymentScreenshot}
-                      alt="payment"
-                      style={{
-                        maxHeight: 120,
-                        borderRadius: 8,
-                        maxWidth: "100%",
-                      }}
-                    />
-                    <p
-                      style={{
-                        color: "#4ade80",
-                        fontSize: "0.82rem",
-                        marginTop: "0.5rem",
-                      }}
-                    >
-                      ✓ Screenshot uploaded
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
-                      📷
-                    </div>
-                    <p style={{ color: "#64748b", fontSize: "0.85rem" }}>
-                      Upload screenshot of payment confirmation
-                    </p>
-                  </>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) =>
-                    handleFileUpload("paymentScreenshot", e.target.files?.[0])
-                  }
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    opacity: 0,
-                    cursor: "pointer",
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <p style={labelStyle}>Payment Reference / Note (optional)</p>
-              <input
-                style={inputStyle}
-                placeholder="Transaction ID or any reference"
-                value={form.paymentRef}
-                onChange={(e) => upd("paymentRef", e.target.value)}
-              />
-            </div>
-
-            <div
-              style={{
-                background: "rgba(251,191,36,0.08)",
-                border: "1px solid rgba(251,191,36,0.2)",
-                borderRadius: 8,
-                padding: "0.75rem",
-                fontSize: "0.82rem",
-                color: "#fbbf24",
-              }}
-            >
-              ⚠️ After submitting, your registration will be reviewed within 30
-              minutes. You will be able to login as a driver only after admin
-              approval.
-            </div>
-          </div>
-        )}
-
+      <div
+        style={{
+          background: "#0d1420",
+          border: "1px solid rgba(0,230,118,0.15)",
+          borderRadius: 16,
+          padding: "2rem",
+        }}
+      >
         {error && (
-          <p
+          <div
+            data-ocid="driver_register.error_state"
             style={{
+              background: "rgba(248,113,113,0.08)",
+              border: "1px solid rgba(248,113,113,0.25)",
+              borderRadius: 10,
+              padding: "0.75rem 1rem",
               color: "#f87171",
-              background: "rgba(239,68,68,0.1)",
-              border: "1px solid rgba(239,68,68,0.3)",
-              borderRadius: 8,
-              padding: "0.65rem",
-              marginTop: "1rem",
-              fontSize: "0.88rem",
+              marginBottom: "1.25rem",
+              fontSize: "0.875rem",
             }}
           >
             {error}
-          </p>
+          </div>
         )}
 
-        <div style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}>
-          {step > 1 && (
-            <button
-              type="button"
-              onClick={() => setStep((s) => s - 1)}
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+        >
+          {/* Full Name */}
+          <div>
+            <label
+              htmlFor="_"
               style={{
-                flex: 1,
-                background: "none",
-                border: "1px solid #3a3a3a",
                 color: "#94a3b8",
-                borderRadius: 8,
-                padding: "0.75rem",
-                cursor: "pointer",
-                fontWeight: 600,
+                fontSize: "0.85rem",
+                display: "block",
+                marginBottom: "0.5rem",
               }}
             >
-              ← Back
-            </button>
-          )}
-          {step < 3 ? (
+              Full Name *
+            </label>
+            <input
+              data-ocid="driver_register.name_input"
+              style={inputStyle}
+              placeholder="Enter your full name"
+              value={form.name}
+              onChange={(e) => upd("name", e.target.value)}
+            />
+          </div>
+
+          {/* Phone + OTP */}
+          <div>
+            <label
+              htmlFor="_"
+              style={{
+                color: "#94a3b8",
+                fontSize: "0.85rem",
+                display: "block",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Phone Number *
+            </label>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <input
+                data-ocid="driver_register.phone_input"
+                style={{ ...inputStyle, flex: 1 }}
+                placeholder="10-digit mobile number"
+                value={form.phone}
+                maxLength={10}
+                onChange={(e) =>
+                  upd("phone", e.target.value.replace(/\D/g, ""))
+                }
+              />
+              {!otpVerified && (
+                <button
+                  type="button"
+                  data-ocid="driver_register.send_otp_button"
+                  onClick={sendOtp}
+                  style={{
+                    background: "rgba(0,230,118,0.15)",
+                    border: "1px solid rgba(0,230,118,0.4)",
+                    color: "#00e676",
+                    borderRadius: 10,
+                    padding: "0 1rem",
+                    cursor: "pointer",
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: "0.82rem",
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    minHeight: 48,
+                  }}
+                >
+                  {otpSent ? "Resend" : "Send OTP"}
+                </button>
+              )}
+              {otpVerified && (
+                <span
+                  style={{
+                    color: "#4ade80",
+                    fontSize: "0.85rem",
+                    alignSelf: "center",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  ✓ Verified
+                </span>
+              )}
+            </div>
+            {otpSent && !otpVerified && (
+              <div style={{ marginTop: "0.75rem" }}>
+                {displayOtp && (
+                  <div
+                    style={{
+                      fontSize: "0.78rem",
+                      color: "#fbbf24",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Demo OTP: <strong>{displayOtp}</strong>
+                  </div>
+                )}
+                <div style={{ display: "flex", gap: "0.75rem" }}>
+                  <input
+                    data-ocid="driver_register.otp_input"
+                    style={{
+                      ...inputStyle,
+                      flex: 1,
+                      letterSpacing: "0.2em",
+                      textAlign: "center",
+                    }}
+                    placeholder="Enter 6-digit OTP"
+                    maxLength={6}
+                    value={enteredOtp}
+                    onChange={(e) =>
+                      setEnteredOtp(e.target.value.replace(/\D/g, ""))
+                    }
+                  />
+                  <button
+                    type="button"
+                    data-ocid="driver_register.verify_otp_button"
+                    onClick={verifyOtp}
+                    className="green-btn"
+                    style={{ minHeight: 48 }}
+                  >
+                    Verify
+                  </button>
+                </div>
+                {otpError && (
+                  <div
+                    style={{
+                      color: "#f87171",
+                      fontSize: "0.8rem",
+                      marginTop: "0.4rem",
+                    }}
+                  >
+                    {otpError}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* DL Upload */}
+          <div>
+            <label
+              htmlFor="_"
+              style={{
+                color: "#94a3b8",
+                fontSize: "0.85rem",
+                display: "block",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Driving License *
+            </label>
+            <input
+              ref={dlRef}
+              type="file"
+              accept=".jpg,.png,.pdf"
+              style={{ display: "none" }}
+              onChange={(e) => handleFile("dlFile", e.target.files?.[0])}
+            />
             <button
               type="button"
-              onClick={nextStep}
+              data-ocid="driver_register.dl_upload_button"
+              onClick={() => dlRef.current?.click()}
               style={{
-                flex: 2,
-                background: "#00e676",
-                color: "white",
-                border: "none",
-                borderRadius: 8,
-                padding: "0.75rem",
+                width: "100%",
+                background: form.dlFile
+                  ? "rgba(0,230,118,0.07)"
+                  : "rgba(255,255,255,0.03)",
+                border: `2px dashed ${form.dlFile ? "#16a34a" : "rgba(255,255,255,0.15)"}`,
+                borderRadius: 10,
+                padding: "1.25rem",
                 cursor: "pointer",
-                fontWeight: 700,
-                fontSize: "1rem",
+                color: form.dlFile ? "#4ade80" : "#64748b",
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "0.875rem",
+                textAlign: "center",
+                minHeight: 64,
               }}
             >
-              Continue →
+              {form.dlFile
+                ? "✅ License uploaded"
+                : "📄 Upload Driving License (.jpg, .png, .pdf)"}
             </button>
-          ) : (
+          </div>
+
+          {/* Experience */}
+          <div>
+            <label
+              htmlFor="_"
+              style={{
+                color: "#94a3b8",
+                fontSize: "0.85rem",
+                display: "block",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Driving Experience (years)
+            </label>
+            <input
+              data-ocid="driver_register.experience_input"
+              type="number"
+              min="0"
+              max="50"
+              style={inputStyle}
+              value={form.experience}
+              onChange={(e) => upd("experience", Number(e.target.value))}
+            />
+          </div>
+
+          {/* City + State */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0.75rem",
+            }}
+          >
+            <div>
+              <label
+                htmlFor="_"
+                style={{
+                  color: "#94a3b8",
+                  fontSize: "0.85rem",
+                  display: "block",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                City *
+              </label>
+              <input
+                data-ocid="driver_register.city_input"
+                style={inputStyle}
+                placeholder="e.g. Delhi"
+                value={form.city}
+                onChange={(e) => upd("city", e.target.value)}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="_"
+                style={{
+                  color: "#94a3b8",
+                  fontSize: "0.85rem",
+                  display: "block",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                State
+              </label>
+              <select
+                data-ocid="driver_register.state_select"
+                style={{ ...inputStyle, cursor: "pointer" }}
+                value={form.state}
+                onChange={(e) => upd("state", e.target.value)}
+              >
+                {STATES.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Profile Photo */}
+          <div>
+            <label
+              htmlFor="_"
+              style={{
+                color: "#94a3b8",
+                fontSize: "0.85rem",
+                display: "block",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Profile Photo
+            </label>
+            <input
+              ref={photoRef}
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(e) => handleFile("profilePhoto", e.target.files?.[0])}
+            />
             <button
               type="button"
-              onClick={submit}
+              data-ocid="driver_register.photo_upload_button"
+              onClick={() => photoRef.current?.click()}
               style={{
-                flex: 2,
-                background: "#00e676",
-                color: "white",
-                border: "none",
-                borderRadius: 8,
-                padding: "0.75rem",
+                width: "100%",
+                background: form.profilePhoto
+                  ? "rgba(0,230,118,0.07)"
+                  : "rgba(255,255,255,0.03)",
+                border: `2px dashed ${form.profilePhoto ? "#16a34a" : "rgba(255,255,255,0.15)"}`,
+                borderRadius: 10,
+                padding: "1.25rem",
                 cursor: "pointer",
-                fontWeight: 700,
-                fontSize: "1rem",
-                boxShadow: "0 4px 0 #0d7a30",
+                color: form.profilePhoto ? "#4ade80" : "#64748b",
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "0.875rem",
+                textAlign: "center",
+                minHeight: 64,
               }}
             >
-              🚀 Submit Registration
+              {form.profilePhoto
+                ? "✅ Photo uploaded"
+                : "📸 Upload Profile Photo"}
             </button>
-          )}
+          </div>
+
+          <button
+            type="button"
+            data-ocid="driver_register.submit_button"
+            onClick={submit}
+            className="green-btn"
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              minHeight: 52,
+              fontSize: "1rem",
+              marginTop: "0.5rem",
+            }}
+          >
+            Submit Application
+          </button>
         </div>
       </div>
     </div>

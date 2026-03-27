@@ -190,8 +190,8 @@ export default function HomePage({ navigate }: HomePageProps) {
   const [heroSlide, setHeroSlide] = useState(0);
 
   const HERO_IMAGES = [
+    "/assets/generated/indian-driver-hero.dim_1920x1080.jpg",
     "/assets/uploads/experience_luxury_with_black_car_services-019d203f-148d-76bf-b70f-f749e8b7ad54-1.jpg",
-    "/assets/uploads/download_1-019d203f-154c-737d-9924-4a89f6d64228-2.jpg",
     "/assets/uploads/experience_luxury_with_our_limo_service-019d203f-15a8-7504-85d7-179717824a70-3.jpg",
     "/assets/uploads/download_2-019d203f-15ac-742a-9cf1-ccd9f37f334f-4.jpg",
   ];
@@ -288,43 +288,46 @@ export default function HomePage({ navigate }: HomePageProps) {
           </div>
           <h1
             className="font-bold text-white"
-            style={{ fontSize: "clamp(2rem,4vw,3.2rem)", lineHeight: 1.15 }}
+            style={{ fontSize: "clamp(1.8rem,4vw,3rem)", lineHeight: 1.15 }}
           >
-            Book Verified
+            Book Professional Drivers
             <br />
             <span
               style={{ color: "#00e676", textShadow: "0 0 32px #00e67688" }}
             >
-              Personal Drivers
+              Anytime, Anywhere
             </span>
-            <br />
-            Near You
           </h1>
-          <p className="text-gray-300 text-base max-w-sm">
-            Safe, reliable rides with OTP verification and trusted drivers.
-            Serving 1000+ families across India.
+          <p
+            className="text-gray-300 text-base max-w-sm"
+            style={{ lineHeight: 1.7 }}
+          >
+            Safe, Verified, Affordable Drivers at Your Service. Trusted by 1000+
+            families across India.
           </p>
           <div className="flex flex-wrap gap-3">
             <button
               type="button"
-              data-ocid="hero.find_drivers_button"
-              onClick={() => navigate("drivers")}
+              data-ocid="hero.book_driver_button"
+              onClick={() => navigate("book")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
               style={{
                 background: "linear-gradient(135deg,#16a34a,#15803d)",
                 boxShadow: "0 4px 24px #16a34a77",
+                minHeight: 48,
               }}
             >
-              <MapPin size={18} /> Find Drivers
+              <MapPin size={18} /> Book a Driver Now
             </button>
-            <a
-              href="tel:+917836887228"
-              data-ocid="hero.help_button"
+            <button
+              type="button"
+              data-ocid="hero.become_driver_button"
+              onClick={() => navigate("register-driver")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 border-green-400 text-green-300 shadow transition-all hover:bg-green-900/30 hover:scale-105 active:scale-95"
-              style={{ background: "rgba(0,0,0,0.2)" }}
+              style={{ background: "rgba(0,0,0,0.2)", minHeight: 48 }}
             >
-              📞 Call Support
-            </a>
+              🚗 Become a Driver
+            </button>
           </div>
           <p className="text-gray-400 text-xs">
             Takes less than 30 seconds · No hidden charges
@@ -382,7 +385,6 @@ export default function HomePage({ navigate }: HomePageProps) {
             }}
           >
             {[0, 1, 2, 3].map((dotIdx) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: static dot indicators
               <button
                 key={dotIdx}
                 type="button"
@@ -791,6 +793,244 @@ export default function HomePage({ navigate }: HomePageProps) {
                     {d.name}
                   </div>
                   <div className="text-gray-500 text-xs">{d.city}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY FAMILIES TRUST DRIVEEASE */}
+      <section
+        style={{
+          background: "#060d16",
+          padding: "5rem 1rem",
+          borderTop: "1px solid rgba(0,230,118,0.1)",
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <p
+              style={{
+                color: "#00e676",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Trusted & Verified
+            </p>
+            <h2
+              style={{
+                color: "#fff",
+                fontWeight: 800,
+                fontSize: "clamp(1.6rem,3vw,2.4rem)",
+                marginBottom: "0.75rem",
+              }}
+            >
+              Why Families Trust DriveEase
+            </h2>
+            <p
+              style={{
+                color: "#94a3b8",
+                maxWidth: 500,
+                margin: "0 auto",
+                lineHeight: 1.7,
+                fontSize: "0.95rem",
+              }}
+            >
+              We put safety, reliability, and peace of mind first—every single
+              ride.
+            </p>
+          </div>
+
+          {/* Trust Cards */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))",
+              gap: "1.25rem",
+              marginBottom: "4rem",
+            }}
+          >
+            {[
+              {
+                icon: "✅",
+                title: "Verified Drivers",
+                desc: "Police verified, background checked, and trained professionals.",
+              },
+              {
+                icon: "🛡️",
+                title: "Safety Guarantee",
+                desc: "OTP-secured rides and real-time GPS tracking on every trip.",
+              },
+              {
+                icon: "⭐",
+                title: "5-Star Ratings",
+                desc: "1000+ happy families across India rate us 4.8/5 on average.",
+              },
+              {
+                icon: "📞",
+                title: "24/7 Support",
+                desc: "Our support team is always here when you need us, day or night.",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                style={{
+                  background: "#0d1420",
+                  border: "1px solid rgba(0,230,118,0.15)",
+                  borderRadius: 16,
+                  padding: "1.75rem",
+                  textAlign: "center",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 12px 40px rgba(0,230,118,0.12)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+                  {card.icon}
+                </div>
+                <h3
+                  style={{
+                    color: "#fff",
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {card.title}
+                </h3>
+                <p
+                  style={{
+                    color: "#94a3b8",
+                    fontSize: "0.875rem",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {card.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Testimonials */}
+          <h3
+            style={{
+              color: "#fff",
+              fontWeight: 700,
+              fontSize: "1.4rem",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            What Our Customers Say
+          </h3>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+              gap: "1.25rem",
+            }}
+          >
+            {[
+              {
+                name: "Priya Sharma",
+                city: "Delhi",
+                text: "DriveEase found me the perfect driver for my elderly parents. Very reliable and professional!",
+                rating: 5,
+                initials: "PS",
+              },
+              {
+                name: "Rajesh Kumar",
+                city: "Mumbai",
+                text: "Professional, punctual, and affordable. Booked the same driver three times already!",
+                rating: 5,
+                initials: "RK",
+              },
+              {
+                name: "Meera Patel",
+                city: "Bangalore",
+                text: "Finally a service I can trust for my family. Highly recommended to everyone.",
+                rating: 5,
+                initials: "MP",
+              },
+            ].map((review) => (
+              <div
+                key={review.name}
+                style={{
+                  background: "#0d1420",
+                  border: "1px solid rgba(0,230,118,0.12)",
+                  borderRadius: 16,
+                  padding: "1.5rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "0.25rem",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  {"⭐".repeat(review.rating)}
+                </div>
+                <p
+                  style={{
+                    color: "#cbd5e1",
+                    fontSize: "0.9rem",
+                    lineHeight: 1.7,
+                    marginBottom: "1rem",
+                    fontStyle: "italic",
+                  }}
+                >
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      background: "linear-gradient(135deg,#00e676,#16a34a)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontWeight: 700,
+                      fontSize: "0.875rem",
+                      color: "#0a0f1a",
+                    }}
+                  >
+                    {review.initials}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        color: "#fff",
+                        fontWeight: 600,
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      {review.name}
+                    </div>
+                    <div style={{ color: "#64748b", fontSize: "0.78rem" }}>
+                      {review.city}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
