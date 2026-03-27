@@ -101,14 +101,14 @@ export default function ChatBot() {
           width: 56,
           height: 56,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #DC143C, #0d9488)",
+          background: "linear-gradient(135deg, #FF6B6B, #42A5F5, #66BB6A)",
           border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.5rem",
-          boxShadow: "0 4px 20px rgba(220,20,60,0.5)",
+          boxShadow: "0 4px 20px rgba(66,165,245,0.4)",
           animation: "chatbot-ring 2s ease-in-out infinite",
         }}
       >
@@ -126,14 +126,14 @@ export default function ChatBot() {
             zIndex: 1001,
             width: "min(400px, calc(100vw - 2rem))",
             height: 500,
-            background: "rgba(18,18,18,0.97)",
+            background: "rgba(15,23,42,0.97)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(74,222,128,0.3)",
+            border: "1px solid rgba(66,165,245,0.25)",
             borderRadius: 20,
             display: "flex",
             flexDirection: "column",
             boxShadow:
-              "0 0 40px rgba(74,222,128,0.15), 0 20px 60px rgba(0,0,0,0.6)",
+              "0 0 40px rgba(66,165,245,0.12), 0 20px 60px rgba(0,0,0,0.5)",
             overflow: "hidden",
             animation: "slideUpIn 0.25s ease-out",
           }}
@@ -142,11 +142,12 @@ export default function ChatBot() {
           <div
             style={{
               padding: "0.9rem 1rem",
-              borderBottom: "1px solid rgba(74,222,128,0.15)",
+              borderBottom: "1px solid rgba(66,165,245,0.15)",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              background: "rgba(220,20,60,0.08)",
+              background:
+                "linear-gradient(90deg, rgba(255,107,107,0.08), rgba(66,165,245,0.08), rgba(102,187,106,0.08))",
             }}
           >
             <div
@@ -157,8 +158,8 @@ export default function ChatBot() {
                   width: 10,
                   height: 10,
                   borderRadius: "50%",
-                  background: "#f87171",
-                  boxShadow: "0 0 8px #f87171",
+                  background: "#66BB6A",
+                  boxShadow: "0 0 8px #66BB6A",
                   animation: "glow-pulse 1.5s ease-in-out infinite",
                 }}
               />
@@ -225,7 +226,7 @@ export default function ChatBot() {
                         : "16px 16px 16px 4px",
                     background:
                       msg.role === "user"
-                        ? "linear-gradient(135deg, #DC143C, #15803d)"
+                        ? "linear-gradient(135deg, #42A5F5, #66BB6A)"
                         : "rgba(40,40,40,0.9)",
                     border:
                       msg.role === "user"
@@ -257,7 +258,7 @@ export default function ChatBot() {
           <div
             style={{
               padding: "0.7rem",
-              borderTop: "1px solid rgba(74,222,128,0.12)",
+              borderTop: "1px solid rgba(66,165,245,0.12)",
               display: "flex",
               gap: "0.5rem",
             }}
@@ -272,7 +273,7 @@ export default function ChatBot() {
               style={{
                 flex: 1,
                 background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(74,222,128,0.2)",
+                border: "1px solid rgba(66,165,245,0.2)",
                 borderRadius: 10,
                 color: "#f8fafc",
                 padding: "0.5rem 0.75rem",
@@ -285,7 +286,7 @@ export default function ChatBot() {
               data-ocid="chatbot.submit_button"
               onClick={send}
               style={{
-                background: "#DC143C",
+                background: "linear-gradient(135deg, #42A5F5, #66BB6A)",
                 border: "none",
                 borderRadius: 10,
                 color: "white",

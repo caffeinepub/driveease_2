@@ -13,33 +13,33 @@
     --card-foreground: 0.15 0.02 240;
     --popover: 1 0 0;
     --popover-foreground: 0.15 0.02 240;
-    /* Dark red primary: DC143C → oklch ≈ 0.48 0.22 22 */
-    --primary: 0.48 0.22 22;
+    /* Blue primary: #42A5F5 → oklch ≈ 0.68 0.14 234 */
+    --primary: 0.68 0.14 234;
     --primary-foreground: 1 0 0;
     --secondary: 0.96 0.01 240;
     --secondary-foreground: 0.15 0.02 240;
     --muted: 0.94 0.01 240;
     --muted-foreground: 0.46 0.04 240;
-    --accent: 0.48 0.22 22;
+    --accent: 0.68 0.14 234;
     --accent-foreground: 1 0 0;
-    --destructive: 0.577 0.245 27.325;
+    --destructive: 0.64 0.18 22;
     --destructive-foreground: 1 0 0;
     --border: 0.88 0.02 240;
     --input: 0.96 0.01 240;
-    --ring: 0.48 0.22 22;
-    --chart-1: 0.48 0.22 22;
-    --chart-2: 0.55 0.18 30;
-    --chart-3: 0.6 0.12 210;
-    --chart-4: 0.72 0.14 84;
-    --chart-5: 0.65 0.14 70;
+    --ring: 0.68 0.14 234;
+    --chart-1: 0.68 0.14 234;
+    --chart-2: 0.72 0.17 145;
+    --chart-3: 0.78 0.16 84;
+    --chart-4: 0.64 0.18 22;
+    --chart-5: 0.82 0.18 95;
     --sidebar: 1 0 0;
     --sidebar-foreground: 0.15 0.02 240;
-    --sidebar-primary: 0.48 0.22 22;
+    --sidebar-primary: 0.68 0.14 234;
     --sidebar-primary-foreground: 1 0 0;
     --sidebar-accent: 0.96 0.01 240;
     --sidebar-accent-foreground: 0.15 0.02 240;
     --sidebar-border: 0.88 0.02 240;
-    --sidebar-ring: 0.48 0.22 22;
+    --sidebar-ring: 0.68 0.14 234;
   }
 
   * {
@@ -70,9 +70,9 @@
   font-family: "Orbitron", monospace;
 }
 
-/* ─── Shared buttons ────────────────────────────────────────── */
+/* ─── Primary blue button ────────────────────────────────────────── */
 .red-btn {
-  background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
+  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
   color: #ffffff;
   padding: 0.6rem 1.4rem;
   border-radius: 0.5rem;
@@ -84,16 +84,16 @@
   align-items: center;
   gap: 0.4rem;
   font-family: "Poppins", sans-serif;
-  box-shadow: 0 4px 14px rgba(139, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(66, 165, 245, 0.3);
 }
 .red-btn:hover {
-  box-shadow: 0 8px 24px rgba(220, 20, 60, 0.4);
+  box-shadow: 0 8px 24px rgba(66, 165, 245, 0.5);
   transform: translateY(-1px);
 }
 
-/* Keep old .green-btn as alias for backwards compat */
+/* Green button (Become a Driver / secondary actions) */
 .green-btn {
-  background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
+  background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
   color: #ffffff;
   padding: 0.6rem 1.4rem;
   border-radius: 0.5rem;
@@ -105,10 +105,10 @@
   align-items: center;
   gap: 0.4rem;
   font-family: "Poppins", sans-serif;
-  box-shadow: 0 4px 14px rgba(139, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(102, 187, 106, 0.3);
 }
 .green-btn:hover {
-  box-shadow: 0 8px 24px rgba(220, 20, 60, 0.4);
+  box-shadow: 0 8px 24px rgba(102, 187, 106, 0.5);
   transform: translateY(-1px);
 }
 
@@ -135,32 +135,51 @@
   font-family: "Poppins", sans-serif;
 }
 .input-dark:focus {
-  border-color: #dc143c;
-  box-shadow: 0 0 0 2px rgba(220, 20, 60, 0.15);
+  border-color: #42a5f5;
+  box-shadow: 0 0 0 2px rgba(66, 165, 245, 0.15);
 }
 .input-dark::placeholder {
   color: #94a3b8;
 }
 
 .badge-red {
-  background: rgba(220, 20, 60, 0.1);
-  color: #8b0000;
+  background: rgba(255, 107, 107, 0.12);
+  color: #e53935;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(220, 20, 60, 0.25);
+  border: 1px solid rgba(255, 107, 107, 0.3);
 }
 
-/* Keep badge-green as alias */
 .badge-green {
-  background: rgba(220, 20, 60, 0.1);
-  color: #8b0000;
+  background: rgba(102, 187, 106, 0.12);
+  color: #388e3c;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(220, 20, 60, 0.25);
+  border: 1px solid rgba(102, 187, 106, 0.3);
+}
+
+.badge-blue {
+  background: rgba(66, 165, 245, 0.12);
+  color: #1565c0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(66, 165, 245, 0.3);
+}
+
+.badge-yellow {
+  background: rgba(255, 202, 40, 0.15);
+  color: #f57f17;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 202, 40, 0.4);
 }
 
 .section-heading {
@@ -181,7 +200,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #dc143c;
+  background-color: #66bb6a;
   display: inline-block;
   animation: pulse 1.5s infinite;
 }
@@ -242,10 +261,10 @@
 @keyframes cta-breathe {
   0%,
   100% {
-    box-shadow: 0 4px 20px rgba(220, 20, 60, 0.3), 0 2px 0 #8b0000;
+    box-shadow: 0 4px 20px rgba(66, 165, 245, 0.35), 0 2px 0 #1565c0;
   }
   50% {
-    box-shadow: 0 8px 32px rgba(220, 20, 60, 0.5), 0 4px 0 #8b0000;
+    box-shadow: 0 8px 32px rgba(66, 165, 245, 0.55), 0 4px 0 #1565c0;
   }
 }
 .cta-breathe {
@@ -283,10 +302,10 @@
 @keyframes driver-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.4);
+    box-shadow: 0 0 0 0 rgba(66, 187, 106, 0.4);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(220, 20, 60, 0);
+    box-shadow: 0 0 0 8px rgba(66, 187, 106, 0);
   }
 }
 .driver-dot-online {
@@ -328,7 +347,13 @@
 /* ─── Brand gradient text ───────────────────────────────────── */
 .orbitron-gradient {
   font-family: "Orbitron", monospace;
-  background: linear-gradient(135deg, #8b0000 0%, #dc143c 60%, #ff4444 100%);
+  background: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #42a5f5 40%,
+    #66bb6a 70%,
+    #ffca28 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -608,37 +633,37 @@
   transform: translateY(2px) scale(0.98) !important;
 }
 
-/* ── Red/crimson variant ── */
+/* ── Blue primary variant (Book Now / main CTA) ── */
 .sparkle-btn-green {
-  background: linear-gradient(135deg, #8b0000 0%, #dc143c 60%, #ff4444 100%);
+  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 60%, #64b5f6 100%);
   color: #ffffff;
-  box-shadow: 0 4px 20px rgba(220, 20, 60, 0.3), 0 2px 0 #8b0000;
+  box-shadow: 0 4px 20px rgba(66, 165, 245, 0.35), 0 2px 0 #1565c0;
   animation: cta-breathe 2.5s ease-in-out infinite;
 }
 .sparkle-btn-green:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(220, 20, 60, 0.5), 0 4px 0 #8b0000;
+  box-shadow: 0 10px 32px rgba(66, 165, 245, 0.55), 0 4px 0 #1565c0;
   animation: none;
 }
 
-/* ── Teal/secondary variant ── */
+/* ── Green secondary variant (Become a Driver) ── */
 .sparkle-btn-indigo {
-  background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 60%, #67e8f9 100%);
+  background: linear-gradient(135deg, #388e3c 0%, #66bb6a 60%, #81c784 100%);
   color: #ffffff;
-  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3), 0 2px 0 #075985;
+  box-shadow: 0 4px 20px rgba(102, 187, 106, 0.3), 0 2px 0 #2e7d32;
   border: none;
 }
 .sparkle-btn-indigo:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(14, 165, 233, 0.45), 0 4px 0 #075985;
+  box-shadow: 0 10px 32px rgba(102, 187, 106, 0.45), 0 4px 0 #2e7d32;
 }
 
 /* ─── Tech glow effects ─────────────────────────── */
 .tech-glow {
-  box-shadow: 0 2px 16px rgba(220, 20, 60, 0.1);
+  box-shadow: 0 2px 16px rgba(66, 165, 245, 0.12);
 }
 .tech-border {
-  border: 1px solid rgba(220, 20, 60, 0.2);
+  border: 1px solid rgba(66, 165, 245, 0.2);
 }
 
 /* ─── Tagline text ─────────────────────────────── */
@@ -655,9 +680,9 @@
   animation: tagline-glow 2s ease-in-out infinite;
 }
 
-/* ─── Red text utility ─────────────────────────── */
+/* ─── Blue text utility ─────────────────────────── */
 .text-neon-green {
-  color: #dc143c;
+  color: #42a5f5;
 }
 
 /* ─── Waveform animation for call recordings ─── */

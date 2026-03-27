@@ -266,7 +266,8 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* ANNOUNCEMENT STRIP */}
       <div
         style={{
-          background: "linear-gradient(90deg,#8B0000,#DC143C,#8B0000)",
+          background:
+            "linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
           overflow: "hidden",
           padding: "0.55rem 0",
           position: "relative",
@@ -331,34 +332,30 @@ export default function HomePage({ navigate }: HomePageProps) {
         <div
           className="flex flex-col justify-center gap-5 px-8 py-16 md:py-20 w-full md:w-1/2"
           style={{
-            background: "linear-gradient(135deg,#0a1628 0%,#0d2318 100%)",
+            background: "linear-gradient(135deg,#eff6ff 0%,#f0fdf4 100%)",
             zIndex: 2,
           }}
         >
           <div
             data-ocid="hero.live_badge"
-            className="flex items-center gap-2 border border-red-400/40 rounded-full px-4 py-2 w-fit"
-            style={{ background: "rgba(220,20,60,0.08)" }}
+            className="flex items-center gap-2 border border-blue-400/40 rounded-full px-4 py-2 w-fit"
+            style={{ background: "rgba(66,165,245,0.08)" }}
           >
-            <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-red-400" />
-            <span className="text-red-300 font-semibold text-sm">
+            <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-blue-400" />
+            <span className="text-blue-500 font-semibold text-sm">
               {driverCount} drivers nearby right now
             </span>
           </div>
           <h1
-            className="font-bold text-white"
+            className="font-bold text-gray-900"
             style={{ fontSize: "clamp(1.8rem,4vw,3rem)", lineHeight: 1.15 }}
           >
             Book Professional Drivers
             <br />
-            <span
-              style={{ color: "#00e676", textShadow: "0 0 32px #00e67688" }}
-            >
-              Anytime, Anywhere
-            </span>
+            <span style={{ color: "#42A5F5" }}>Anytime, Anywhere</span>
           </h1>
           <p
-            className="text-gray-300 text-base max-w-sm"
+            className="text-gray-600 text-base max-w-sm"
             style={{ lineHeight: 1.7 }}
           >
             Safe, Verified, Affordable Drivers at Your Service. Trusted by 1000+
@@ -371,8 +368,8 @@ export default function HomePage({ navigate }: HomePageProps) {
               onClick={() => navigate("book")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "linear-gradient(135deg,#8B0000,#15803d)",
-                boxShadow: "0 4px 24px #8B000077",
+                background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+                boxShadow: "0 4px 24px #1565C077",
                 minHeight: 48,
               }}
             >
@@ -382,7 +379,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               type="button"
               data-ocid="hero.become_driver_button"
               onClick={() => navigate("register-driver")}
-              className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 border-red-400 text-red-300 shadow transition-all hover:bg-red-950/30 hover:scale-105 active:scale-95"
+              className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 border-red-400 text-blue-500 shadow transition-all hover:bg-red-950/30 hover:scale-105 active:scale-95"
               style={{ background: "rgba(0,0,0,0.2)", minHeight: 48 }}
             >
               🚗 Become a Driver
@@ -470,7 +467,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       <section
         style={{
           background:
-            "linear-gradient(135deg,#6b0000 0%,#8B0000 40%,#DC143C 100%)",
+            "linear-gradient(135deg,#FF6B6B 0%,#42A5F5 35%,#FFCA28 65%,#66BB6A 100%)",
           padding: "3.5rem 1rem",
           position: "relative",
           overflow: "hidden",
@@ -596,7 +593,13 @@ export default function HomePage({ navigate }: HomePageProps) {
       </section>
 
       {/* PROMO CARDS */}
-      <section style={{ background: "#111827", padding: "2.5rem 1rem" }}>
+      <section
+        style={{
+          background:
+            "linear-gradient(135deg,#fff5f5 0%,#eff6ff 50%,#f0fdf4 100%)",
+          padding: "2.5rem 1rem",
+        }}
+      >
         <div
           style={{
             maxWidth: 1100,
@@ -629,10 +632,10 @@ export default function HomePage({ navigate }: HomePageProps) {
             <div
               key={card.title}
               style={{
-                background: "#1e293b",
+                background: "#ffffff",
                 borderRadius: 16,
                 padding: "1.75rem",
-                borderLeft: "4px solid #DC143C",
+                borderLeft: "4px solid #42A5F5",
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.75rem",
@@ -650,7 +653,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 <span style={{ fontSize: "2rem" }}>{card.icon}</span>
                 <span
                   style={{
-                    background: "#DC143C",
+                    background: "#42A5F5",
                     color: "#fff",
                     fontSize: "0.65rem",
                     fontWeight: 700,
@@ -819,7 +822,8 @@ export default function HomePage({ navigate }: HomePageProps) {
         ref={reviewsFade.ref}
         className={reviewsFade.visible ? "fade-section" : "hide-section"}
         style={{
-          background: "linear-gradient(135deg,#f0fdf4 0%,#e0f2fe 100%)",
+          background:
+            "linear-gradient(135deg,#fff5f5 0%,#eff6ff 50%,#f0fdf4 100%)",
           padding: "4rem 1rem",
         }}
       >
@@ -964,8 +968,8 @@ export default function HomePage({ navigate }: HomePageProps) {
             onClick={() => navigate("book")}
             className="font-bold px-10 py-4 rounded-full text-white text-lg shadow-xl transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "linear-gradient(135deg,#8B0000,#15803d)",
-              boxShadow: "0 6px 32px #8B000066",
+              background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+              boxShadow: "0 6px 32px #1565C066",
             }}
           >
             🚗 Book Your First Ride
@@ -1016,7 +1020,7 @@ export default function HomePage({ navigate }: HomePageProps) {
         style={{
           background: "#f8fafc",
           padding: "3rem 0 3.5rem",
-          borderTop: "1px solid #d1fae5",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
         }}
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -1083,16 +1087,17 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* WHY FAMILIES TRUST DRIVEEASE */}
       <section
         style={{
-          background: "#060d16",
+          background:
+            "linear-gradient(135deg, #fff5f5 0%, #eff6ff 50%, #f0fdf4 100%)",
           padding: "5rem 1rem",
-          borderTop: "1px solid rgba(0,230,118,0.1)",
+          borderTop: "1px solid rgba(0,0,0,0.06)",
         }}
       >
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "3rem" }}>
             <p
               style={{
-                color: "#00e676",
+                color: "#42A5F5",
                 fontSize: "0.8rem",
                 fontWeight: 700,
                 letterSpacing: "0.12em",
@@ -1104,7 +1109,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             </p>
             <h2
               style={{
-                color: "#fff",
+                color: "#1e293b",
                 fontWeight: 800,
                 fontSize: "clamp(1.6rem,3vw,2.4rem)",
                 marginBottom: "0.75rem",
@@ -1114,7 +1119,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             </h2>
             <p
               style={{
-                color: "#94a3b8",
+                color: "#64748b",
                 maxWidth: 500,
                 margin: "0 auto",
                 lineHeight: 1.7,
@@ -1160,7 +1165,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               <div
                 key={card.title}
                 style={{
-                  background: "#0d1420",
+                  background: "#ffffff",
                   border: "1px solid rgba(0,230,118,0.15)",
                   borderRadius: 16,
                   padding: "1.75rem",
@@ -1182,7 +1187,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 </div>
                 <h3
                   style={{
-                    color: "#fff",
+                    color: "#1e293b",
                     fontWeight: 700,
                     fontSize: "1rem",
                     marginBottom: "0.5rem",
@@ -1192,7 +1197,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 </h3>
                 <p
                   style={{
-                    color: "#94a3b8",
+                    color: "#64748b",
                     fontSize: "0.875rem",
                     lineHeight: 1.6,
                   }}
@@ -1206,7 +1211,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           {/* Testimonials */}
           <h3
             style={{
-              color: "#fff",
+              color: "#1e293b",
               fontWeight: 700,
               fontSize: "1.4rem",
               textAlign: "center",
@@ -1248,7 +1253,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               <div
                 key={review.name}
                 style={{
-                  background: "#0d1420",
+                  background: "#ffffff",
                   border: "1px solid rgba(0,230,118,0.12)",
                   borderRadius: 16,
                   padding: "1.5rem",
@@ -1265,7 +1270,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 </div>
                 <p
                   style={{
-                    color: "#cbd5e1",
+                    color: "#475569",
                     fontSize: "0.9rem",
                     lineHeight: 1.7,
                     marginBottom: "1rem",
@@ -1286,7 +1291,8 @@ export default function HomePage({ navigate }: HomePageProps) {
                       width: 40,
                       height: 40,
                       borderRadius: "50%",
-                      background: "linear-gradient(135deg,#00e676,#8B0000)",
+                      background:
+                        "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1321,9 +1327,9 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* INVESTORS SECTION */}
       <section
         style={{
-          background: "#0d1420",
+          background: "linear-gradient(135deg,#eff6ff 0%,#fff5f5 100%)",
           padding: "4rem 1rem",
-          borderTop: "1px solid #d1fae5",
+          borderTop: "1px solid rgba(0,0,0,0.06)",
         }}
       >
         <div className="max-w-5xl mx-auto text-center">
@@ -1435,8 +1441,8 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* FOOTER */}
       <footer
         style={{
-          background: "#0a0f1a",
-          borderTop: "1px solid #d1fae5",
+          background: "#0f172a",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
           padding: "1.5rem 1rem",
           textAlign: "center",
         }}
@@ -1464,7 +1470,9 @@ export default function HomePage({ navigate }: HomePageProps) {
           data-ocid="mobile.book_now_button"
           onClick={() => navigate("book")}
           className="flex-1 font-bold py-3 rounded-full text-white mr-2 text-sm"
-          style={{ background: "linear-gradient(135deg,#8B0000,#15803d)" }}
+          style={{
+            background: "linear-gradient(135deg,#FF6B6B,#42A5F5,#66BB6A)",
+          }}
         >
           🚗 Book Now
         </button>
@@ -1577,7 +1585,7 @@ function DriverCard({
           onClick={() => navigate("book")}
           className="flex-1 text-xs font-semibold py-2 rounded-lg text-white transition-all hover:opacity-90"
           style={{
-            background: driver.status === "offline" ? "#94a3b8" : "#8B0000",
+            background: driver.status === "offline" ? "#94a3b8" : "#1565C0",
           }}
           disabled={driver.status === "offline"}
         >

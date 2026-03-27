@@ -6,8 +6,12 @@ export default function Footer({ navigate }: FooterProps) {
   return (
     <footer
       style={{
-        background: "#060d16",
-        borderTop: "1px solid rgba(220,20,60,0.2)",
+        background: "#0f172a",
+        borderTop: "3px solid transparent",
+        backgroundImage:
+          "linear-gradient(#0f172a,#0f172a), linear-gradient(90deg,#FF6B6B,#42A5F5,#FFCA28,#66BB6A)",
+        backgroundOrigin: "border-box",
+        backgroundClip: "padding-box, border-box",
         padding: "3rem 1.5rem 1.5rem",
         marginTop: "auto",
       }}
@@ -32,14 +36,14 @@ export default function Footer({ navigate }: FooterProps) {
             >
               <div
                 style={{
-                  background: "linear-gradient(135deg,#DC143C,#DC143C)",
+                  background: "linear-gradient(135deg,#FF6B6B,#42A5F5)",
                   borderRadius: 8,
                   width: 32,
                   height: 32,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 2px 8px rgba(220,20,60,0.25)",
+                  boxShadow: "0 2px 8px rgba(66,165,245,0.3)",
                 }}
               >
                 <span style={{ fontSize: "1rem" }}>🚗</span>
@@ -63,7 +67,7 @@ export default function Footer({ navigate }: FooterProps) {
             </p>
             <p
               style={{
-                color: "#DC143C",
+                color: "#42A5F5",
                 marginTop: "0.75rem",
                 fontSize: "0.9rem",
                 fontWeight: 500,
@@ -84,13 +88,13 @@ export default function Footer({ navigate }: FooterProps) {
               Quick Links
             </h4>
             {[
-              ["Home", "home"],
-              ["Book Driver", "drivers"],
-              ["Register Driver", "register-driver"],
-              ["My Bookings", "my-bookings"],
-              ["Plans", "plans"],
-              ["Insurance", "insurance"],
-            ].map(([l, p]) => (
+              ["Home", "home", "#FF6B6B"],
+              ["Book Driver", "drivers", "#42A5F5"],
+              ["Register Driver", "register-driver", "#66BB6A"],
+              ["My Bookings", "my-bookings", "#FFCA28"],
+              ["Plans", "plans", "#FF6B6B"],
+              ["Insurance", "insurance", "#42A5F5"],
+            ].map(([l, p, c]) => (
               <button
                 type="button"
                 key={p}
@@ -107,7 +111,7 @@ export default function Footer({ navigate }: FooterProps) {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#DC143C";
+                  e.currentTarget.style.color = c;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = "#94a3b8";
@@ -140,7 +144,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="tel:+917836887228"
               style={{
-                color: "#DC143C",
+                color: "#66BB6A",
                 fontSize: "0.9rem",
                 display: "block",
                 marginBottom: "0.5rem",
@@ -168,7 +172,7 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                background: "#2563eb",
+                background: "#42A5F5",
                 color: "white",
                 padding: "0.4rem 0.8rem",
                 borderRadius: 6,
@@ -198,9 +202,9 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                background: "rgba(239,68,68,0.08)",
-                border: "1px solid rgba(239,68,68,0.25)",
-                color: "#dc2626",
+                background: "rgba(255,107,107,0.1)",
+                border: "1px solid rgba(255,107,107,0.3)",
+                color: "#FF6B6B",
                 padding: "0.5rem 0.75rem",
                 borderRadius: 8,
                 fontSize: "0.88rem",
@@ -216,9 +220,9 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                background: "rgba(59,130,246,0.08)",
-                border: "1px solid rgba(59,130,246,0.2)",
-                color: "#2563eb",
+                background: "rgba(66,165,245,0.1)",
+                border: "1px solid rgba(66,165,245,0.25)",
+                color: "#42A5F5",
                 padding: "0.5rem 0.75rem",
                 borderRadius: 8,
                 fontSize: "0.88rem",
@@ -231,7 +235,7 @@ export default function Footer({ navigate }: FooterProps) {
         </div>
         <div
           style={{
-            borderTop: "1px solid #1a2e1a20",
+            borderTop: "1px solid rgba(255,255,255,0.08)",
             paddingTop: "1.5rem",
             display: "flex",
             justifyContent: "space-between",
@@ -250,7 +254,7 @@ export default function Footer({ navigate }: FooterProps) {
               target="_blank"
               rel="noreferrer"
               style={{
-                color: "#DC143C",
+                color: "#42A5F5",
                 textDecoration: "none",
                 fontWeight: 600,
               }}
@@ -260,14 +264,14 @@ export default function Footer({ navigate }: FooterProps) {
           </p>
         </div>
       </div>
-      {/* WhatsApp float */}
+      {/* Support float */}
       <a
         href="tel:+917836887228"
         style={{
           position: "fixed",
           bottom: "1.5rem",
           right: "1.5rem",
-          background: "#2563eb",
+          background: "linear-gradient(135deg,#42A5F5,#66BB6A)",
           color: "white",
           width: 52,
           height: 52,
@@ -276,7 +280,7 @@ export default function Footer({ navigate }: FooterProps) {
           alignItems: "center",
           justifyContent: "center",
           fontSize: "1.6rem",
-          boxShadow: "0 4px 20px rgba(37,99,235,0.4)",
+          boxShadow: "0 4px 20px rgba(66,165,245,0.4)",
           zIndex: 999,
           textDecoration: "none",
           transition: "transform 0.2s",

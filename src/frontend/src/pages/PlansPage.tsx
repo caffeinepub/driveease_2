@@ -10,7 +10,7 @@ const PLANS = [
     period: "day",
     monthly: "₹24,000/month",
     badge: "Most Popular",
-    color: "#00e676",
+    color: "#FF6B6B",
     desc: "8 hours/day flexible scheduling between 7 AM – 9 PM. Same verified driver every day.",
     features: [
       "8 hrs/day coverage",
@@ -27,7 +27,7 @@ const PLANS = [
     period: "day",
     monthly: "₹36,000/month",
     badge: "Best Value",
-    color: "#0ea5e9",
+    color: "#42A5F5",
     desc: "12 hours daily coverage for heavy usage. Ideal for professionals and busy families.",
     features: [
       "12 hrs/day coverage",
@@ -44,7 +44,7 @@ const PLANS = [
     period: "month",
     monthly: "",
     badge: "Premium Care",
-    color: "#8b5cf6",
+    color: "#66BB6A",
     desc: "Complete family coverage with dedicated driver, live tracking, SOS alerts, and medical priority.",
     features: [
       "Dedicated family driver",
@@ -61,7 +61,7 @@ const PLANS = [
     period: "",
     monthly: "",
     badge: "Enterprise",
-    color: "#f59e0b",
+    color: "#FFCA28",
     desc: "Custom pricing for corporates. Executive trained drivers, multiple vehicles, invoice billing.",
     features: [
       "Multiple drivers",
@@ -108,7 +108,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       <div style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1
           style={{
-            color: "#e2e8f0",
+            color: "#1e293b",
             fontWeight: 800,
             fontSize: "2.25rem",
             marginBottom: "0.5rem",
@@ -169,7 +169,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
             >
               <h3
                 style={{
-                  color: "#e2e8f0",
+                  color: "#1e293b",
                   fontWeight: 800,
                   fontSize: "1.15rem",
                   marginBottom: "0.25rem",
@@ -310,7 +310,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
               <div>
                 <h3
                   style={{
-                    color: "#e2e8f0",
+                    color: "#1e293b",
                     fontWeight: 800,
                     fontSize: "1.2rem",
                   }}
@@ -361,7 +361,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                   }}
                   style={{
                     marginTop: "1.5rem",
-                    background: "#00e676",
+                    background: "#66BB6A",
                     color: "white",
                     border: "none",
                     borderRadius: 8,
@@ -426,7 +426,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                 </div>
                 <div
                   style={{
-                    background: "rgba(220,20,60,0.08)",
+                    background: "rgba(66,165,245,0.08)",
                     border: "1px solid rgba(0,230,118,0.2)",
                     borderRadius: 8,
                     padding: "0.75rem",
@@ -454,7 +454,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
                     background:
                       !form.name || !form.phone
                         ? "#94a3b8"
-                        : activePlan?.color || "#8B0000",
+                        : activePlan?.color || "#1565C0",
                     color: "white",
                     border: "none",
                     borderRadius: 8,
@@ -477,7 +477,7 @@ export default function PlansPage(_: { navigate: (p: string) => void }) {
       <div className="card-dark" style={{ maxWidth: 560, margin: "0 auto" }}>
         <h2
           style={{
-            color: "#e2e8f0",
+            color: "#1e293b",
             fontWeight: 700,
             fontSize: "1.2rem",
             marginBottom: "0.5rem",
