@@ -437,7 +437,7 @@ export default function HomePage({ navigate }: HomePageProps) {
         {/* RIGHT: Auto-play photo slideshow */}
         <div
           className="relative w-full md:w-1/2 overflow-hidden"
-          style={{ minHeight: "40vh", height: "auto", background: "#000" }}
+          style={{ minHeight: "60vh", height: "100%", background: "#111" }}
         >
           {HERO_IMAGES.map((img, i) => (
             <img
