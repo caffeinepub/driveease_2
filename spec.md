@@ -1,44 +1,39 @@
-# DriveEase - Zoomcar Theme Redesign
+# DriveEase - V43 Theme Update
 
 ## Current State
-The app currently uses a vibrant multi-color theme (light red, blue, yellow, green gradients) across all pages including homepage, splash screen, 'Become a Driver', Driver Login, booking page, and admin panel. Animated stars and multicolor gradients are used extensively.
+- Theme is dark (black/dark backgrounds) with green and yellow-gold accents throughout
+- Homepage has a scrolling promotional marquee/banner strip at the top with bubble animations
+- Admin panel login page uses dark navy (#0f172a) background with dark red gradient accents
+- Font colors are mostly white/light on dark backgrounds
+- CSS variables and utility classes use yellow-gold (#F5C100) as primary color
+- Header/Navbar uses dark charcoal background
 
 ## Requested Changes (Diff)
 
 ### Add
-- Zoomcar-inspired unified theme: dark charcoal/black backgrounds (#1a1a1a, #111111, #222222) with bold orange-yellow accent (#FF6200 or #F5A623), white/light gray text
-- Clean, professional car rental aesthetic matching Zoomcar's brand: dark headers, orange CTA buttons, white cards with subtle shadows
-- Orange accent color for all buttons, highlights, borders, and active states
+- Dark Green (#166534 / #15803D) as the new primary brand color throughout
+- White backgrounds for main page sections (public website)
+- Black font color for all body text on white backgrounds
+- Admin login page redesigned to match a premium CRM style: white/light card on dark green background, with DriveEase branding prominently displayed
 
 ### Modify
-- Remove ALL multicolor gradients (red+blue+yellow+green) from every page
-- Remove animated star particles from DriverLoginPage and DriverRegisterPage
-- Replace with Zoomcar-style dark background + orange accent on those pages
-- SplashScreen: change to dark background with orange logo glow instead of white-to-mint gradient
-- Header/Navbar: dark background with orange CTA button
-- Homepage hero: dark overlay with orange CTAs
-- Booking page: dark cards with orange accents
-- Admin panel sidebar: dark with orange highlights (keep white sidebar option but with orange accents)
-- Footer: dark background with orange links
-- RideQuoteTicker: dark styling
-- index.css global CSS variables updated to Zoomcar palette
-- All gradient text (multicolor) → solid orange or white
-- All multicolor buttons → solid orange (#FF6200) with white text
+- `index.css`: Update CSS variables - primary to dark green, backgrounds to white, text to black
+- `Header.tsx`: Change navbar background to dark green with white text/links, Book Now button in white or accent color
+- `HomePage.tsx`: Remove the entire scrolling promotional banner (marquee strip + bubble animation at top). Update hero and all sections to use dark green + white + black font theme
+- `AdminPage.tsx` LoginPage component: Redesign to dark green background with white card, green gradient button, professional CRM look
+- All `.red-btn`, `.green-btn`, sparkle buttons, badge classes: update to dark green primary
+- `SplashScreen.tsx`: Update to dark green + white theme
+- `DriverLoginPage.tsx`, `DriverRegisterPage.tsx`: Update to dark green + white theme
 
 ### Remove
-- All `from-red-* via-blue-* to-yellow-*` or similar multicolor gradient classes
-- Star particle animations on driver pages
-- Green/blue/yellow/red mixed color schemes
+- Scrolling marquee/promotional banner strip from HomePage (the entire ANNOUNCEMENT STRIP section with bubble animations)
+- All yellow-gold (#F5C100) color references - replace with dark green
+- Dark black/charcoal backgrounds on public-facing pages (replace with white)
 
 ## Implementation Plan
-1. Update index.css CSS variables to Zoomcar palette (dark bg, orange primary)
-2. Update Header.tsx - dark nav, orange Book Now button
-3. Update SplashScreen.tsx - dark theme, orange glow
-4. Update HomePage.tsx - remove multicolor, apply dark+orange
-5. Update DriverRegisterPage.tsx - remove stars/multicolor, dark+orange
-6. Update DriverLoginPage.tsx - remove stars/multicolor, dark+orange
-7. Update BookPage.tsx - dark cards with orange accents
-8. Update PlansPage.tsx, DriversPage.tsx, MyBookingsPage.tsx, PaymentPage.tsx - consistent dark+orange
-9. Update Footer.tsx, ChatBot.tsx, RideQuoteTicker.tsx - dark+orange
-10. Update AdminPage.tsx sidebar and accents to orange
-11. Validate build
+1. Update `index.css` - new CSS variables: dark green primary (oklch ~0.4 0.14 145), white background, black foreground. Update all utility classes (.red-btn, .green-btn, badge classes, sparkle buttons) to use dark green.
+2. Update `Header.tsx` - dark green navbar background (#166534), white nav links, white logo text, green CTA button
+3. Update `HomePage.tsx` - remove entire ANNOUNCEMENT STRIP block (lines ~267-355). Update hero section and all other sections to white background, black text, dark green accents
+4. Update `AdminPage.tsx` LoginPage - change background to dark green gradient, white card, green accent button, premium look matching a professional CRM
+5. Update `SplashScreen.tsx` - dark green theme with white text
+6. Update `DriverLoginPage.tsx` and `DriverRegisterPage.tsx` - dark green + white theme

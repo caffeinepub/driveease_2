@@ -7,40 +7,40 @@
 @layer base {
   :root {
     --radius: 0.625rem;
-    /* Dark backgrounds */
-    --background: 0.12 0 0;
-    --foreground: 1 0 0;
-    --card: 0.15 0 0;
-    --card-foreground: 1 0 0;
-    --popover: 0.15 0 0;
-    --popover-foreground: 1 0 0;
-    /* Yellow-gold primary: #F5C100 → oklch ≈ 0.83 0.18 90 */
-    --primary: 0.83 0.18 90;
-    --primary-foreground: 0.15 0 0;
-    --secondary: 0.18 0 0;
-    --secondary-foreground: 0.75 0 0;
-    --muted: 0.2 0 0;
-    --muted-foreground: 0.6 0 0;
-    --accent: 0.83 0.18 90;
+    /* White background */
+    --background: 1 0 0;
+    --foreground: 0.13 0 0;
+    --card: 1 0 0;
+    --card-foreground: 0.13 0 0;
+    --popover: 1 0 0;
+    --popover-foreground: 0.13 0 0;
+    /* Dark green primary: #166534 → oklch ≈ 0.4 0.14 145 */
+    --primary: 0.4 0.14 145;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.96 0.01 120;
+    --secondary-foreground: 0.13 0 0;
+    --muted: 0.95 0.005 120;
+    --muted-foreground: 0.45 0 0;
+    --accent: 0.55 0.18 145;
     --accent-foreground: 1 0 0;
     --destructive: 0.64 0.18 22;
     --destructive-foreground: 1 0 0;
-    --border: 0.25 0 0;
-    --input: 0.2 0 0;
-    --ring: 0.83 0.18 90;
-    --chart-1: 0.83 0.18 90;
-    --chart-2: 0.69 0.2 145;
-    --chart-3: 0.78 0.16 84;
+    --border: 0.88 0.02 120;
+    --input: 0.94 0.01 120;
+    --ring: 0.4 0.14 145;
+    --chart-1: 0.4 0.14 145;
+    --chart-2: 0.55 0.18 145;
+    --chart-3: 0.7 0.15 145;
     --chart-4: 0.64 0.18 22;
-    --chart-5: 0.82 0.18 95;
-    --sidebar: 0.12 0 0;
+    --chart-5: 0.83 0.18 90;
+    --sidebar: 0.4 0.14 145;
     --sidebar-foreground: 1 0 0;
-    --sidebar-primary: 0.83 0.18 90;
+    --sidebar-primary: 0.55 0.18 145;
     --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.18 0 0;
-    --sidebar-accent-foreground: 0.75 0 0;
-    --sidebar-border: 0.25 0 0;
-    --sidebar-ring: 0.83 0.18 90;
+    --sidebar-accent: 0.32 0.12 145;
+    --sidebar-accent-foreground: 1 0 0;
+    --sidebar-border: 0.32 0.1 145;
+    --sidebar-ring: 0.55 0.18 145;
   }
 
   * {
@@ -48,8 +48,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #1a1a1a;
     font-family: "Poppins", system-ui, -apple-system, sans-serif;
   }
   h1,
@@ -58,11 +58,11 @@
   h4,
   h5,
   h6 {
-    color: #ffffff;
+    color: #111827;
     font-family: "Poppins", system-ui, sans-serif;
   }
   p {
-    color: #aaaaaa;
+    color: #374151;
   }
 }
 
@@ -71,10 +71,10 @@
   font-family: "Orbitron", monospace;
 }
 
-/* ─── Primary orange button ────────────────────────────────────────── */
+/* ─── Primary dark green button ────────────────────────────────────────── */
 .red-btn {
-  background: #f5c100;
-  color: #1a1a1a;
+  background: #166534;
+  color: #ffffff;
   padding: 0.6rem 1.4rem;
   border-radius: 0.5rem;
   font-weight: 700;
@@ -85,48 +85,48 @@
   align-items: center;
   gap: 0.4rem;
   font-family: "Poppins", sans-serif;
-  box-shadow: 0 4px 14px rgba(245, 193, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(22, 101, 52, 0.35);
 }
 .red-btn:hover {
-  background: #f5c100;
-  box-shadow: 0 8px 24px rgba(245, 193, 0, 0.5);
+  background: #15803d;
+  box-shadow: 0 8px 24px rgba(22, 101, 52, 0.5);
   transform: translateY(-1px);
 }
 
 /* Secondary button */
 .green-btn {
   background: transparent;
-  color: #f5c100;
+  color: #166534;
   padding: 0.6rem 1.4rem;
   border-radius: 0.5rem;
   font-weight: 700;
   transition: all 0.2s;
   cursor: pointer;
-  border: 2px solid #f5c100;
+  border: 2px solid #166534;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   font-family: "Poppins", sans-serif;
 }
 .green-btn:hover {
-  background: rgba(245, 193, 0, 0.1);
+  background: rgba(22, 101, 52, 0.08);
   transform: translateY(-1px);
 }
 
-/* Dark card */
+/* Light card */
 .card-dark {
-  background-color: #1e1e1e;
-  border: 1px solid #333333;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   padding: 1.25rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   color: #1a1a1a;
 }
 
-/* Dark input */
+/* Light input */
 .input-dark {
-  background-color: #1e1e1e;
-  border: 1px solid #333333;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
   color: #1a1a1a;
   border-radius: 0.5rem;
   padding: 0.6rem 0.9rem;
@@ -136,26 +136,26 @@
   font-family: "Poppins", sans-serif;
 }
 .input-dark:focus {
-  border-color: #f5c100;
-  box-shadow: 0 0 0 2px rgba(245, 193, 0, 0.15);
+  border-color: #166534;
+  box-shadow: 0 0 0 2px rgba(22, 101, 52, 0.15);
 }
 .input-dark::placeholder {
-  color: #555555;
+  color: #9ca3af;
 }
 
 .badge-red {
-  background: rgba(245, 193, 0, 0.12);
-  color: #f5c100;
+  background: rgba(22, 101, 52, 0.1);
+  color: #166534;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(245, 193, 0, 0.3);
+  border: 1px solid rgba(22, 101, 52, 0.25);
 }
 
 .badge-green {
-  background: rgba(34, 197, 94, 0.12);
-  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
@@ -164,35 +164,35 @@
 }
 
 .badge-blue {
-  background: rgba(245, 193, 0, 0.1);
-  color: #f5c100;
+  background: rgba(22, 101, 52, 0.08);
+  color: #166534;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(245, 193, 0, 0.25);
+  border: 1px solid rgba(22, 101, 52, 0.2);
 }
 
 .badge-yellow {
-  background: rgba(245, 193, 0, 0.1);
-  color: #f5c100;
+  background: rgba(22, 101, 52, 0.08);
+  color: #166534;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(245, 193, 0, 0.25);
+  border: 1px solid rgba(22, 101, 52, 0.2);
 }
 
 .section-heading {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #111827;
   text-align: center;
   margin-bottom: 0.5rem;
   font-family: "Poppins", sans-serif;
 }
 .section-sub {
-  color: #888888;
+  color: #6b7280;
   text-align: center;
   margin-bottom: 2.5rem;
   font-size: 0.9rem;
@@ -262,10 +262,10 @@
 @keyframes cta-breathe {
   0%,
   100% {
-    box-shadow: 0 4px 20px rgba(245, 193, 0, 0.35), 0 2px 0 #d4a900;
+    box-shadow: 0 4px 20px rgba(22, 101, 52, 0.35), 0 2px 0 #14532d;
   }
   50% {
-    box-shadow: 0 8px 32px rgba(245, 193, 0, 0.55), 0 4px 0 #d4a900;
+    box-shadow: 0 8px 32px rgba(22, 101, 52, 0.55), 0 4px 0 #14532d;
   }
 }
 .cta-breathe {
@@ -345,10 +345,10 @@
   }
 }
 
-/* ─── Brand orange text ───────────────────────────────────── */
+/* ─── Brand green text ───────────────────────────────────── */
 .orbitron-gradient {
   font-family: "Orbitron", monospace;
-  color: #f5c100;
+  color: #166534;
 }
 
 /* ─── Hero responsive grid ───────────────────────────────────── */
@@ -358,7 +358,7 @@
   }
 }
 
-/* ─── Marquee ad strip ──────────────────────────────────────── */
+/* ─── Marquee ad strip (kept for reference, not used) ──────────────────────────────────────── */
 @keyframes marquee-scroll {
   0% {
     transform: translateX(0);
@@ -625,39 +625,39 @@
   transform: translateY(2px) scale(0.98) !important;
 }
 
-/* ── Orange primary variant (Book Now / main CTA) ── */
+/* ── Dark green primary variant (Book Now / main CTA) ── */
 .sparkle-btn-green {
-  background: #f5c100;
-  color: #1a1a1a;
-  box-shadow: 0 4px 20px rgba(245, 193, 0, 0.35), 0 2px 0 #d4a900;
+  background: #166534;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(22, 101, 52, 0.35), 0 2px 0 #14532d;
   animation: cta-breathe 2.5s ease-in-out infinite;
 }
 .sparkle-btn-green:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(245, 193, 0, 0.55), 0 4px 0 #d4a900;
+  box-shadow: 0 10px 32px rgba(22, 101, 52, 0.55), 0 4px 0 #14532d;
   animation: none;
-  background: #f5c100;
+  background: #15803d;
 }
 
-/* ── Dark secondary variant (Become a Driver) ── */
+/* ── Outline secondary variant (Become a Driver) ── */
 .sparkle-btn-indigo {
   background: transparent;
-  color: #f5c100;
-  border: 2px solid #f5c100;
-  box-shadow: 0 4px 20px rgba(245, 193, 0, 0.15);
+  color: #166534;
+  border: 2px solid #166534;
+  box-shadow: 0 4px 20px rgba(22, 101, 52, 0.12);
 }
 .sparkle-btn-indigo:hover {
   transform: translateY(-3px);
-  background: rgba(245, 193, 0, 0.1);
-  box-shadow: 0 10px 32px rgba(245, 193, 0, 0.3);
+  background: rgba(22, 101, 52, 0.08);
+  box-shadow: 0 10px 32px rgba(22, 101, 52, 0.25);
 }
 
 /* ─── Tech glow effects ─────────────────────────── */
 .tech-glow {
-  box-shadow: 0 2px 16px rgba(245, 193, 0, 0.15);
+  box-shadow: 0 2px 16px rgba(22, 101, 52, 0.12);
 }
 .tech-border {
-  border: 1px solid rgba(245, 193, 0, 0.25);
+  border: 1px solid rgba(22, 101, 52, 0.2);
 }
 
 /* ─── Tagline text ─────────────────────────────── */
@@ -674,9 +674,9 @@
   animation: tagline-glow 2s ease-in-out infinite;
 }
 
-/* ─── Orange text utility ─────────────────────────── */
+/* ─── Green text utility ─────────────────────────── */
 .text-neon-green {
-  color: #f5c100;
+  color: #166534;
 }
 
 /* ─── Waveform animation for call recordings ─── */
@@ -738,21 +738,21 @@
 .doodle-icon {
   position: absolute;
   opacity: 0.08;
-  color: #f5c100;
+  color: #166534;
   font-size: 2rem;
 }
 
-/* ─── Brush stroke section divider ─────────────────────────── */
+/* ─── Section divider ─────────────────────────────────────────── */
 .brush-divider {
   width: 100%;
   height: 60px;
-  background: #1a1a1a;
+  background: #f0fdf4;
   clip-path: ellipse(55% 100% at 50% 0%);
   margin-top: -2px;
 }
 
-/* ─── Yellow glow card ──────────────────────────────────────── */
+/* ─── Green glow card ──────────────────────────────────────── */
 .card-yellow-glow {
-  box-shadow: 0 4px 24px rgba(245, 193, 0, 0.12);
-  border: 1px solid rgba(245, 193, 0, 0.15);
+  box-shadow: 0 4px 24px rgba(22, 101, 52, 0.1);
+  border: 1px solid rgba(22, 101, 52, 0.12);
 }

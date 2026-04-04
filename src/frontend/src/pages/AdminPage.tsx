@@ -200,51 +200,97 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
     <div
       style={{
         minHeight: "100vh",
-        background: "#0f172a",
+        background: "linear-gradient(135deg, #052e16 0%, #166534 100%)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "1rem",
         fontFamily: "'Poppins',sans-serif",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div style={{ width: "100%", maxWidth: 420 }}>
+      {/* Background orbs */}
+      <div
+        style={{
+          position: "absolute",
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%)",
+          top: "-100px",
+          right: "-100px",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          width: 300,
+          height: 300,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(22,101,52,0.2) 0%, transparent 70%)",
+          bottom: "-80px",
+          left: "-80px",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 440,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.5rem",
-              marginBottom: "0.5rem",
+              gap: "0.75rem",
+              marginBottom: "0.75rem",
             }}
           >
             <div
               style={{
-                width: 40,
-                height: 40,
-                background: "linear-gradient(135deg,#DC143C,#8B0000)",
-                borderRadius: 10,
+                width: 48,
+                height: 48,
+                background: "linear-gradient(135deg, #22c55e, #166534)",
+                borderRadius: 14,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "1.2rem",
+                fontSize: "1.4rem",
+                boxShadow: "0 4px 16px rgba(34,197,94,0.4)",
               }}
             >
               🚗
             </div>
             <span
               style={{
-                color: "#f1f5f9",
+                color: "#ffffff",
                 fontWeight: 800,
-                fontSize: "1.5rem",
+                fontSize: "1.7rem",
                 letterSpacing: "-0.02em",
+                fontFamily: "'Orbitron', monospace",
               }}
             >
               DriveEase
             </span>
           </div>
-          <p style={{ color: "#64748b", fontSize: "0.85rem" }}>
+          <p
+            style={{
+              color: "#86efac",
+              fontSize: "0.88rem",
+              fontWeight: 500,
+              letterSpacing: "0.05em",
+            }}
+          >
             CRM Admin Panel
           </p>
         </div>
@@ -253,10 +299,11 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
         <div
           style={{
             display: "flex",
-            background: "#1e293b",
-            borderRadius: 12,
-            padding: 4,
+            background: "rgba(0,0,0,0.25)",
+            borderRadius: 14,
+            padding: 5,
             marginBottom: "1.5rem",
+            border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
           {(["founder", "exec"] as const).map((m) => (
@@ -269,15 +316,17 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
               }}
               style={{
                 flex: 1,
-                padding: "0.6rem",
-                borderRadius: 8,
+                padding: "0.65rem",
+                borderRadius: 10,
                 border: "none",
                 cursor: "pointer",
-                background: mode === m ? "#DC143C" : "transparent",
-                color: mode === m ? "#fff" : "#64748b",
+                background: mode === m ? "#15803d" : "transparent",
+                color: mode === m ? "#fff" : "rgba(255,255,255,0.55)",
                 fontWeight: mode === m ? 700 : 400,
                 fontSize: "0.88rem",
-                transition: "all 0.15s",
+                transition: "all 0.18s",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: mode === m ? "0 2px 8px rgba(0,0,0,0.2)" : "none",
               }}
             >
               {m === "founder" ? "🔑 Founder Access" : "👤 Staff Login"}
@@ -285,12 +334,13 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
           ))}
         </div>
 
-        {/* Form */}
+        {/* Form card */}
         <div
           style={{
-            background: "#1e293b",
-            borderRadius: 16,
-            padding: "1.75rem",
+            background: "#ffffff",
+            borderRadius: 20,
+            padding: "2rem",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
           }}
         >
           {mode === "founder" ? (
@@ -298,10 +348,11 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
               <label
                 htmlFor="founder-pass"
                 style={{
-                  color: "#94a3b8",
-                  fontSize: "0.82rem",
+                  color: "#374151",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
                   display: "block",
-                  marginBottom: "0.4rem",
+                  marginBottom: "0.5rem",
                 }}
               >
                 Admin Password
@@ -315,16 +366,27 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
                 onKeyDown={(e) => e.key === "Enter" && loginFounder()}
                 style={{
                   width: "100%",
-                  background: "#0f172a",
-                  border: "1px solid #334155",
-                  borderRadius: 8,
-                  padding: "0.65rem 1rem",
-                  color: "#f1f5f9",
+                  background: "#f9fafb",
+                  border: "1.5px solid #e5e7eb",
+                  borderRadius: 10,
+                  padding: "0.7rem 1rem",
+                  color: "#111827",
                   fontSize: "0.9rem",
                   outline: "none",
                   boxSizing: "border-box",
                   letterSpacing: "0.15em",
-                  marginBottom: "1rem",
+                  marginBottom: "1.25rem",
+                  transition: "border-color 0.15s",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = "#166534";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 0 3px rgba(22,101,52,0.12)";
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = "#e5e7eb";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               />
             </>
@@ -333,10 +395,11 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
               <label
                 htmlFor="exec-email"
                 style={{
-                  color: "#94a3b8",
-                  fontSize: "0.82rem",
+                  color: "#374151",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
                   display: "block",
-                  marginBottom: "0.4rem",
+                  marginBottom: "0.5rem",
                 }}
               >
                 Email Address
@@ -349,24 +412,36 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
                   width: "100%",
-                  background: "#0f172a",
-                  border: "1px solid #334155",
-                  borderRadius: 8,
-                  padding: "0.65rem 1rem",
-                  color: "#f1f5f9",
+                  background: "#f9fafb",
+                  border: "1.5px solid #e5e7eb",
+                  borderRadius: 10,
+                  padding: "0.7rem 1rem",
+                  color: "#111827",
                   fontSize: "0.9rem",
                   outline: "none",
                   boxSizing: "border-box",
-                  marginBottom: "0.75rem",
+                  marginBottom: "1rem",
+                  fontFamily: "'Poppins', sans-serif",
+                  transition: "border-color 0.15s",
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = "#166534";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 0 3px rgba(22,101,52,0.12)";
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = "#e5e7eb";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               />
               <label
                 htmlFor="exec-pass"
                 style={{
-                  color: "#94a3b8",
-                  fontSize: "0.82rem",
+                  color: "#374151",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
                   display: "block",
-                  marginBottom: "0.4rem",
+                  marginBottom: "0.5rem",
                 }}
               >
                 Password
@@ -380,15 +455,26 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
                 onKeyDown={(e) => e.key === "Enter" && loginExec()}
                 style={{
                   width: "100%",
-                  background: "#0f172a",
-                  border: "1px solid #334155",
-                  borderRadius: 8,
-                  padding: "0.65rem 1rem",
-                  color: "#f1f5f9",
+                  background: "#f9fafb",
+                  border: "1.5px solid #e5e7eb",
+                  borderRadius: 10,
+                  padding: "0.7rem 1rem",
+                  color: "#111827",
                   fontSize: "0.9rem",
                   outline: "none",
                   boxSizing: "border-box",
-                  marginBottom: "1rem",
+                  marginBottom: "1.25rem",
+                  fontFamily: "'Poppins', sans-serif",
+                  transition: "border-color 0.15s",
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = "#166534";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 0 3px rgba(22,101,52,0.12)";
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = "#e5e7eb";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               />
             </>
@@ -396,12 +482,13 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
           {err && (
             <p
               style={{
-                color: "#f87171",
-                fontSize: "0.82rem",
-                marginBottom: "0.75rem",
+                color: "#ef4444",
+                fontSize: "0.84rem",
+                marginBottom: "1rem",
+                fontWeight: 500,
               }}
             >
-              {err}
+              ⚠️ {err}
             </p>
           )}
           <button
@@ -409,25 +496,38 @@ function LoginPage({ onAuth }: { onAuth: (s: AuthState) => void }) {
             onClick={mode === "founder" ? loginFounder : loginExec}
             style={{
               width: "100%",
-              background: "linear-gradient(135deg,#DC143C,#8B0000)",
+              background: "linear-gradient(135deg, #166534, #15803d)",
               color: "#fff",
               border: "none",
-              borderRadius: 8,
-              padding: "0.75rem",
+              borderRadius: 10,
+              padding: "0.85rem",
               fontWeight: 700,
               fontSize: "0.95rem",
               cursor: "pointer",
-              boxShadow: "0 4px 16px rgba(34,197,94,0.3)",
+              boxShadow: "0 4px 16px rgba(22,101,52,0.35)",
+              fontFamily: "'Poppins', sans-serif",
+              transition: "all 0.18s",
+              letterSpacing: "0.01em",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow =
+                "0 8px 24px rgba(22,101,52,0.5)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow =
+                "0 4px 16px rgba(22,101,52,0.35)";
+              e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            {mode === "founder" ? "Login as Founder" : "Login as Staff"}
+            {mode === "founder" ? "🔑 Login as Founder" : "👤 Login as Staff"}
           </button>
         </div>
 
         <p
           style={{
             textAlign: "center",
-            color: "#475569",
+            color: "rgba(255,255,255,0.45)",
             fontSize: "0.78rem",
             marginTop: "1.5rem",
           }}

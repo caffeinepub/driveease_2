@@ -556,7 +556,7 @@ export default function BookPage({ navigate, driverId: _driverId }: Props) {
           <div
             style={{
               height: "100%",
-              background: "#F5C100",
+              background: "#22C55E",
               width: `${((step - 1) / 3) * 100}%`,
               transition: "width 0.4s ease",
               borderRadius: 99,

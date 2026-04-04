@@ -262,66 +262,9 @@ export default function HomePage({ navigate }: HomePageProps) {
         .hide-section{opacity:0}
         .driver-strip::-webkit-scrollbar{display:none}
         .driver-strip{-ms-overflow-style:none;scrollbar-width:none}
+        @keyframes floatBubble{0%{transform:translateY(100%) scale(0.8);opacity:0}10%{opacity:0.2}90%{opacity:0.15}100%{transform:translateY(-200%) scale(1.2);opacity:0}}
+        .bubble{animation:floatBubble linear infinite;position:absolute;border-radius:50%;pointer-events:none}
       `}</style>
-
-      {/* ANNOUNCEMENT STRIP */}
-      <div
-        style={{
-          background: "#F5C100",
-          overflow: "hidden",
-          padding: "0.55rem 0",
-          position: "relative",
-          zIndex: 5,
-        }}
-      >
-        <div className="marquee-track" style={{ gap: "0 3rem" }}>
-          {["a", "b"].map((k) => (
-            <span
-              key={k}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "2rem",
-                paddingRight: "3rem",
-              }}
-            >
-              {[
-                "🚗 Book Your Driver Today",
-                "🎉 20% Off First Ride",
-                "🛡️ Police Verified Drivers",
-                "📍 GPS Tracked Every Ride",
-                "👨‍👩‍👧 Trusted by 5000+ Families",
-                "📞 24/7 Support Available",
-                "⚡ Book in Under 60 Seconds",
-                "🏆 India's #1 Driver Network",
-              ].map((text) => (
-                <span
-                  key={text}
-                  style={{
-                    color: "#fff",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
-                    whiteSpace: "nowrap",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                  }}
-                >
-                  {text}
-                  <span
-                    style={{
-                      color: "rgba(255,255,255,0.5)",
-                      fontSize: "0.7rem",
-                    }}
-                  >
-                    •
-                  </span>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
 
       <RideQuoteTicker />
       {/* HERO - Split layout */}
@@ -333,7 +276,7 @@ export default function HomePage({ navigate }: HomePageProps) {
         <div
           className="flex flex-col justify-center gap-5 px-8 py-16 md:py-20 w-full md:w-1/2"
           style={{
-            background: "linear-gradient(135deg,#eff6ff 0%,#f0fdf4 100%)",
+            background: "linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%)",
             zIndex: 2,
             position: "relative",
             overflow: "hidden",
@@ -341,21 +284,25 @@ export default function HomePage({ navigate }: HomePageProps) {
         >
           <div
             data-ocid="hero.live_badge"
-            className="flex items-center gap-2 border border-blue-400/40 rounded-full px-4 py-2 w-fit"
-            style={{ background: "rgba(66,165,245,0.08)" }}
+            className="flex items-center gap-2 border border-green-400/40 rounded-full px-4 py-2 w-fit"
+            style={{ background: "rgba(22,101,52,0.08)" }}
           >
-            <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-blue-400" />
-            <span className="text-blue-500 font-semibold text-sm">
+            <span className="blink inline-block w-2.5 h-2.5 rounded-full bg-green-500" />
+            <span className="text-green-700 font-semibold text-sm">
               {driverCount} drivers nearby right now
             </span>
           </div>
           <h1
-            className="font-bold text-gray-900"
-            style={{ fontSize: "clamp(1.8rem,4vw,3rem)", lineHeight: 1.15 }}
+            className="font-bold"
+            style={{
+              fontSize: "clamp(1.8rem,4vw,3rem)",
+              lineHeight: 1.15,
+              color: "#111827",
+            }}
           >
-            Book Professional Drivers
+            Book <span style={{ color: "#166534" }}>Professional</span> Drivers
             <br />
-            <span style={{ color: "#42A5F5" }}>Anytime, Anywhere</span>
+            <span style={{ color: "#15803d" }}>Anytime, Anywhere</span>
           </h1>
           <p
             className="text-gray-600 text-base max-w-sm"
@@ -371,8 +318,8 @@ export default function HomePage({ navigate }: HomePageProps) {
               onClick={() => navigate("book")}
               className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "#F5C100",
-                boxShadow: "0 4px 24px #1565C077",
+                background: "#166534",
+                boxShadow: "0 4px 24px rgba(22,101,52,0.4)",
                 minHeight: 48,
               }}
             >
@@ -382,8 +329,13 @@ export default function HomePage({ navigate }: HomePageProps) {
               type="button"
               data-ocid="hero.become_driver_button"
               onClick={() => navigate("register-driver")}
-              className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 border-red-400 text-blue-500 shadow transition-all hover:bg-red-950/30 hover:scale-105 active:scale-95"
-              style={{ background: "rgba(0,0,0,0.2)", minHeight: 48 }}
+              className="flex items-center gap-2 font-semibold px-6 py-3 rounded-full border-2 transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "transparent",
+                borderColor: "#166534",
+                color: "#166534",
+                minHeight: 48,
+              }}
             >
               🚗 Become a Driver
             </button>
@@ -399,8 +351,12 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((b) => (
               <span
                 key={b}
-                className="border border-red-400/30 text-red-200 text-xs font-medium px-3 py-1.5 rounded-full"
-                style={{ background: "rgba(0,230,118,0.07)" }}
+                className="border text-xs font-medium px-3 py-1.5 rounded-full"
+                style={{
+                  background: "rgba(22,101,52,0.07)",
+                  borderColor: "rgba(22,101,52,0.3)",
+                  color: "#166534",
+                }}
               >
                 {b}
               </span>
@@ -495,7 +451,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* BRANDING BANNER */}
       <section
         style={{
-          background: "#F5C100",
+          background: "#22C55E",
           padding: "3.5rem 1rem",
           position: "relative",
           overflow: "hidden",
@@ -551,7 +507,8 @@ export default function HomePage({ navigate }: HomePageProps) {
               letterSpacing: "-0.01em",
             }}
           >
-            India's #1 Personal Driver Network
+            India's #1 <span style={{ color: "#22C55E" }}>Personal Driver</span>{" "}
+            Network
           </h2>
           <p
             style={{
@@ -623,8 +580,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* PROMO CARDS */}
       <section
         style={{
-          background:
-            "linear-gradient(135deg,#fff5f5 0%,#eff6ff 50%,#f0fdf4 100%)",
+          background: "#f8fafc",
           padding: "2.5rem 1rem",
         }}
       >
@@ -663,7 +619,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 background: "#ffffff",
                 borderRadius: 16,
                 padding: "1.75rem",
-                borderLeft: "4px solid #42A5F5",
+                borderLeft: "4px solid #166534",
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.75rem",
@@ -681,7 +637,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 <span style={{ fontSize: "2rem" }}>{card.icon}</span>
                 <span
                   style={{
-                    background: "#42A5F5",
+                    background: "#166534",
                     color: "#fff",
                     fontSize: "0.65rem",
                     fontWeight: 700,
@@ -695,7 +651,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               </div>
               <h3
                 style={{
-                  color: "#f1f5f9",
+                  color: "#111827",
                   fontWeight: 700,
                   fontSize: "1.1rem",
                   margin: 0,
@@ -705,7 +661,7 @@ export default function HomePage({ navigate }: HomePageProps) {
               </h3>
               <p
                 style={{
-                  color: "#94a3b8",
+                  color: "#374151",
                   fontSize: "0.88rem",
                   margin: 0,
                   lineHeight: 1.6,
@@ -722,13 +678,13 @@ export default function HomePage({ navigate }: HomePageProps) {
       <section
         ref={trustFade.ref}
         className={trustFade.visible ? "fade-section" : "hide-section"}
-        style={{ background: "#f8fafc", padding: "2.5rem 1rem" }}
+        style={{ background: "#f0fdf4", padding: "2.5rem 1rem" }}
       >
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
-                icon: <Shield size={28} className="text-red-600" />,
+                icon: <Shield size={28} className="text-green-700" />,
                 label: "Police Verified Drivers",
                 sub: "Every driver is background-checked",
               },
@@ -747,7 +703,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 key={b.label}
                 className="flex items-center gap-4 bg-white rounded-2xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-shadow"
               >
-                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-gray-100">
+                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-50">
                   {b.icon}
                 </div>
                 <div>
@@ -769,7 +725,7 @@ export default function HomePage({ navigate }: HomePageProps) {
         style={{ background: "#ffffff", padding: "4rem 1rem" }}
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-1">
+          <h2 className="text-2xl font-bold text-green-700 mb-1">
             How It Works
           </h2>
           <p className="text-gray-600 text-sm mb-10">
@@ -800,11 +756,11 @@ export default function HomePage({ navigate }: HomePageProps) {
                 key={s.step}
                 className="relative bg-white rounded-2xl shadow-md p-6 border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all"
               >
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-red-700 text-white text-xs font-bold flex items-center justify-center shadow">
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-green-700 text-white text-xs font-bold flex items-center justify-center shadow">
                   {s.step}
                 </div>
                 <div className="text-4xl mb-3">{s.icon}</div>
-                <h3 className="font-semibold text-gray-900 mb-1.5">
+                <h3 className="font-semibold text-green-800 mb-1.5">
                   {s.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
@@ -825,7 +781,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">
+            <h2 className="text-2xl font-bold text-green-700 mb-1">
               Verified Drivers Near You
             </h2>
             <p className="text-gray-600 text-sm">
@@ -850,14 +806,13 @@ export default function HomePage({ navigate }: HomePageProps) {
         ref={reviewsFade.ref}
         className={reviewsFade.visible ? "fade-section" : "hide-section"}
         style={{
-          background:
-            "linear-gradient(135deg,#fff5f5 0%,#eff6ff 50%,#f0fdf4 100%)",
+          background: "#f8fafc",
           padding: "4rem 1rem",
         }}
       >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">
+            <h2 className="text-2xl font-bold text-green-700 mb-1">
               What Families Say
             </h2>
             <p className="text-gray-600 text-sm">
@@ -881,7 +836,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                   &ldquo;{r.quote}&rdquo;
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center text-red-700 font-bold text-xs">
+                  <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-xs">
                     {r.name
                       .split(" ")
                       .map((x) => x[0])
@@ -908,7 +863,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       >
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">
+            <h2 className="text-2xl font-bold text-green-700 mb-1">
               Why DriveEase is Different
             </h2>
             <p className="text-gray-600 text-sm">
@@ -916,8 +871,8 @@ export default function HomePage({ navigate }: HomePageProps) {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-6 border border-red-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-              <Heart size={32} className="text-red-500 mb-3" fill="#ef4444" />
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+              <Heart size={32} className="text-green-600 mb-3" fill="#166534" />
               <h3 className="font-bold text-gray-900 mb-2">Favourite Driver</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Save and rebook the same trusted driver every time. Build a
@@ -934,12 +889,12 @@ export default function HomePage({ navigate }: HomePageProps) {
                 Your family deserves the best.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-red-50 to-red-50 rounded-2xl p-6 border border-red-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-              <Calendar size={32} className="text-red-600 mb-3" />
+            <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-6 border border-green-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+              <Calendar size={32} className="text-green-600 mb-3" />
               <h3 className="font-bold text-gray-900 mb-2">
                 Subscription Plans
               </h3>
-              <p className="text-slate-300 text-sm leading-relaxed mb-3">
+              <p className="text-gray-600 text-sm leading-relaxed mb-3">
                 Monthly driver from ₹8,000/mo. Fixed driver, no daily hassle.
                 Best value for daily commuters.
               </p>
@@ -947,7 +902,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                 type="button"
                 data-ocid="features.view_plans_button"
                 onClick={() => navigate("plans")}
-                className="text-red-700 text-sm font-semibold underline underline-offset-2 hover:text-red-900 transition-colors"
+                className="text-green-700 text-sm font-semibold underline underline-offset-2 hover:text-green-900 transition-colors"
               >
                 View Plans →
               </button>
@@ -974,16 +929,16 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((b) => (
               <div
                 key={b.text}
-                className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-sm border border-red-100"
+                className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-sm border border-green-100"
               >
                 <span className="text-lg">{b.icon}</span>
-                <span className="font-semibold text-red-800 text-sm">
+                <span className="font-semibold text-green-800 text-sm">
                   {b.text}
                 </span>
               </div>
             ))}
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-green-700 mb-2">
             Ready to Book Your First Ride?
           </h2>
           <p className="text-gray-600 mb-6">
@@ -996,7 +951,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             onClick={() => navigate("book")}
             className="font-bold px-10 py-4 rounded-full text-white text-lg shadow-xl transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "#F5C100",
+              background: "#22C55E",
               boxShadow: "0 6px 32px #1565C066",
             }}
           >
@@ -1015,7 +970,7 @@ export default function HomePage({ navigate }: HomePageProps) {
         style={{ background: "#f8fafc", padding: "3rem 1rem" }}
       >
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
+          <h2 className="text-xl font-bold text-green-700 mb-1">
             Available In Your City
           </h2>
           <p className="text-gray-600 text-sm mb-6">
@@ -1030,11 +985,11 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((c) => (
               <div
                 key={c.city}
-                className="flex items-center gap-2 bg-white border-2 border-red-200 rounded-full px-6 py-2.5 shadow-sm hover:bg-red-50 hover:border-red-400 transition-all"
+                className="flex items-center gap-2 bg-white border-2 border-green-200 rounded-full px-6 py-2.5 shadow-sm hover:bg-green-50 hover:border-green-400 transition-all"
               >
                 <span className="text-lg">{c.emoji}</span>
-                <span className="font-semibold text-red-800">{c.city}</span>
-                <CheckCircle size={14} className="text-red-500" />
+                <span className="font-semibold text-green-800">{c.city}</span>
+                <CheckCircle size={14} className="text-green-600" />
               </div>
             ))}
           </div>
@@ -1053,7 +1008,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       >
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-1">
+            <h2 className="text-xl font-bold text-green-700 mb-1">
               Meet Our Drivers
             </h2>
             <p className="text-gray-600 text-sm">
@@ -1095,7 +1050,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                       d.status === "available"
                         ? "bg-red-500 blink"
                         : d.status === "on-trip"
-                          ? "bg-orange-500"
+                          ? "bg-green-500"
                           : "bg-gray-400"
                     }`}
                   />
@@ -1116,7 +1071,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       <section
         style={{
           background:
-            "linear-gradient(135deg, #fff5f5 0%, #eff6ff 50%, #f0fdf4 100%)",
+            "linear-gradient(135deg, #f0fdf4 0%, #f8fafc 50%, #ffffff 100%)",
           padding: "5rem 1rem",
           borderTop: "1px solid rgba(0,0,0,0.06)",
         }}
@@ -1125,7 +1080,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <div style={{ textAlign: "center", marginBottom: "3rem" }}>
             <p
               style={{
-                color: "#42A5F5",
+                color: "#166534",
                 fontSize: "0.8rem",
                 fontWeight: 700,
                 letterSpacing: "0.12em",
@@ -1319,7 +1274,7 @@ export default function HomePage({ navigate }: HomePageProps) {
                       width: 40,
                       height: 40,
                       borderRadius: "50%",
-                      background: "#F5C100",
+                      background: "#22C55E",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1354,7 +1309,7 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* INVESTORS SECTION */}
       <section
         style={{
-          background: "linear-gradient(135deg,#eff6ff 0%,#fff5f5 100%)",
+          background: "linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%)",
           padding: "4rem 1rem",
           borderTop: "1px solid rgba(0,0,0,0.06)",
         }}
@@ -1363,7 +1318,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           <p className="text-gray-500 text-xs uppercase tracking-widest font-semibold mb-3">
             Backed &amp; Trusted By
           </p>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-green-700 mb-2">
             Our Investors &amp; Partners
           </h2>
           <p className="text-gray-600 text-sm mb-10 max-w-md mx-auto">
@@ -1455,9 +1410,11 @@ export default function HomePage({ navigate }: HomePageProps) {
             ].map((s) => (
               <div
                 key={s.label}
-                className="bg-white border border-red-100 rounded-2xl px-8 py-4 shadow-sm text-center"
+                className="bg-white border border-green-100 rounded-2xl px-8 py-4 shadow-sm text-center"
               >
-                <div className="font-bold text-2xl text-red-700">{s.stat}</div>
+                <div className="font-bold text-2xl text-green-700">
+                  {s.stat}
+                </div>
                 <div className="text-gray-500 text-xs mt-0.5">{s.label}</div>
               </div>
             ))}
@@ -1468,8 +1425,8 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* FOOTER */}
       <footer
         style={{
-          background: "#0f172a",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
+          background: "#052e16",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
           padding: "1.5rem 1rem",
           textAlign: "center",
         }}
@@ -1480,7 +1437,7 @@ export default function HomePage({ navigate }: HomePageProps) {
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-red-600 hover:underline"
+            className="text-green-400 hover:underline"
           >
             caffeine.ai
           </a>
@@ -1490,7 +1447,11 @@ export default function HomePage({ navigate }: HomePageProps) {
       {/* MOBILE STICKY BAR */}
       <div
         className="fixed bottom-0 left-0 right-0 md:hidden z-30 flex border-t border-red-100"
-        style={{ background: "#f8fafc", padding: "0.75rem 1rem" }}
+        style={{
+          background: "#ffffff",
+          padding: "0.75rem 1rem",
+          boxShadow: "0 -2px 8px rgba(0,0,0,0.08)",
+        }}
       >
         <button
           type="button"
@@ -1498,7 +1459,7 @@ export default function HomePage({ navigate }: HomePageProps) {
           onClick={() => navigate("book")}
           className="flex-1 font-bold py-3 rounded-full text-white mr-2 text-sm"
           style={{
-            background: "#F5C100",
+            background: "#166534",
           }}
         >
           🚗 Book Now
@@ -1507,7 +1468,8 @@ export default function HomePage({ navigate }: HomePageProps) {
           type="button"
           data-ocid="mobile.find_drivers_button"
           onClick={() => navigate("drivers")}
-          className="flex-1 font-bold py-3 rounded-full text-red-700 border-2 border-red-600 text-sm"
+          className="flex-1 font-bold py-3 rounded-full text-sm"
+          style={{ color: "#166534", borderWidth: 2, borderColor: "#166534" }}
         >
           📍 Find Drivers
         </button>
@@ -1534,10 +1496,10 @@ function DriverCard({
       blink: true,
     },
     "on-trip": {
-      dot: "bg-orange-500",
+      dot: "bg-green-500",
       label: "On Trip",
-      text: "text-orange-700",
-      bg: "bg-orange-50 border-orange-200",
+      text: "text-green-700",
+      bg: "bg-green-50 border-green-200",
       blink: false,
     },
     offline: {
@@ -1594,7 +1556,7 @@ function DriverCard({
           <div className="font-semibold text-slate-100">{driver.rides}</div>
           <div className="text-gray-500">rides</div>
         </div>
-        <div className="bg-yellow-50 rounded-lg p-2">
+        <div className="bg-green-50 rounded-lg p-2">
           <div className="flex items-center gap-0.5 font-semibold text-gray-800">
             <Star size={10} fill="#f59e0b" color="#f59e0b" />
             {driver.rating}

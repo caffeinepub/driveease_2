@@ -1376,15 +1376,14 @@ td:last-child{text-align:right;font-weight:600;}
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background:
-          "linear-gradient(135deg,#1a0a2e 0%,#0d1b3e 30%,#1a2a0a 60%,#2a1a0a 100%)",
+        background: "linear-gradient(135deg, #052e16 0%, #166534 100%)",
         padding: "1rem",
         position: "relative",
         overflow: "hidden",
       }}
     >
       <style>{`
-        @keyframes loginGlow{0%,100%{box-shadow:0 0 18px 4px #F5C10055,0 0 32px 8px #42A5F533}33%{box-shadow:0 0 18px 4px #42A5F555,0 0 32px 8px #F5C10033}66%{box-shadow:0 0 18px 4px #66BB6A55,0 0 32px 8px #F5C10033}}
+        @keyframes loginGlow{0%,100%{box-shadow:0 0 18px 4px #22C55E55,0 0 32px 8px #16653455}50%{box-shadow:0 0 24px 8px #22C55E66,0 0 40px 12px #16653444}}
         @keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
       `}</style>
       <div
@@ -1402,7 +1401,7 @@ td:last-child{text-align:right;font-weight:600;}
               width: 72,
               height: 72,
               borderRadius: "50%",
-              background: "#F5C100",
+              background: "#22C55E",
               margin: "0 auto 1rem",
               display: "flex",
               alignItems: "center",
@@ -1419,14 +1418,12 @@ td:last-child{text-align:right;font-weight:600;}
               fontWeight: 800,
               fontSize: "1.6rem",
               marginBottom: "0.25rem",
-              background: "#F5C100",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#ffffff",
             }}
           >
             Captain Portal
           </h1>
-          <p style={{ color: "#cbd5e1", fontSize: "0.9rem" }}>
+          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.9rem" }}>
             Login to access your Captain dashboard
           </p>
         </div>
@@ -1434,9 +1431,8 @@ td:last-child{text-align:right;font-weight:600;}
         {step === "login" && (
           <div
             style={{
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(14px)",
-              border: "1px solid rgba(255,255,255,0.15)",
+              background: "#ffffff",
+              border: "1px solid #e5e7eb",
               borderRadius: 16,
               padding: "1.5rem",
               position: "relative",
@@ -1478,9 +1474,8 @@ td:last-child{text-align:right;font-weight:600;}
         {step === "otp" && (
           <div
             style={{
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(14px)",
-              border: "1px solid rgba(255,255,255,0.15)",
+              background: "#ffffff",
+              border: "1px solid #e5e7eb",
               borderRadius: 16,
               padding: "1.5rem",
               position: "relative",

@@ -32,7 +32,7 @@ export default function Footer({ navigate }: FooterProps) {
             >
               <div
                 style={{
-                  background: "#F5C100",
+                  background: "#22C55E",
                   borderRadius: 8,
                   width: 32,
                   height: 32,
@@ -46,7 +46,7 @@ export default function Footer({ navigate }: FooterProps) {
               </div>
               <span
                 style={{
-                  color: "#F5C100",
+                  color: "#22C55E",
                   fontWeight: 800,
                   fontSize: "1.1rem",
                   fontFamily: "'Orbitron', monospace",
@@ -63,7 +63,7 @@ export default function Footer({ navigate }: FooterProps) {
             </p>
             <p
               style={{
-                color: "#F5C100",
+                color: "#22C55E",
                 marginTop: "0.75rem",
                 fontSize: "0.9rem",
                 fontWeight: 500,
@@ -107,7 +107,7 @@ export default function Footer({ navigate }: FooterProps) {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#F5C100";
+                  e.currentTarget.style.color = "#22C55E";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = "#888888";
@@ -140,7 +140,7 @@ export default function Footer({ navigate }: FooterProps) {
             <a
               href="tel:+917836887228"
               style={{
-                color: "#F5C100",
+                color: "#22C55E",
                 fontSize: "0.9rem",
                 display: "block",
                 marginBottom: "0.5rem",
@@ -168,7 +168,7 @@ export default function Footer({ navigate }: FooterProps) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                background: "#F5C100",
+                background: "#22C55E",
                 color: "#1a1a1a",
                 padding: "0.4rem 0.8rem",
                 borderRadius: 6,
@@ -200,7 +200,7 @@ export default function Footer({ navigate }: FooterProps) {
                 gap: "0.5rem",
                 background: "rgba(245,193,0,0.1)",
                 border: "1px solid rgba(245,193,0,0.3)",
-                color: "#F5C100",
+                color: "#22C55E",
                 padding: "0.5rem 0.75rem",
                 borderRadius: 8,
                 fontSize: "0.88rem",
@@ -250,7 +250,7 @@ export default function Footer({ navigate }: FooterProps) {
               target="_blank"
               rel="noreferrer"
               style={{
-                color: "#F5C100",
+                color: "#22C55E",
                 textDecoration: "none",
                 fontWeight: 600,
               }}
@@ -267,7 +267,7 @@ export default function Footer({ navigate }: FooterProps) {
           position: "fixed",
           bottom: "1.5rem",
           right: "1.5rem",
-          background: "#F5C100",
+          background: "#22C55E",
           color: "#1a1a1a",
           width: 52,
           height: 52,

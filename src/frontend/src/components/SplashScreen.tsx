@@ -62,7 +62,8 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "#111111",
+        background:
+          "linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #dcfce7 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -81,7 +82,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           height: 600,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(245,193,0,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(22,101,52,0.08) 0%, transparent 70%)",
           top: "50%",
           left: "50%",
           transform: "translate(-50%,-50%)",
@@ -106,7 +107,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
               fontWeight: 700,
-              color: "#F5C100",
+              color: "#166534",
               animation: "splashSlideUp 0.6s cubic-bezier(0.22,1,0.36,1) both",
               textAlign: "center",
             }}
@@ -120,7 +121,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
               fontWeight: 700,
-              color: "#F5C100",
+              color: "#166534",
               animation: "splashFadeOut 0.35s ease forwards",
               textAlign: "center",
             }}
@@ -134,7 +135,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               fontFamily: "'Poppins', sans-serif",
               fontSize: "clamp(1.4rem, 4.5vw, 2rem)",
               fontWeight: 700,
-              color: "#ffffff",
+              color: "#111827",
               animation: "splashSlideUp 0.55s cubic-bezier(0.22,1,0.36,1) both",
               textAlign: "center",
             }}
@@ -142,7 +143,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             Welcome To{" "}
             <span
               style={{
-                color: "#F5C100",
+                color: "#166534",
                 fontFamily: "'Orbitron', monospace",
               }}
             >
@@ -162,11 +163,11 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             width: 88,
             height: 88,
             borderRadius: "50%",
-            background: "#F5C100",
+            background: "#166534",
             boxShadow:
-              "0 8px 40px rgba(245,193,0,0.4), 0 2px 8px rgba(245,193,0,0.2)",
+              "0 8px 40px rgba(22,101,52,0.35), 0 2px 8px rgba(22,101,52,0.2)",
             marginBottom: "1.2rem",
-            animation: "pulse-glow-orange 2s ease-in-out infinite",
+            animation: "pulse-glow-green 2s ease-in-out infinite",
           }}
         >
           <span style={{ fontSize: "2.4rem" }}>🚗</span>
@@ -177,7 +178,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
             fontFamily: "'Orbitron', sans-serif",
             fontSize: "clamp(2rem, 6vw, 2.8rem)",
             fontWeight: 800,
-            color: "#F5C100",
+            color: "#166534",
             letterSpacing: "0.05em",
             lineHeight: 1.1,
           }}
@@ -187,7 +188,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
 
         <div
           style={{
-            color: "#888888",
+            color: "#6b7280",
             fontSize: "0.82rem",
             letterSpacing: "0.24em",
             textTransform: "uppercase",
@@ -212,7 +213,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       >
         <div
           style={{
-            color: taglineFade ? "#aaaaaa" : "transparent",
+            color: taglineFade ? "#374151" : "transparent",
             fontSize: "clamp(0.9rem, 3vw, 1.05rem)",
             fontFamily: "'Poppins', sans-serif",
             fontWeight: 600,
@@ -231,7 +232,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
         style={{
           width: "min(300px, 75vw)",
           height: 4,
-          background: "rgba(255,255,255,0.08)",
+          background: "rgba(22,101,52,0.12)",
           borderRadius: 99,
           overflow: "hidden",
           marginBottom: "1rem",
@@ -241,17 +242,17 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
           style={{
             height: "100%",
             width: `${progress}%`,
-            background: "#F5C100",
+            background: "#166534",
             borderRadius: 99,
             transition: "width 0.03s linear",
-            boxShadow: "0 0 12px rgba(245,193,0,0.6)",
+            boxShadow: "0 0 12px rgba(22,101,52,0.5)",
           }}
         />
       </div>
 
       <div
         style={{
-          color: "#555555",
+          color: "#9ca3af",
           fontSize: "0.75rem",
           fontFamily: "'Poppins', sans-serif",
           letterSpacing: "0.1em",
@@ -261,13 +262,13 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       </div>
 
       <style>{`
-        @keyframes pulse-glow-orange {
+        @keyframes pulse-glow-green {
           0%, 100% {
-            box-shadow: 0 8px 40px rgba(245,193,0,0.4), 0 2px 8px rgba(245,193,0,0.2);
+            box-shadow: 0 8px 40px rgba(22,101,52,0.35), 0 2px 8px rgba(22,101,52,0.2);
             transform: scale(1);
           }
           50% {
-            box-shadow: 0 12px 60px rgba(245,193,0,0.6), 0 4px 16px rgba(245,193,0,0.3);
+            box-shadow: 0 12px 60px rgba(22,101,52,0.55), 0 4px 16px rgba(22,101,52,0.3);
             transform: scale(1.04);
           }
         }

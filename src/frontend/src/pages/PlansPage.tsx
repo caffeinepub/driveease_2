@@ -11,7 +11,7 @@ const PLANS = [
     period: "day",
     monthly: "₹24,000/month",
     badge: "Most Popular",
-    color: "#F5C100",
+    color: "#22C55E",
     desc: "8 hours/day flexible scheduling between 7 AM – 9 PM. Same verified driver every day.",
     features: [
       "8 hrs/day coverage",
@@ -62,7 +62,7 @@ const PLANS = [
     period: "",
     monthly: "",
     badge: "Enterprise",
-    color: "#F5C100",
+    color: "#22C55E",
     desc: "Custom pricing for corporates. Executive trained drivers, multiple vehicles, invoice billing.",
     features: [
       "Multiple drivers",
